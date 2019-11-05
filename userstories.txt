@@ -1,0 +1,13 @@
+As a user, I want to be able to login and see my home page
+As a user, I want to be able to register my account and choose my role
+
+As a caregiver, I want to be able to see a list of patients today and see if they took their meds and ate.
+
+As a family member I want to see a family members appt, meds and if they ate.
+
+As a Doctor I want to be able to see a list of my appointments, as well as their medical history.
+
+As an admin, I would like to be able to enter customers payments
+As an admin, I would like to be able to edit the roles of users
+As an admin, I would like to be able to edit employee salaries
+As an admin, I would like to be able to approve user registrations before they become able to access the system
