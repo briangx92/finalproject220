@@ -14,7 +14,13 @@ include_once 'db.php';
     <title>Old Home</title>
 </head>
 <body>
-
+<form action="" method="post">
+    <fieldset>
+        <legend>Roster</legend>
+        <label>Date: </label>
+        <input type="date" name="date">
+    </fieldset>
+</form>
     
 </body>
 </html>

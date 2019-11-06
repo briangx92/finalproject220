@@ -12,6 +12,18 @@ include_once 'db.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Old Home</title>
+    <style>
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    }
+    </style>
 </head>
 <body>
 <!-- Shows current employee list with all attributes -->

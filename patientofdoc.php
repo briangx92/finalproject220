@@ -1,7 +1,10 @@
 <?php
 include_once 'db.php';
 ?>
+<?php
 
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,6 @@ include_once 'db.php';
 </head>
 <body>
 
-    
     
 </body>
 </html>
