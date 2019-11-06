@@ -15,6 +15,27 @@ include_once 'db.php';
 </head>
 <body>
 
+<!-- Patient  Information Form-->
+<form action="" method="POST">
+    <fieldset>
+        <legend>Patient Information</legend>
+        <p>
+        Patient ID: <input type="text" name="patientid">
+        <br>
+        Group: <input type="text" name="group">
+        Admission Date<input type="date" name="admdate">
+        <input type="date" name="date">
+        </p>
+        <select name="doctor">
+            <?php
+            // PHP CODE FOR LISTING DOCTORS
+            ?>
+        </select>
+        <button type="submit">Ok</button>
+        <button type="submit">Cancel</button>
+
+    </fieldset>
+</form>
     
 </body>
 </html>
