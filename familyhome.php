@@ -18,16 +18,16 @@ include_once 'db.php';
     <fieldset>
         <legend>Family Member's Home</legend>
         <label>Date: </label>
-        <input type="date" name="date">
+            <input type="date" name="date">
         <br>
         <label>Family code: </label>
-        <input type="text" name="famcode">
+            <input type="text" name="famcode">
         <br>
         <label>Patient ID: </label>
-        <input type="text" name="patid" id="">
+            <input type="text" name="patid" id="">
         <br>
         <button type="submit" value="ok" name="ok">OK</button>
-        <button type="submit" value="cancel" name="cancel">CANCEL</button>
+            <input type="button" onclick="location.href='index.php';" value="Cancel">
     </fieldset>
 </form>
 

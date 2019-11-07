@@ -35,7 +35,7 @@ include_once 'db.php';
         <input type="text" name="newsalary" placeholder="Enter New Salary">
         <br>
         <button type="submit" name="ok" value="ok">Ok</button>
-        <button type="submit">Cancel</button>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
     </fieldset>      
 </form>
 <table>

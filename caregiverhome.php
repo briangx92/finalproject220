@@ -48,8 +48,11 @@ include_once 'db.php';
 
 
 </table>
-
-        
+<!-- OK and Cancel Form -->
+<form action="" method="post">
+    <button type="submit" name="submit" value="submit">Ok</button>
+    <input type="button" onclick="location.href='index.php';" value="Cancel">
+</form>  
 
 
 </body>

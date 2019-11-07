@@ -34,7 +34,7 @@ include_once 'db.php';
             ?>
         </select>
         <button type="submit">Ok</button>
-        <button type="submit">Cancel</button>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
 
     </fieldset>
 </form>

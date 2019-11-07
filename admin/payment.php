@@ -31,7 +31,7 @@ include_once 'db.php';
         <input type="text" name="pay" placeholder="00.00" value="<?php // sql variable for insert ?>">
         <br>
         <button type="submit" value="ok">Ok</button>
-        <button type="submit" value="cancel">Cancel</button>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
     </fieldset>
 </form>
 
