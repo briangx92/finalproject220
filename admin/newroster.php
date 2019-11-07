@@ -1,9 +1,14 @@
 <?php
 include_once 'db.php';
+session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +88,12 @@ include_once 'db.php';
 
         <button type="submit" value="ok" name="ok">Ok</button>
         <button type="submit" value="cancel" name="cancel">Cancel</button>
-      
+
 
 
     </fieldset>
 </form>
-    
+
 </body>
 </html>
 

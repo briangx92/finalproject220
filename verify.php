@@ -1,5 +1,6 @@
 <?php
 include_once 'db.php';
+session_start();
 
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
@@ -15,26 +16,34 @@ if ($resultCheck >= 1) {
     $what_role = mysqli_query($conn, $roleChecks);
     $user_info = mysqli_fetch_assoc($what_role);
     // All re-directs must be changed once we have the actual html files
+    $_SESSION['id'] = $id;
     if ($user_info['role'] == admin) {
-           header("Location: admin/admin.php");
+        $_SESSION['role'] = admin;
+        header("Location: admin/adminreport.php");
     }
     elseif ($user_info['role'] == patient) {
-           header("Location: admin/patient.php");
+            $_SESSION['role'] = 'patient';
+            header("Location: /patient.php");
     }
     elseif ($user_info['role'] == supervisor) {
-           header("Location: admin/patient.php");
+            $_SESSION['role'] = 'supervisor';
+            header("Location: supervisorhome.php");
     }
     elseif ($user_info['role'] == doctor) {
-           header("Location: admin/patient.php");
+            $_SESSION['role'] = 'doctor';
+            header("Location: /doctorhome.php");
     }
     elseif ($user_info['role'] == caregiver) {
-           header("Location: admin/patient.php");
+            $_SESSION['role'] = 'caregiver';
+            header("Location: /caregiverhome.php");
     }
     elseif ($user_info['role'] == family) {
-           header("Location: admin/patient.php");
+            $_SESSION['role'] = 'family';
+            header("Location: /familyhome.php");
+
     }
     elseif (isempty($user_info['role']) == TRUE) {
-           header("Location: admin/index.php");
+            header("Location: admin/index.php");
     }
 }
 else {
