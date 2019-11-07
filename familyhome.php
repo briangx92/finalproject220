@@ -1,9 +1,15 @@
 <?php
 include_once 'db.php';
+
+session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,13 +52,13 @@ include_once 'db.php';
         <th>Dinner</th>
     </tr>
     <?php
-    
+
     // WHILE LOOP TO CREATE A TABLE FOR THE LIST OF PATIENTS INFO <tr></tr> <td></td>
     ?>
 
 
 </table>
-    
+
 </body>
 </html>
 

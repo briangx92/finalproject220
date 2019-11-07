@@ -1,9 +1,14 @@
 <?php
 include_once 'db.php';
+session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +29,7 @@ include_once 'db.php';
         <br>
         Group: <input type="text" name="group">
         Admission Date<input type="date" name="admdate">
-        
+
         <input type="date" name="date">
         Patient Name: <input type="text" name="name" value="<?php // CODE FOR PATIENT NAME ?>">
         </p>
@@ -38,7 +43,7 @@ include_once 'db.php';
 
     </fieldset>
 </form>
-    
+
 </body>
 </html>
 

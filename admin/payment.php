@@ -1,5 +1,10 @@
 <?php
 include_once 'db.php';
+session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
@@ -37,7 +42,7 @@ include_once 'db.php';
 
 <p>$10 for every day</p>
 <p>$50 for every appointment</p>
-<p>$5 for every medicine/month</p>    
+<p>$5 for every medicine/month</p>
 </body>
 </html>
 

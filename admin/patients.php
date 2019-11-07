@@ -1,9 +1,14 @@
 <?php
 include_once 'db.php';
+session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,9 +47,9 @@ th, td {
         Admission Date: <input type="date" name="admdate">
         </p>
         <button type="submit" name="submit" value="submit">Search</button>
-        
 
-        
+
+
     </fieldset>
 </form>
     <table>

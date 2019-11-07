@@ -1,9 +1,15 @@
 <?php
 include_once 'db.php';
+
+session_start();
+
+if ($_SESSION['role'] = '') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +27,7 @@ include_once 'db.php';
         <input type="date" name="date">
     </fieldset>
 </form>
-    
+
 </body>
 </html>
 

@@ -1,9 +1,14 @@
 <?php
 include_once 'db.php';
+session_start();
+
+if ($_SESSION['role'] != 'doctor') {
+    header("Location: index.php");
+}
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
