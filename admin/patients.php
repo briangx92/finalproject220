@@ -49,6 +49,7 @@ th, td {
 </form>
     <table>
         <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Age</th>
             <th>Emergency Contact</th>
