@@ -11,7 +11,11 @@ include_once 'db.php';
     <label> Password:
         <input type="password" name="password">
     </label>
-    <input type="submit">
+    <br>
+    <button type="submit" name="submit" value="submit">Ok</button>
+    <input type="button" onclick="location.href='index.php';" value="Cancel">
+    <input type="button" onclick="location.href='register.php';" value="register">
+
 </form>
 <body>
 </body>
