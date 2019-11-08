@@ -11,8 +11,8 @@ $resultCheck = mysqli_num_rows($result);
 
 if ($resultCheck >= 1) {
     $tables = mysqli_fetch_assoc($result);
-    $id = intval($tables['User_ID']);
-    $roleChecks = "SELECT * FROM user WHERE User_ID = $id;";
+    $id = intval($tables['userid']);
+    $roleChecks = "SELECT * FROM user WHERE userid = $id;";
     $what_role = mysqli_query($conn, $roleChecks);
     $user_info = mysqli_fetch_assoc($what_role);
     // All re-directs must be changed once we have the actual html files
