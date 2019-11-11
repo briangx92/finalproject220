@@ -39,7 +39,7 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <button type="submit">Ok</button>
-        <button type="submit">Cancel</button>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
 
     </fieldset>
 </form>

@@ -23,6 +23,7 @@ if ($_SESSION['role'] != 'admin') {
     </fieldset>
 </form>
 <!-- Missed Patient Activity code here -->
+<!-- Don't really know how to go about this part -->
 <!-- End Code -->
 <table>
 

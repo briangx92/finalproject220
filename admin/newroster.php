@@ -87,7 +87,7 @@ if ($_SESSION['role'] != 'admin') {
         <br>
 
         <button type="submit" value="ok" name="ok">Ok</button>
-        <button type="submit" value="cancel" name="cancel">Cancel</button>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
 
 
 

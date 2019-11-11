@@ -40,8 +40,8 @@ if ($_SESSION['role'] != 'admin') {
         <input type="text" name="newsalary" placeholder="Enter New Salary">
         <br>
         <button type="submit" name="ok" value="ok">Ok</button>
-        <button type="submit">Cancel</button>
-    </fieldset>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
+    </fieldset>      
 </form>
 <table>
     <tr>
