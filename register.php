@@ -112,18 +112,21 @@ $emcontact = $_POST['$emcontact'] ?? '';
 $relation = $_POST['relation'] ?? '';
 
 $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob)
-VALUES ($role, $fname, $lname, $phone, $dob);";
-mysqli_query($conn, $usersinfo);
+VALUES ('$role', '$fname', '$lname', '$phone', '$dob');";
+$what = mysqli_query($conn, $usersinfo);
 $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
 $theirid = mysqli_query($conn, $getid);
-$nowid = mysqli_fetch_assoc($theirid);
-print_r($nowid);
-$userinfo = "INSERT INTO login (userid, email, pass, approved)
-VALUES ($theirid, $email, $pass, 0);";
-$theirid = mysqli_query($conn, $userinfo);
+$newid = mysqli_fetch_assoc($theirid);
+$youid = $newid['userid'];
+$userlogininfo = "INSERT INTO login (userid, email, pass, approved)
+VALUES ('$youid', '$email', '$pass', 0);";
+$theirid = mysqli_query($conn, $userlogininfo);
 echo "Your registration has been submitted, please wait on admin approval.";
-    if ($role == patient) {
-
+    if ($role == 'patient') {
+        echo 'Iswehere';
+        $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)
+        VALUES ('$youid', '$famcode', '$emcontact', '$relation');";
+        mysqli_query($conn, $patientinfo);
     }
 }
 ?>
