@@ -1,9 +1,15 @@
 <?php
 include_once 'db.php';
+
+session_start();
+
+if ($_SESSION['role'] != 'caregiver') {
+    header("Location: index.php");
+}
 ?>
 
 <?php
-// SQL CODE TO LIST PATIENTS 
+// SQL CODE TO LIST PATIENTS
 
 ?>
 <!DOCTYPE html>
@@ -42,7 +48,7 @@ include_once 'db.php';
         <th>Dinner</th>
     </tr>
     <?php
-    
+
     // WHILE LOOP TO CREATE A TABLE FOR THE LIST OF PATIENTS DUTY <tr></tr> <td></td>
     ?>
 

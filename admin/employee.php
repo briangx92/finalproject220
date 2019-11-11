@@ -1,9 +1,14 @@
 <?php
 include_once 'db.php';
-?> 
+session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: index.php");
+}
+?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,10 +63,10 @@ if ($result->num_rows > 0) {
 echo "</table>";
 } else { echo "0 results"; }
 
-?>      
+?>
 </table>
 
-    
+
 </body>
 </html>
 
