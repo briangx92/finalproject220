@@ -12,6 +12,12 @@ include_once 'db.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Old Home</title>
+<style>
+section {
+    display: none;
+}
+</style>
+
 </head>
 <body>
 
@@ -19,8 +25,8 @@ include_once 'db.php';
     <fieldset>
         <legend>Register</legend>
         <label>Role: </label>
-        <select name="role">
-            <option value="none">Select</option>
+        <select id="role" name="role">
+            <option value="none">-- Select --</option>
             <option value="admin">Admin</option>
             <option value="patient">Patient</option>
             <option value="family">Family Member</option>
@@ -45,14 +51,16 @@ include_once 'db.php';
             <input type="text" name="dob" value="<?php // sql variable ?>">
         <br>
         <!-- Make this appear when role is patient -->
-        <label>Family Code: </label>
-            <input type="text" name="famcode" value="<?php // sql variable ?>">
+        <section id="section">
+        <label class="hideit">Family Code: </label>
+            <input class="hideit" type="text" name="famcode" value="<?php // sql variable ?>">
         <br>
-        <label>Emergency Contact: </label>
-            <input type="text" name="emcontact" value="<?php // sql variable ?>">
+        <label class="hideit">Emergency Contact: </label>
+            <input class="hideit" type="text" name="emcontact" value="<?php // sql variable ?>">
         <br>
-        <label>Relationship: </label>
-            <input type="text" name="relation" value="<?php // sql variable ?>">
+        <label class="hideit">Relationship: </label>
+            <input class="hideit" type="text" name="relation" value="<?php // sql variable ?>">
+        </section>
         <!-- End appear -->
         
         <button type="submit" name="submit" value="submit">Ok</button>
@@ -65,7 +73,24 @@ include_once 'db.php';
 
     </fieldset>
 </form>
-    
+
+<script>
+// This shows the patient form when selected in the dropdown menu
+let role = document.getElementById('role');
+
+role.addEventListener("change", (event) => {
+    let select = role.options[role.selectedIndex].value;
+    if (select != "patient") {
+        document.getElementById('section').style.display="none";
+    } else {
+        document.getElementById('section').style.display="block";
+    }
+});
+
+</script>
+
+
+
 </body>
 </html>
 
