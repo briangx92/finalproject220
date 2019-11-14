@@ -43,47 +43,56 @@ if ($_SESSION['role'] != 'admin') {
         <legend>Registration Approval</legend>
         
         <?php
-        $sql = "SELECT u.fname, u.lname, role
+        $i = 1;
+        $sql = "SELECT u.fname, u.lname, role, l.userid
         FROM users u JOIN login l ON u.userid = l.userid
         WHERE l.approved = 0;";
+        $userid = "SELECT userid FROM login;";
         $result = mysqli_query($conn, $sql);
+        $approved = "UPDATE login SET approved = 1 WHERE userid = ". $userid.";";
+        $unapproved = "UPDATE login SET approved = 0 WHERE userid = ". $userid.";";
+        
+        
+        
+        
         echo "<table border='1'>";
         echo "<tr><td>Name</td><td>Role</td><td>Yes</td><td>No</td><tr>\n";
         while ($row = mysqli_fetch_array($result)) {
             echo "<tr class='index'>";       
             echo"<td>{$row['fname']} {$row['lname']}</td>";
             echo "<td>{$row['role']}</td>";
-            echo "<td><input type='radio' name='yes' value='1'></td>";
-            echo "<td><input type='radio' name='no' value='0'></td>";
-            echo "</tr>\n";   
+            echo "<td><input id='{$row['userid']}' type='checkbox' name='approve' value='yes'></td>";
+            echo "<td><input id='{$row['userid']}' type='checkbox' name='unapprove' value='no'></td>";
+            echo "</tr>\n"; 
             
         }
+
         echo "</table>";
 
-        print_r($_POST);
+    
         
+        $yes = isset($_POST['yes']);
+        $no = isset($_POST['no']);
+        if ($yes) {
+            mysqli_query($conn, $approved);
+        }
+        if ($no) {
+            mysqli_query($conn,$unapproved);
+        }
+    
+        echo "<button type='submit' value='submit'>Submit</button>";
         ?>
-        <script>
-            let x = document.getElementsByClassName('index');
-            var txt = "";
-            var i;
-            for (i=0;i<x.length;i++) {
-                txt = txt + "the index of row "+(i+1)+" is: "+x[i].rowIndex+"<br>";
-            }
-
-
-        </script>
-        <button type="submit">Submit</button>
-
     </fieldset>
 
-
+  
 </form> 
 
 </body>
 </html>
 
 <?php
+
+
 
 
 ?>
