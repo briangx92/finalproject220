@@ -63,7 +63,14 @@ if( isset($_POST['change']) )
 
         <br>
         <!-- Search for group by $grouptwo before $wegood -->
-        Group: <input type="text" name="group" value="<?php echo $wegood['group_num'];?>">
+        Group:
+        <select name="group">
+            <option value= "<?php echo $wegood['group_num']?>"> <?php echo $wegood['group_num'] ?></option>
+            <option value = '1'>1</option>
+            <option value = '2'>2</option>
+            <option value = '3'>3</option>
+            <option value = '4'>4</option>
+        </select>
         Admission Date<input type="date" name="admdate" value="<?php echo $wegood['admission_date'];?>">
         </p>
         <input type="submit" value="Update" name="change">

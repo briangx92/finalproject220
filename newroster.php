@@ -71,9 +71,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg1">
-            <?php
-            // PHP CODE FOR LISTING CAREGIVER GROUP 1
-            ?>
+            <option value = '1'>1</option>
+            <option value = '2'>2</option>
+            <option value = '3'>3</option>
+            <option value = '4'>4</option>
         </select>
         <br>
         <label>Caregiver 2:</label>
@@ -92,9 +93,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg2">
-            <?php
-            // PHP CODE FOR LISTING CAREGIVER GROUP 2
-            ?>
+            <option value = '1'>1</option>
+            <option value = '2'>2</option>
+            <option value = '3'>3</option>
+            <option value = '4'>4</option>
         </select>
         <br>
         <label>Caregiver 3:</label>
@@ -113,9 +115,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg3">
-            <?php
-            // PHP CODE FOR LISTING CAREGIVER GROUP 3
-            ?>
+            <option value = '1'>1</option>
+            <option value = '2'>2</option>
+            <option value = '3'>3</option>
+            <option value = '4'>4</option>
         </select>
         <br>
         <label>Caregiver 4:</label>
@@ -134,9 +137,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg4">
-            <?php
-            // PHP CODE FOR LISTING CAREGIVER GROUP 4
-            ?>
+            <option value = '1'>1</option>
+            <option value = '2'>2</option>
+            <option value = '3'>3</option>
+            <option value = '4'>4</option>
         </select>
         <br>
 
