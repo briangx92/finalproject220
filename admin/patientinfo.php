@@ -5,8 +5,12 @@ session_start();
 if ($_SESSION['role'] != 'admin') {
     header("Location: index.php");
 }
-?>
-<?php
+
+if (isset($_SESSION['message'])) {
+    echo $_SESSION['message'];
+    $_SESSION['message'] = '';
+}
+
 $group = $_POST['group'] ?? '';
 $admindate = $_POST['admdate'] ?? '';
 $fname = $_POST['fname'] ?? '';
@@ -21,6 +25,19 @@ $nameget = "SELECT fname,lname FROM users WHERE userid = '$nameid'";
 $namegot = mysqli_query($conn, $nameget);
 $getgot = mysqli_fetch_assoc($namegot);
 
+if( isset($_POST['change']) )
+{
+    echo 'Update Complete';
+    $grouptwo = intval($group);
+    $updateinfo = "UPDATE patient
+    SET group_num = '$grouptwo', admission_date = '$admindate'
+    WHERE patientid = '$getpatientid';";
+    mysqli_query($conn, $updateinfo);
+    $group = $_POST['group'] ?? '';
+    $admindate = $_POST['admdate'] ?? '';
+    $_SESSION['message'] = 'Update Submitted!';
+    header("Refresh:0");
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,10 +62,11 @@ $getgot = mysqli_fetch_assoc($namegot);
     </form>
 
         <br>
+        <!-- Search for group by $grouptwo before $wegood -->
         Group: <input type="text" name="group" value="<?php echo $wegood['group_num'];?>">
         Admission Date<input type="date" name="admdate" value="<?php echo $wegood['admission_date'];?>">
         </p>
-        <input type="submit" value="changeform" name="change">
+        <input type="submit" value="Update" name="change">
         <input type="button" onclick="location.href='index.php';" value="Cancel">
 
     </fieldset>
@@ -59,10 +77,5 @@ $getgot = mysqli_fetch_assoc($namegot);
 </html>
 
 <?php
-if( isset($_POST['change']) )
-{
-    echo "BOTTOM TEXT";
-    echo $group;
-    $bringpatient = "SELECT * FROM patient WHERE patientid = '$getpatientid'";
-}
+
 ?>
