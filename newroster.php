@@ -42,14 +42,32 @@ if ($_SESSION['role'] != 'admin') {
         <label>Doctor:</label>
         <select name="doctor">
             <?php
-            // PHP CODE FOR LISTING DOCTORS
+            $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'doctor';";
+            $thesup = mysqli_query($conn, $getsup);
+            $resultCheck = mysqli_num_rows($thesup);
+            if($resultCheck>0) {
+                while($tables = mysqli_fetch_assoc($thesup))
+            {
+                echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+            }
+        }
             ?>
         </select>
         <br>
         <label>Caregiver 1:</label>
         <select name="cg1">
             <?php
-            // PHP CODE FOR LISTING CAREGIVER 1
+            $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
+            $thesup = mysqli_query($conn, $getsup);
+            $resultCheck = mysqli_num_rows($thesup);
+            if($resultCheck>0) {
+                while($tables = mysqli_fetch_assoc($thesup))
+            {
+                echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+            }
+        }
             ?>
         </select>
         <select name="cgg1">
@@ -61,7 +79,16 @@ if ($_SESSION['role'] != 'admin') {
         <label>Caregiver 2:</label>
         <select name="cg2">
             <?php
-            // PHP CODE FOR LISTING CAREGIVER 2
+            $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
+            $thesup = mysqli_query($conn, $getsup);
+            $resultCheck = mysqli_num_rows($thesup);
+            if($resultCheck>0) {
+                while($tables = mysqli_fetch_assoc($thesup))
+            {
+                echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+            }
+        }
             ?>
         </select>
         <select name="cgg2">
@@ -73,7 +100,16 @@ if ($_SESSION['role'] != 'admin') {
         <label>Caregiver 3:</label>
         <select name="cg3">
             <?php
-            // PHP CODE FOR LISTING CAREGIVER 3
+            $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
+            $thesup = mysqli_query($conn, $getsup);
+            $resultCheck = mysqli_num_rows($thesup);
+            if($resultCheck>0) {
+                while($tables = mysqli_fetch_assoc($thesup))
+            {
+                echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+            }
+        }
             ?>
         </select>
         <select name="cgg3">
@@ -85,7 +121,16 @@ if ($_SESSION['role'] != 'admin') {
         <label>Caregiver 4:</label>
         <select name="cg4">
             <?php
-            // PHP CODE FOR LISTING CAREGIVER 4
+            $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
+            $thesup = mysqli_query($conn, $getsup);
+            $resultCheck = mysqli_num_rows($thesup);
+            if($resultCheck>0) {
+                while($tables = mysqli_fetch_assoc($thesup))
+            {
+                echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+            }
+        }
             ?>
         </select>
         <select name="cgg4">
