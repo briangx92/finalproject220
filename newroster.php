@@ -27,7 +27,16 @@ if ($_SESSION['role'] != 'admin') {
         <label>Supervisor:</label>
         <select name="supervisor">
             <?php
-            // PHP CODE FOR LISTING SUPERVISOR
+            $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'supervisor';";
+            $thesup = mysqli_query($conn, $getsup);
+            $resultCheck = mysqli_num_rows($thesup);
+            if($resultCheck>0) {
+                while($tables = mysqli_fetch_assoc($thesup))
+            {
+                echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+            }
+        }
             ?>
         </select>
         <label>Doctor:</label>
@@ -98,6 +107,11 @@ if ($_SESSION['role'] != 'admin') {
 </html>
 
 <?php
-
+// $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob)
+// VALUES ('$role', '$fname', '$lname', '$phone', '$dob');";
+// $what = mysqli_query($conn, $usersinfo);
+// $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
+// $theirid = mysqli_query($conn, $getid);
+// $newid = mysqli_fetch_assoc($theirid);
 
 ?>
