@@ -20,6 +20,8 @@ if ($conn->query($sql) === TRUE) {
         dob date
     );";
 
+    
+
     $sql = "CREATE TABLE login (
         userid int PRIMARY KEY,
         FOREIGN KEY (userid) REFERENCES users(userid),
@@ -100,6 +102,28 @@ if ($conn->query($sql) === TRUE) {
         FOREIGN KEY (userid) REFERENCES users(userid),
         salary int
         );";
+    // Sample Data
+
+    $sql_login_data = "INSERT INTO login (userid, emai, pass, approved) VALUES
+    (1, 'sup@a.com', '1', 0),
+    (2, 'a@a.com', '1', 0),
+    (3, 'patient@a.com', '1', 0),
+    (4, 'pat2@a.com', '1', 0),
+    (5, 'fam@a.com', '1', 0),
+    (6, 'doc@a.com', '1', 0);";
+    $sql_patient_data = "INSERT INTO patient (userid, family_code, emergency_contact, emergency_contact_name, relation)
+    VALUES (
+        3, 12, 5435654564, 'crazy lady', 'mom'),
+        (4, 43, 23894984, 'crazy dude', 'dad');";
+    
+    $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob) VALUES
+    (1, 'supervisor', 'eric', 'cartman', '1234567890', '0022-11-03'),
+    (2, 'admin', 'admin', 'admin', '1', '0001-01-01'),
+    (3, 'patient', 'john', 'doe', '1234567890', '2023-02-02'),
+    (4, 'patient', 'jane', 'doe', '1', '0033-09-03'),
+    (5, 'family', 'big', 'doe', '1111111111', '2020-04-20'),
+    (6, 'doctor', 'rick', 'sanchez', '1', '0001-01-01');";
+    
 
         $result = mysqli_query($conn, $sql_user);
         $result = mysqli_query($conn, $sql);
@@ -108,6 +132,9 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_roster_table);
         $result = mysqli_query($conn, $sql_caregiver_table);
         $result = mysqli_query($conn, $sql_employee_table);
+        $result = mysqli_query($conn, $sql_login_data);
+        $result = mysqli_query($conn, $sql_patient_data);
+        $result = mysqli_query($conn, $sql_user_data);
 
 } else {
 }

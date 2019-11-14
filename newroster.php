@@ -7,7 +7,24 @@ if ($_SESSION['role'] != 'admin') {
 }
 ?>
 <?php
+$submit = isset($_POST['submit']);
 
+function caregivergroup($submit) {
+
+    $cg1 = $_POST['cg1'];
+    $cg2 = $_POST['cg2'];
+    $cg3 = $_POST['cg3'];
+    $cg4 = $_POST['cg4'];
+    $cgg1 = $_POST['cgg1'];
+    $cgg2 = $_POST['cgg2'];
+    $cgg3 = $_POST['cgg3'];
+    $cgg4 = $_POST['cgg4'];
+
+    
+
+
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -144,7 +161,7 @@ if ($_SESSION['role'] != 'admin') {
         </select>
         <br>
 
-        <button type="submit" value="ok" name="ok">Ok</button>
+        <button type="submit" value="submit" name="submit">Ok</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
 
 
@@ -162,5 +179,9 @@ if ($_SESSION['role'] != 'admin') {
 // $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
 // $theirid = mysqli_query($conn, $getid);
 // $newid = mysqli_fetch_assoc($theirid);
+
+
+
+
 
 ?>
