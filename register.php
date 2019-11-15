@@ -56,13 +56,13 @@ section {
         <!-- Make this appear when role is patient -->
         <section id="section">
         <label class="hideit">Family Code: </label>
-            <input class="hideit" type="text" name="famcode" value="<?php // sql variable ?>">
+            <input class="hideit" type="text" name="famcode">
         <br>
         <label class="hideit">Emergency Contact: </label>
-            <input class="hideit" type="text" name="emcontact" value="<?php // sql variable ?>">
+            <input class="hideit" type="text" name="emcontact">
         <br>
         <label class="hideit">Relationship: </label>
-            <input class="hideit" type="text" name="relation" value="<?php // sql variable ?>">
+            <input class="hideit" type="text" name="relation">
         </section>
         <!-- End appear -->
 

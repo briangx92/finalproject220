@@ -44,6 +44,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg1">
+            <option value="Group 1"></option>
+            <option value="Group 2"></option>
+            <option value="Group 3"></option>
+            <option value="Group 4"></option>
             <?php
             // PHP CODE FOR LISTING CAREGIVER GROUP 1
             ?>
@@ -56,6 +60,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg2">
+            <option value="Group 1"></option>
+            <option value="Group 2"></option>
+            <option value="Group 3"></option>
+            <option value="Group 4"></option>
             <?php
             // PHP CODE FOR LISTING CAREGIVER GROUP 2
             ?>
@@ -68,6 +76,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg3">
+            <option value="Group 1"></option>
+            <option value="Group 2"></option>
+            <option value="Group 3"></option>
+            <option value="Group 4"></option>
             <?php
             // PHP CODE FOR LISTING CAREGIVER GROUP 3
             ?>
@@ -80,6 +92,10 @@ if ($_SESSION['role'] != 'admin') {
             ?>
         </select>
         <select name="cgg4">
+            <option value="Group 1"></option>
+            <option value="Group 2"></option>
+            <option value="Group 3"></option>
+            <option value="Group 4"></option>
             <?php
             // PHP CODE FOR LISTING CAREGIVER GROUP 4
             ?>

@@ -19,7 +19,11 @@ if ($resultCheck >= 1) {
     $_SESSION['id'] = $id;
     if ($user_info['role'] == 'admin') {
         $_SESSION['role'] = 'admin';
+<<<<<<< HEAD
+        header("Location: /adminreport.php");
+=======
         header("Location: admin/adminreport.php");
+>>>>>>> master
     }
     elseif ($user_info['role'] == 'patient') {
             $_SESSION['role'] = 'patient';

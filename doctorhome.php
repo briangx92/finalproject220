@@ -29,7 +29,7 @@ if ($_SESSION['role'] != 'doctor') {
     text-align: left;
     border-bottom: 1px solid #ddd;
     }
-    </style>
+</style>
 <body>
     <!--Doctors home table  -->
 <table>
