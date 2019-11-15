@@ -74,17 +74,21 @@ if ($_SESSION['role'] != 'admin') {
 
 
 
-        if (isset($approved) == true)  {
+        if( isset($_POST['approved']) )  {
             echo $approved;
             $makeapproved = "UPDATE login SET approved = 1 WHERE userid = '$approved';";
             mysqli_query($conn, $makeapproved);
+            header("Refresh:0");
         }
-        elseif (isset($denied) == true)  {
+        elseif ( isset($_POST['denied']) ) {
+            $remove_patient = "DELETE FROM patient WHERE userid = '$denied';";
+            mysqli_query($conn, $remove_patient);
             echo $denied;
             $remove_login = "DELETE FROM login WHERE userid = '$denied';";
             mysqli_query($conn, $remove_login);
             $remove_users = "DELETE FROM users WHERE userid = '$denied';";
             mysqli_query($conn, $remove_users);
+            header("Refresh:0");
         }
 
         ?>
