@@ -104,25 +104,35 @@ if ($conn->query($sql) === TRUE) {
         );";
     // Sample Data
 
-    $sql_login_data = "INSERT INTO login (userid, emai, pass, approved) VALUES
-    (1, 'sup@a.com', '1', 0),
+    $sql_login_data = "INSERT INTO login (userid, email, pass, approved) VALUES
+    (1, 'cg4@a.com', '1', 0),
     (2, 'a@a.com', '1', 0),
-    (3, 'patient@a.com', '1', 0),
+    (3, 'pat@a.com', '1', 0),
     (4, 'pat2@a.com', '1', 0),
-    (5, 'fam@a.com', '1', 0),
-    (6, 'doc@a.com', '1', 0);";
-    $sql_patient_data = "INSERT INTO patient (userid, family_code, emergency_contact, emergency_contact_name, relation)
-    VALUES (
-        3, 12, 5435654564, 'crazy lady', 'mom'),
-        (4, 43, 23894984, 'crazy dude', 'dad');";
+    (5, 'pat3@a.com', '1', 0),
+    (6, 'fam@a.com', '1', 0),
+    (8, 'doc@a.com', '1', 0),
+    (9, 'sup@a.com', '1', 0),
+    (10, 'cg1@a.com', '1', 0),
+    (11, 'cg2@a.com', '1', 0),
+    (12, 'cg3@a.com', '1', 0);";
+    $sql_patient_data = "INSERT INTO patient (userid, patientid, family_code, emergency_contact, emergency_contact_name, relation, group_num, admission_date, morning_meds, afternoon_meds, night_meds) VALUES
+    (3, 1, 12, NULL, '', 'mom', NULL, NULL, NULL, NULL, NULL),
+    (4, 2, 54, NULL, '', 'dad', NULL, NULL, NULL, NULL, NULL),
+    (5, 3, 765, NULL, '', 'son', NULL, NULL, NULL, NULL, NULL);";
     
     $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob) VALUES
-    (1, 'supervisor', 'eric', 'cartman', '1234567890', '0022-11-03'),
-    (2, 'admin', 'admin', 'admin', '1', '0001-01-01'),
-    (3, 'patient', 'john', 'doe', '1234567890', '2023-02-02'),
-    (4, 'patient', 'jane', 'doe', '1', '0033-09-03'),
-    (5, 'family', 'big', 'doe', '1111111111', '2020-04-20'),
-    (6, 'doctor', 'rick', 'sanchez', '1', '0001-01-01');";
+    (1, 'caregiver', 'penny', 'lee', '1', '0008-08-08'),
+    (2, 'admin', 'admin', 'admin', '1', '0001-11-11'),
+    (3, 'patient', 'alice', 'ames', '1', '0001-01-11'),
+    (4, 'patient', 'charlie', 'sues', '1234567890', '0004-04-04'),
+    (5, 'patient', 'frank', 'herr', '123456543', '0002-03-31'),
+    (6, 'family', 'bob', 'omb', '146533464', '1111-11-11'),
+    (8, 'doctor', 'evil', 'surgeon', '654345432', '0033-11-14'),
+    (9, 'supervisor', 'eric', 'cartman', '6542457874', '6432-03-22'),
+    (10, 'caregiver', 'felicia', 'jones', '1', '1834-07-31'),
+    (11, 'caregiver', 'elen', 'ingram', '1', '4543-04-22'),
+    (12, 'caregiver', 'jane', 'parker', '1', '0033-05-05');";
     
 
         $result = mysqli_query($conn, $sql_user);
