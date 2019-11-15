@@ -31,17 +31,30 @@ if ($_SESSION['role'] != 'admin') {
     </style>
 </head>
 <body>
-<!-- Shows current employee list with all attributes -->
+
 <form action="" method="post">
     <fieldset>
-        <legend>Search</legend>
-        <input type="text" name="empid" placeholder="Enter ID">
+        <legend>Update Salary</legend>
+        <label>ID:
+        <select name="empid">
+        <?php
+        $empsql = "SELECT userid FROM employee;";
+        $result = mysqli_query($conn, $empsql);
+        $resultcheck = mysqli_num_rows($result);
+           if($resultcheck>0) {
+               while($tables = mysqli_fetch_assoc($result))
+           {
+               echo '<option value = ' . $tables['userid'] . '>' . $tables['userid']. '</option>';
+           }
+       }
+        ?>
+    </select>
         <br>
         <input type="text" name="newsalary" placeholder="Enter New Salary">
         <br>
         <button type="submit" name="ok" value="ok">Ok</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
-    </fieldset>      
+    </fieldset>
 </form>
 <table>
     <tr>
@@ -52,13 +65,22 @@ if ($_SESSION['role'] != 'admin') {
     </tr>
 <?php
 // Statement for displaying  employee info from the user info table and joining the salary from the employee table
-$sql = "SELECT ui.userid AS ID, CONCAT(ui.fname, ' ', ui.lname) AS emp_name, ui.role, emp.salary FROM user_info ui JOIN employee emp ON ui.userid = emp.userid;";
+$empsql = "SELECT * FROM employee;";
+$result = mysqli_query($conn, $empsql);
 
-$result = mysqli_query($conn, $sql);
-if ($result->num_rows > 0) {
-// output data of each row
+$resultcheck = mysqli_num_rows($result);
+if ($resultcheck > 0) {
     while($row = mysqli_fetch_assoc($result)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["emp_name"] . "</td><td>" . $row["role"] . "</td><td>" . $row["salary"] . "</td></tr>";
+        $whoareyou = $row['userid'];
+        $nameget = "SELECT fname,lname, role FROM users WHERE userid = '$whoareyou'";
+        $namegot = mysqli_query($conn, $nameget);
+        $getgot = mysqli_fetch_assoc($namegot);
+        echo "<tr>";
+        echo "<td>" . $row['userid'] . "</td>";
+        echo "<td>" . $getgot['fname'] . ' ' . $getgot['lname'] . "</td>";
+        echo "<td>" . ucfirst($getgot['role']) . "</td>";
+        echo "<td>$" . $row['salary'] . "</td>";
+        echo "</tr>";
 }
 echo "</table>";
 } else { echo "0 results"; }
@@ -71,6 +93,14 @@ echo "</table>";
 </html>
 
 <?php
-
-
+$empid = $_POST['empid'] ?? '';
+$newsal = $_POST['newsalary'] ?? '';
+$newsal = intval($newsal);
+if( $newsal > 0) {
+    $updatesal = "UPDATE employee
+    SET salary = '$newsal'
+    WHERE userid = '$empid';";
+    mysqli_query($conn, $updatesal);
+    header("Refresh:0");
+}
 ?>

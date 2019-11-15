@@ -123,10 +123,14 @@ VALUES ('$youid', '$email', '$pass', 0);";
 $theirid = mysqli_query($conn, $userlogininfo);
 echo "Your registration has been submitted, please wait on admin approval.";
     if ($role == 'patient') {
-        echo 'Iswehere';
         $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)
         VALUES ('$youid', '$famcode', '$emcontact', '$relation');";
         mysqli_query($conn, $patientinfo);
+    }
+    elseif ($role != 'patient' AND $role != 'family') {
+        $salary = "INSERT INTO employee(userid)
+        VALUES ('$youid');";
+        mysqli_query($conn, $salary);
     }
 }
 ?>
