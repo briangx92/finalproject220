@@ -52,13 +52,22 @@ if ($_SESSION['role'] != 'admin') {
     </tr>
 <?php
 // Statement for displaying  employee info from the user info table and joining the salary from the employee table
-$sql = "SELECT ui.userid AS ID, CONCAT(ui.fname, ' ', ui.lname) AS emp_name, ui.role, emp.salary FROM user_info ui JOIN employee emp ON ui.userid = emp.userid;";
+$empsql = "SELECT * FROM employee;";
+$result = mysqli_query($conn, $empsql);
 
-$result = mysqli_query($conn, $sql);
-if ($result->num_rows > 0) {
-// output data of each row
+$resultcheck = mysqli_num_rows($result);
+if ($resultcheck > 0) {
     while($row = mysqli_fetch_assoc($result)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["emp_name"] . "</td><td>" . $row["role"] . "</td><td>" . $row["salary"] . "</td></tr>";
+        $whoareyou = $row['userid'];
+        $nameget = "SELECT fname,lname, role FROM users WHERE userid = '$whoareyou'";
+        $namegot = mysqli_query($conn, $nameget);
+        $getgot = mysqli_fetch_assoc($namegot);
+        echo "<tr>";
+        echo "<td>" . $row['userid'] . "</td>";
+        echo "<td>" . $getgot['fname'] . ' ' . $getgot['lname'] . "</td>";
+        echo "<td>" . ucfirst($getgot['role']) . "</td>";
+        echo "<td>$" . $row['salary'] . "</td>";
+        echo "</tr>";
 }
 echo "</table>";
 } else { echo "0 results"; }
