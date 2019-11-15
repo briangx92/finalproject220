@@ -7,24 +7,8 @@ if ($_SESSION['role'] != 'admin') {
 }
 ?>
 <?php
-$submit = isset($_POST['submit']);
-
-function caregivergroup($submit) {
-
-    $cg1 = $_POST['cg1'];
-    $cg2 = $_POST['cg2'];
-    $cg3 = $_POST['cg3'];
-    $cg4 = $_POST['cg4'];
-    $cgg1 = $_POST['cgg1'];
-    $cgg2 = $_POST['cgg2'];
-    $cgg3 = $_POST['cgg3'];
-    $cgg4 = $_POST['cgg4'];
-
-    
 
 
-
-}
 
 ?>
 <!DOCTYPE html>
@@ -163,8 +147,61 @@ function caregivergroup($submit) {
 
         <button type="submit" value="submit" name="submit">Ok</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
+        <?php
+            $submit = $_POST['submit'] ?? '';
+            $cg1 = $_POST['cg1'] ?? '';
+            $cg2 = $_POST['cg2'] ?? '';
+            $cg3 = $_POST['cg3'] ?? '';
+            $cg4 = $_POST['cg4'] ?? '';
+            $cgg1 = $_POST['cgg1'] ?? '';
+            $cgg2 = $_POST['cgg2'] ?? '';
+            $cgg3 = $_POST['cgg3'] ?? '';
+            $cgg4 = $_POST['cgg4'] ?? '';
+            $date = $_POST['date'] ?? '';
+            $supervisor = $_POST['supervisor'] ?? '';
+            $doctor = $_POST['doctor'] ?? '';
+            
 
+            
+           
+            // Prepare insert statement
+            $new_roster = "INSERT INTO roster (roster_date, supervisor, doctor, caregiver_1, caregiver_2, caregiver_3, caregiver_4, caregiver_group1, caregiver_group2, caregiver_group3, caregiver_group4)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            $stmt = mysqli_prepare($conn, $new_roster);
+            
+            if ($stmt) {
+                // Bind variables to the prepared statement as parameters
+                // ORDER MATTERS ON VARIABLES
+                mysqli_stmt_bind_param($stmt, "sssssssssss", $date, $supervisor, $doctor, $cg1, $cg2, $cg3, $cg4, $cgg1, $cgg2, $cgg3, $cgg4);
 
+                // Set parameters
+                $set_cg1 = $cg1;
+                $set_cg2 = $cg2;
+                $set_cg3 = $cg3;
+                $set_cg4 = $cg4;
+                $set_cgg1 = $cgg1;
+                $set_cgg2 = $cgg2;
+                $set_cgg3 = $cgg3;
+                $set_cgg4 = $cgg4;
+                $set_date = $date;
+                $set_supervisor = $supervisor;
+                $set_doctor = $doctor;
+
+                // Attempt to execute the prepared statement
+
+                if (mysqli_stmt_execute($stmt)) {
+                    echo "Inserted successfully";
+                } else {
+                  
+                }
+            
+                
+
+                }
+                mysqli_stmt_close($stmt);
+           
+            
+        ?>
 
     </fieldset>
 </form>
@@ -173,12 +210,7 @@ function caregivergroup($submit) {
 </html>
 
 <?php
-// $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob)
-// VALUES ('$role', '$fname', '$lname', '$phone', '$dob');";
-// $what = mysqli_query($conn, $usersinfo);
-// $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
-// $theirid = mysqli_query($conn, $getid);
-// $newid = mysqli_fetch_assoc($theirid);
+
 
 
 
