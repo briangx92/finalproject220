@@ -13,21 +13,24 @@ if ($_SESSION['role'] != 'admin') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Old Home</title>
 </head>
+
 <body>
-<form action="" method="post">
-    <fieldset>
-        <legend>New Roster</legend>
-        <label>Date:</label>
-        <input type="date" name="date">
-        <label>Supervisor:</label>
-        <select name="supervisor">
-            <?php
+    <form action="" method="post">
+        <fieldset>
+            <legend>New Roster</legend>
+            <label>Date:</label>
+            <input type="date" name="date">
+            <label>Supervisor:</label>
+            <select name="supervisor">
+                <?php
             $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'supervisor';";
             $thesup = mysqli_query($conn, $getsup);
             $resultCheck = mysqli_num_rows($thesup);
@@ -39,10 +42,10 @@ if ($_SESSION['role'] != 'admin') {
             }
         }
             ?>
-        </select>
-        <label>Doctor:</label>
-        <select name="doctor">
-            <?php
+            </select>
+            <label>Doctor:</label>
+            <select name="doctor">
+                <?php
             $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'doctor';";
             $thesup = mysqli_query($conn, $getsup);
             $resultCheck = mysqli_num_rows($thesup);
@@ -54,11 +57,11 @@ if ($_SESSION['role'] != 'admin') {
             }
         }
             ?>
-        </select>
-        <br>
-        <label>Caregiver 1:</label>
-        <select name="cg1">
-            <?php
+            </select>
+            <br>
+            <label>Caregiver 1:</label>
+            <select name="cg1">
+                <?php
             $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
             $thesup = mysqli_query($conn, $getsup);
             $resultCheck = mysqli_num_rows($thesup);
@@ -70,17 +73,17 @@ if ($_SESSION['role'] != 'admin') {
             }
         }
             ?>
-        </select>
-        <select name="cgg1">
-            <option value = '1'>1</option>
-            <option value = '2'>2</option>
-            <option value = '3'>3</option>
-            <option value = '4'>4</option>
-        </select>
-        <br>
-        <label>Caregiver 2:</label>
-        <select name="cg2">
-            <?php
+            </select>
+            <select name="cgg1">
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+            </select>
+            <br>
+            <label>Caregiver 2:</label>
+            <select name="cg2">
+                <?php
             $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
             $thesup = mysqli_query($conn, $getsup);
             $resultCheck = mysqli_num_rows($thesup);
@@ -92,17 +95,17 @@ if ($_SESSION['role'] != 'admin') {
             }
         }
             ?>
-        </select>
-        <select name="cgg2">
-            <option value = '1'>1</option>
-            <option value = '2'>2</option>
-            <option value = '3'>3</option>
-            <option value = '4'>4</option>
-        </select>
-        <br>
-        <label>Caregiver 3:</label>
-        <select name="cg3">
-            <?php
+            </select>
+            <select name="cgg2">
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+            </select>
+            <br>
+            <label>Caregiver 3:</label>
+            <select name="cg3">
+                <?php
             $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
             $thesup = mysqli_query($conn, $getsup);
             $resultCheck = mysqli_num_rows($thesup);
@@ -114,17 +117,17 @@ if ($_SESSION['role'] != 'admin') {
             }
         }
             ?>
-        </select>
-        <select name="cgg3">
-            <option value = '1'>1</option>
-            <option value = '2'>2</option>
-            <option value = '3'>3</option>
-            <option value = '4'>4</option>
-        </select>
-        <br>
-        <label>Caregiver 4:</label>
-        <select name="cg4">
-            <?php
+            </select>
+            <select name="cgg3">
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+            </select>
+            <br>
+            <label>Caregiver 4:</label>
+            <select name="cg4">
+                <?php
             $getsup = "SELECT fname, lname, userid FROM users WHERE role = 'caregiver';";
             $thesup = mysqli_query($conn, $getsup);
             $resultCheck = mysqli_num_rows($thesup);
@@ -136,18 +139,18 @@ if ($_SESSION['role'] != 'admin') {
             }
         }
             ?>
-        </select>
-        <select name="cgg4">
-            <option value = '1'>1</option>
-            <option value = '2'>2</option>
-            <option value = '3'>3</option>
-            <option value = '4'>4</option>
-        </select>
-        <br>
+            </select>
+            <select name="cgg4">
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+            </select>
+            <br>
 
-        <button type="submit" value="submit" name="submit">Ok</button>
-        <input type="button" onclick="location.href='index.php';" value="Cancel">
-        <?php
+            <button type="submit" value="submit" name="submit">Ok</button>
+            <input type="button" onclick="location.href='index.php';" value="Cancel">
+            <?php
             $submit = $_POST['submit'] ?? '';
             $cg1 = $_POST['cg1'] ?? '';
             $cg2 = $_POST['cg2'] ?? '';
@@ -203,10 +206,11 @@ if ($_SESSION['role'] != 'admin') {
             
         ?>
 
-    </fieldset>
-</form>
+        </fieldset>
+    </form>
 
 </body>
+
 </html>
 
 <?php

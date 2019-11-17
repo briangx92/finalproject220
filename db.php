@@ -106,16 +106,16 @@ if ($conn->query($sql) === TRUE) {
 
     $sql_login_data = "INSERT INTO login (userid, email, pass, approved) VALUES
     (1, 'cg4@a.com', '1', 0),
-    (2, 'a@a.com', '1', 0),
+    (2, 'a@a.com', '1', 1),
     (3, 'pat@a.com', '1', 0),
-    (4, 'pat2@a.com', '1', 0),
-    (5, 'pat3@a.com', '1', 0),
-    (6, 'fam@a.com', '1', 0),
-    (8, 'doc@a.com', '1', 0),
-    (9, 'sup@a.com', '1', 0),
-    (10, 'cg1@a.com', '1', 0),
-    (11, 'cg2@a.com', '1', 0),
-    (12, 'cg3@a.com', '1', 0);";
+    (4, 'pat2@a.com', '1', 1),
+    (5, 'pat3@a.com', '1', 1),
+    (6, 'fam@a.com', '1', 1),
+    (8, 'doc@a.com', '1', 1),
+    (9, 'sup@a.com', '1', 1),
+    (10, 'cg1@a.com', '1', 1),
+    (11, 'cg2@a.com', '1', 1),
+    (12, 'cg3@a.com', '1', 1);";
     $sql_patient_data = "INSERT INTO patient (userid, patientid, family_code, emergency_contact, emergency_contact_name, relation, group_num, admission_date, morning_meds, afternoon_meds, night_meds) VALUES
     (3, 1, 12, NULL, '', 'mom', NULL, NULL, NULL, NULL, NULL),
     (4, 2, 54, NULL, '', 'dad', NULL, NULL, NULL, NULL, NULL),
