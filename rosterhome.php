@@ -62,7 +62,6 @@ if ($_SESSION['role'] = '') {
                 echo "<td>{$row['roster_date']}</td>";
                 echo "<td>{$row['supervisor']}</td>";
                 echo "<td>{$row['doctor']}</td>";
-                echo "<p>{$row['caregiver_group1']}</p>";
                 echo "<td>{$row['caregiver_1']}</td>";
                 echo "<td>{$row['caregiver_2']}</td>";
                 echo "<td>{$row['caregiver_3']}</td>";
