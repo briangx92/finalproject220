@@ -48,7 +48,7 @@ if ($_SESSION['role'] = '') {
             </tr>
             <?php
 
-            @$date = $_POST['date'];
+            @$date = $_POST['date'] ?? '';
             // Query
             $sql = "SELECT * FROM roster WHERE roster_date = '{$date}';";
 
