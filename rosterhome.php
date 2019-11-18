@@ -49,6 +49,12 @@ if ($_SESSION['role'] = '') {
             <?php
 
             $date = $_POST['date'] ?? '';
+            if (empty($date) == true) {
+                $sql = "SELECT roster_date FROM roster;";
+                $fetchdate = mysqli_query($conn, $sql);
+                $getgot = mysqli_fetch_assoc($fetchdate);
+                print_r($getgot);
+            }
             // Query
             $sql = "SELECT * FROM roster WHERE roster_date = '{$date}';";
 
