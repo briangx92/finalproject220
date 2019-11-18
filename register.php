@@ -32,6 +32,7 @@ section {
             <option value="family">Family Member</option>
             <option value="doctor">Doctor</option>
             <option value="supervisor">Supervisor</option>
+            <option value="caregiver">Caregiver</option>
 
         </select>
         <br>

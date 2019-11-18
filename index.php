@@ -3,7 +3,7 @@ include_once 'db.php';
 ?>
 
 <html>
-<link rel="stylesheet" type="text/css" href="datastyle.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 <form action="verify.php" method="post">
     <label> Email:
         <input type="email" name="email">
@@ -14,7 +14,7 @@ include_once 'db.php';
     <br>
     <button type="submit" name="submit" value="submit">Ok</button>
     <input type="button" onclick="location.href='index.php';" value="Cancel">
-    <input type="button" onclick="location.href='register.php';" value="register">
+    <input type="button" onclick="location.href='register.php';" value="Register">
 
 </form>
 <body>

@@ -10,7 +10,6 @@ if ($_SESSION['role'] != 'admin') {
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,18 +17,6 @@ if ($_SESSION['role'] != 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Old Home</title>
-    <style>
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    }
-
-    th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    }
-    </style>
 </head>
 <body>
 
@@ -96,18 +83,5 @@ if ($_SESSION['role'] != 'admin') {
 
 
 </form>
-
 </body>
 </html>
-
-<?php
-
-// $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob)
-// VALUES ('$role', '$fname', '$lname', '$phone', '$dob');";
-// $what = mysqli_query($conn, $usersinfo);
-// $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
-// $theirid = mysqli_query($conn, $getid);
-// $newid = mysqli_fetch_assoc($theirid);
-
-
-?>
