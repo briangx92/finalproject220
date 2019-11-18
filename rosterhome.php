@@ -8,7 +8,7 @@ if ($_SESSION['role'] = '') {
 }
 ?>
 <?php
- 
+
 
 ?>
 
@@ -21,7 +21,7 @@ if ($_SESSION['role'] = '') {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Old Home</title>
-   
+
 
 </head>
 
@@ -48,7 +48,7 @@ if ($_SESSION['role'] = '') {
             </tr>
             <?php
 
-            @$date = $_POST['date'] ?? '';
+            $date = $_POST['date'] ?? '';
             // Query
             $sql = "SELECT * FROM roster WHERE roster_date = '{$date}';";
 
@@ -56,20 +56,45 @@ if ($_SESSION['role'] = '') {
             // Initiate query
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
-          
+
+            function getname($conn, $whichguy) {
+                $nameget = "SELECT fname,lname FROM users WHERE userid = '$whichguy'";
+                $namegot = mysqli_query($conn, $nameget);
+                $getgot = mysqli_fetch_assoc($namegot);
+                return $getgot;
+            }
+
+            $supname = getname($conn, $row['supervisor']);
+            $supname = ($supname['fname'] . ' ' . $supname['lname'] );
+
+            $docname = getname($conn, $row['doctor']);
+            $docname = ($docname['fname'] . ' ' . $docname['lname'] );
+
+            $cg1name = getname($conn, $row['caregiver_1']);
+            $cg1name = ($cg1name['fname'] . ' ' . $cg1name['lname'] );
+
+            $cg2name = getname($conn, $row['caregiver_2']);
+            $cg2name = ($cg2name['fname'] . ' ' . $cg2name['lname'] );
+
+            $cg3name = getname($conn, $row['caregiver_3']);
+            $cg3name = ($cg3name['fname'] . ' ' . $cg3name['lname'] );
+
+            $cg4name = getname($conn, $row['caregiver_4']);
+            $cg4name = ($cg4name['fname'] . ' ' . $cg4name['lname'] );
+
             echo "<tr>";
-            
+
                 echo "<td>{$row['roster_date']}</td>";
-                echo "<td>{$row['supervisor']}</td>";
-                echo "<td>{$row['doctor']}</td>";
-                echo "<td>{$row['caregiver_1']}</td>";
-                echo "<td>{$row['caregiver_2']}</td>";
-                echo "<td>{$row['caregiver_3']}</td>";
-                echo "<td>{$row['caregiver_4']}</td>";
-                
-               
-          
-            
+                echo "<td>{$supname}</td>";
+                echo "<td>{$docname}</td>";
+                echo "<td>{$cg1name} <p>Group: {$row['caregiver_group1']}</p></td>";
+                echo "<td>{$cg2name} <p>Group: {$row['caregiver_group2']}</p></td>";
+                echo "<td>{$cg3name} <p>Group: {$row['caregiver_group3']}</p></td>";
+                echo "<td>{$cg4name} <p>Group: {$row['caregiver_group4']}</p></td>";
+
+
+
+
             echo "</tr>";
             ?>
         </table>
