@@ -72,25 +72,47 @@ if ($_SESSION['role'] = '') {
 
             $cg1name = getname($conn, $row['caregiver_1']);
             $cg1name = ($cg1name['fname'] . ' ' . $cg1name['lname'] );
+            $cg1num = $row['caregiver_group1'];
 
             $cg2name = getname($conn, $row['caregiver_2']);
             $cg2name = ($cg2name['fname'] . ' ' . $cg2name['lname'] );
+            $cg2num = $row['caregiver_group2'];
 
             $cg3name = getname($conn, $row['caregiver_3']);
             $cg3name = ($cg3name['fname'] . ' ' . $cg3name['lname'] );
+            $cg3num = $row['caregiver_group3'];
 
             $cg4name = getname($conn, $row['caregiver_4']);
             $cg4name = ($cg4name['fname'] . ' ' . $cg4name['lname'] );
+            $cg4num = $row['caregiver_group4'];
+
+
 
             echo "<tr>";
 
                 echo "<td>{$row['roster_date']}</td>";
                 echo "<td>{$supname}</td>";
                 echo "<td>{$docname}</td>";
-                echo "<td>{$cg1name} <p>Group: {$row['caregiver_group1']}</p></td>";
-                echo "<td>{$cg2name} <p>Group: {$row['caregiver_group2']}</p></td>";
-                echo "<td>{$cg3name} <p>Group: {$row['caregiver_group3']}</p></td>";
-                echo "<td>{$cg4name} <p>Group: {$row['caregiver_group4']}</p></td>";
+                echo "<td>{$cg1name} <p>Group: {$cg1num}</p></td>";
+                ?>
+                <select name="care1">
+                <?php
+                $getsup = "SELECT userid FROM patient WHERE group_num = '$cg1num';";
+                $thesup = mysqli_query($conn, $getsup);
+                $resultCheck = mysqli_num_rows($thesup);
+                if($resultCheck>0) {
+                    while($tables = mysqli_fetch_assoc($thesup))
+                {
+                    echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
+
+                }
+            }
+            ?>
+                </select>
+                <?php
+                echo "<td>{$cg2name} <p>Group: {$cg2num}</p></td>";
+                echo "<td>{$cg3name} <p>Group: {$cg3num}</p></td>";
+                echo "<td>{$cg4name} <p>Group: {$cg4num}</p></td>";
 
 
 
