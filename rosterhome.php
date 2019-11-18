@@ -49,12 +49,8 @@ if ($_SESSION['role'] = '') {
             <?php
 
             $date = $_POST['date'] ?? '';
-            if (empty($date) == true) {
-                $sql = "SELECT roster_date FROM roster;";
-                $fetchdate = mysqli_query($conn, $sql);
-                $getgot = mysqli_fetch_assoc($fetchdate);
-                print_r($getgot);
-            }
+            if (empty($date) == false) {
+        
             // Query
             $sql = "SELECT * FROM roster WHERE roster_date = '{$date}';";
 
@@ -172,7 +168,32 @@ if ($_SESSION['role'] = '') {
             echo "</td>";
 
             echo "</tr>";
+
+            }
             ?>
+            
+            <?php
+            $sql_all = "SELECT * FROM roster;";
+            $result = mysqli_query($conn, $sql_all);
+            if(empty($date) == TRUE) {
+                while($row = mysqli_fetch_array($result)) {
+                    echo "<tr>";
+                    echo "<td>".$row['roster_date']."</td>";
+                    echo "<td>".$row['supervisor']."</td>";
+                    echo "<td>{$row['doctor']}</td>";
+                    echo "<td>{$row['caregiver_1']}</td>";
+                    echo "<td>{$row['caregiver_2']}</td>";
+                    echo "<td>{$row['caregiver_3']}</td>";
+                    echo "<td>{$row['caregiver_4']}</td>";
+                    echo "<br>";
+                    echo "</tr>";
+                    
+                }
+
+            }
+            
+            ?>
+          
         </table>
 
     </form>
