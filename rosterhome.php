@@ -93,8 +93,9 @@ if ($_SESSION['role'] = '') {
                 echo "<td>{$row['roster_date']}</td>";
                 echo "<td>{$supname}</td>";
                 echo "<td>{$docname}</td>";
-                echo "<td>{$cg1name} <p>Group: {$cg1num}</p></td>";
+                echo "<td>{$cg1name} <p>Group: {$cg1num}</p>";
                 ?>
+                <p>Patients:</p>
                 <select name="care1">
                 <?php
                 $getsup = "SELECT userid FROM patient WHERE group_num = '$cg1num';";
@@ -103,19 +104,66 @@ if ($_SESSION['role'] = '') {
                 if($resultCheck>0) {
                     while($tables = mysqli_fetch_assoc($thesup))
                 {
-                    echo '<option value = ' . $tables['userid'] . '>' . $tables['fname'] . ' ' . $tables['lname'] . '</option>';
-
+                    $patient_name = getname($conn, $tables['userid']);
+                    echo '<option>' . $patient_name['fname'] . ' ' . $patient_name['lname'] . '</option>';
                 }
             }
             ?>
                 </select>
                 <?php
-                echo "<td>{$cg2name} <p>Group: {$cg2num}</p></td>";
-                echo "<td>{$cg3name} <p>Group: {$cg3num}</p></td>";
-                echo "<td>{$cg4name} <p>Group: {$cg4num}</p></td>";
-
-
-
+                echo "</td>";
+                echo "<td>{$cg2name} <p>Group: {$cg2num}</p>";
+                ?>
+                <p>Patients:</p>
+                <select name="care2">
+                <?php
+                $getsup = "SELECT userid FROM patient WHERE group_num = '$cg2num';";
+                $thesup = mysqli_query($conn, $getsup);
+                $resultCheck = mysqli_num_rows($thesup);
+                if($resultCheck>0) {
+                    while($tables = mysqli_fetch_assoc($thesup))
+                {
+                    $patient_name = getname($conn, $tables['userid']);
+                    echo '<option>' . $patient_name['fname'] . ' ' . $patient_name['lname'] . '</option>';
+                }
+            }
+            ?>
+                </select>
+            <?php
+                echo "</td>";
+                echo "<td>{$cg3name} <p>Group: {$cg3num}</p>";
+                ?>
+                <p>Patients:</p>
+                <select name="care3">
+                <?php
+                $getsup = "SELECT userid FROM patient WHERE group_num = '$cg3num';";
+                $thesup = mysqli_query($conn, $getsup);
+                $resultCheck = mysqli_num_rows($thesup);
+                if($resultCheck>0) {
+                    while($tables = mysqli_fetch_assoc($thesup))
+                {
+                    $patient_name = getname($conn, $tables['userid']);
+                    echo '<option>' . $patient_name['fname'] . ' ' . $patient_name['lname'] . '</option>';
+                }
+            }
+            echo "</td>";
+            echo "<td>{$cg4name} <p>Group: {$cg4num}</p>";
+            ?>
+                </select>
+                <p>Patients:</p>
+                <select name="care4">
+                <?php
+                    $getsup = "SELECT userid FROM patient WHERE group_num = '$cg4num';";
+                    $thesup = mysqli_query($conn, $getsup);
+                    $resultCheck = mysqli_num_rows($thesup);
+                    if($resultCheck>0) {
+                        while($tables = mysqli_fetch_assoc($thesup))
+                    {
+                        $patient_name = getname($conn, $tables['userid']);
+                        echo '<option>' . $patient_name['fname'] . ' ' . $patient_name['lname'] . '</option>';
+                    }
+                }
+            echo "</td>";
 
             echo "</tr>";
             ?>
