@@ -62,7 +62,6 @@ if( isset($_POST['change']) )
     </form>
 
         <br>
-        <!-- Search for group by $grouptwo before $wegood -->
         Group:
         <select name="group">
             <option value= "<?php echo $wegood['group_num']?>"> <?php echo $wegood['group_num'] ?></option>

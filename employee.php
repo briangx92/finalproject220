@@ -17,14 +17,39 @@ if ($_SESSION['role'] != 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Old Home</title>
-  
+
+    <style>
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    }
+    </style>
 </head>
 <body>
-<!-- Shows current employee list with all attributes -->
+
 <form action="" method="post">
     <fieldset>
-        <legend>Search</legend>
-        <input type="text" name="empid" placeholder="Enter ID">
+        <legend>Update Salary</legend>
+        <label>ID:
+        <select name="empid">
+        <?php
+        $empsql = "SELECT userid FROM employee;";
+        $result = mysqli_query($conn, $empsql);
+        $resultcheck = mysqli_num_rows($result);
+           if($resultcheck>0) {
+               while($tables = mysqli_fetch_assoc($result))
+           {
+               echo '<option value = ' . $tables['userid'] . '>' . $tables['userid']. '</option>';
+           }
+       }
+        ?>
+    </select>
         <br>
         <input type="text" name="newsalary" placeholder="Enter New Salary">
         <br>
@@ -60,6 +85,14 @@ echo "</table>";
 </html>
 
 <?php
-
-
+$empid = $_POST['empid'] ?? '';
+$newsal = $_POST['newsalary'] ?? '';
+$newsal = intval($newsal);
+if( $newsal > 0) {
+    $updatesal = "UPDATE employee
+    SET salary = '$newsal'
+    WHERE userid = '$empid';";
+    mysqli_query($conn, $updatesal);
+    header("Refresh:0");
+}
 ?>

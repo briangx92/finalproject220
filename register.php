@@ -57,13 +57,13 @@ section {
         <!-- Make this appear when role is patient -->
         <section id="section">
         <label class="hideit">Family Code: </label>
-            <input class="hideit" type="text" name="famcode" value="<?php // sql variable ?>">
+            <input class="hideit" type="text" name="famcode">
         <br>
         <label class="hideit">Emergency Contact: </label>
-            <input class="hideit" type="text" name="emcontact" value="<?php // sql variable ?>">
+            <input class="hideit" type="text" name="emcontact">
         <br>
         <label class="hideit">Relationship: </label>
-            <input class="hideit" type="text" name="relation" value="<?php // sql variable ?>">
+            <input class="hideit" type="text" name="relation">
         </section>
         <!-- End appear -->
 
@@ -124,10 +124,14 @@ VALUES ('$youid', '$email', '$pass', 0);";
 $theirid = mysqli_query($conn, $userlogininfo);
 echo "Your registration has been submitted, please wait on admin approval.";
     if ($role == 'patient') {
-        echo 'Iswehere';
         $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)
         VALUES ('$youid', '$famcode', '$emcontact', '$relation');";
         mysqli_query($conn, $patientinfo);
+    }
+    elseif ($role != 'patient' AND $role != 'family') {
+        $salary = "INSERT INTO employee(userid)
+        VALUES ('$youid');";
+        mysqli_query($conn, $salary);
     }
 }
 ?>
