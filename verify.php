@@ -5,7 +5,7 @@ session_start();
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-$sql = "SELECT * FROM login WHERE email = '$email' AND pass = '$password' AND approved = 1;";
+$sql = "SELECT * FROM users WHERE email = '$email' AND pass = '$password' AND approved = 1;";
 $result = mysqli_query($conn, $sql);
 $resultCheck = mysqli_num_rows($result);
 
