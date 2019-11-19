@@ -5,7 +5,7 @@ session_start();
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-$sql = "SELECT * FROM login WHERE email = '$email' AND pass = '$password' AND approved = 1;";
+$sql = "SELECT * FROM users WHERE email = '$email' AND pass = '$password' AND approved = 1;";
 $result = mysqli_query($conn, $sql);
 $resultCheck = mysqli_num_rows($result);
 
@@ -23,11 +23,11 @@ if ($resultCheck >= 1) {
     }
     elseif ($user_info['role'] == 'patient') {
             $_SESSION['role'] = 'patient';
-            header("Location: /patient.php");
+            header("Location: /patients.php");
     }
     elseif ($user_info['role'] == 'supervisor') {
             $_SESSION['role'] = 'supervisor';
-            header("Location: supervisorhome.php");
+            header("Location: /supervisorhome.php");
     }
     elseif ($user_info['role'] == 'doctor') {
             $_SESSION['role'] = 'doctor';
@@ -43,10 +43,10 @@ if ($resultCheck >= 1) {
 
     }
     elseif (isempty($user_info['role']) == TRUE) {
-            header("Location: admin/index.php");
+            header("Location: /index.php");
     }
 }
 else {
-    header("Location: /finalproject220/");
+    header("Location: /finalproject220/index.php");
 }
 ?>

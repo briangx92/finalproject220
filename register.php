@@ -112,16 +112,13 @@ $famcode = $_POST['famcode'] ?? '';
 $emcontact = $_POST['$emcontact'] ?? '';
 $relation = $_POST['relation'] ?? '';
 
-$usersinfo = "INSERT INTO users (role, fname, lname, phone, dob)
-VALUES ('$role', '$fname', '$lname', '$phone', '$dob');";
+$usersinfo = "INSERT INTO users (role, fname, lname, phone, dob, email, pass, approved)
+VALUES ('$role', '$fname', '$lname', '$phone', '$dob', '$email', '$pass', 0);";
 $what = mysqli_query($conn, $usersinfo);
 $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
 $theirid = mysqli_query($conn, $getid);
 $newid = mysqli_fetch_assoc($theirid);
 $youid = $newid['userid'];
-$userlogininfo = "INSERT INTO login (userid, email, pass, approved)
-VALUES ('$youid', '$email', '$pass', 0);";
-$theirid = mysqli_query($conn, $userlogininfo);
 echo "Your registration has been submitted, please wait on admin approval.";
     if ($role == 'patient') {
         $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)

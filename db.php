@@ -17,14 +17,7 @@ if ($conn->query($sql) === TRUE) {
         fname varchar(50),
         lname varchar(50),
         phone char(10),
-        dob date
-    );";
-
-    
-
-    $sql = "CREATE TABLE login (
-        userid int PRIMARY KEY,
-        FOREIGN KEY (userid) REFERENCES users(userid),
+        dob date,
         email varchar(35),
         pass text,
         approved boolean
@@ -33,12 +26,11 @@ if ($conn->query($sql) === TRUE) {
 
     // Patient Table
     $sql_patient_table = "CREATE TABLE patient (
-        userid int PRIMARY KEY,
+        userid int,
         FOREIGN KEY (userid) REFERENCES users(userid),
-        patientid INT AUTO_INCREMENT UNIQUE,
+        patientid INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
         family_code int,
-        emergency_contact char(10),
-        emergency_contact_name varchar(50),
+        emergency_contact_number char(10),
         relation varchar(50),
         group_num int,
         admission_date date,
@@ -49,29 +41,16 @@ if ($conn->query($sql) === TRUE) {
 
     // Doctor Appointment Table
     $sql_doctorappt_table = "CREATE TABLE doctor_appt (
-        patientid int PRIMARY KEY,
+        patientid int,
         FOREIGN KEY (patientid) REFERENCES patient(patientid),
         doctorid int,
         FOREIGN KEY (doctorid) REFERENCES users(userid),
         apt_date date,
+        complete boolean,
         comment text,
-        med_records text
-    );";
-
-    // Caregiver Table
-    $sql_caregiver_table = "CREATE TABLE caregiver (
-        today date,
-        FOREIGN KEY (today) REFERENCES roster(roster_date),
-        patientid int,
-        FOREIGN KEY (patientid) REFERENCES patient(patientid),
-        caregiver int,
-        FOREIGN KEY (caregiver) REFERENCES users(userid),
-        morning_meds boolean,
-        afternoon_meds boolean,
-        night_meds boolean,
-        breakfast boolean,
-        lunch boolean,
-        dinner boolean
+        morning_med text,
+        afternoon_med text,
+        night_med text
     );";
 
     // Roster Table
@@ -96,54 +75,58 @@ if ($conn->query($sql) === TRUE) {
         caregiver_group4 INT
     );";
 
+        // Caregiver Table
+        $sql_patient_activity_table = "CREATE TABLE patient_activity (
+            today date,
+            FOREIGN KEY (today) REFERENCES roster(roster_date),
+            patientid int,
+            FOREIGN KEY (patientid) REFERENCES patient(patientid),
+            caregiver int,
+            FOREIGN KEY (caregiver) REFERENCES users(userid),
+            morning_meds boolean,
+            afternoon_meds boolean,
+            night_meds boolean,
+            breakfast boolean,
+            lunch boolean,
+            dinner boolean
+        );";
+
     // Employee Table
     $sql_employee_table = "CREATE TABLE employee (
         userid int PRIMARY KEY,
         FOREIGN KEY (userid) REFERENCES users(userid),
         salary int
         );";
+
+    // Prescription Table
+    $sql_prescription_table = "CREATE TABLE prescription ( patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist char(1))";
+
     // Sample Data
 
-    $sql_login_data = "INSERT INTO login (userid, email, pass, approved) VALUES
-    (1, 'cg4@a.com', '1', 0),
-    (2, 'a@a.com', '1', 1),
-    (3, 'pat@a.com', '1', 0),
-    (4, 'pat2@a.com', '1', 1),
-    (5, 'pat3@a.com', '1', 1),
-    (6, 'fam@a.com', '1', 1),
-    (8, 'doc@a.com', '1', 1),
-    (9, 'sup@a.com', '1', 1),
-    (10, 'cg1@a.com', '1', 1),
-    (11, 'cg2@a.com', '1', 1),
-    (12, 'cg3@a.com', '1', 1);";
-    $sql_patient_data = "INSERT INTO patient (userid, patientid, family_code, emergency_contact, emergency_contact_name, relation, group_num, admission_date, morning_meds, afternoon_meds, night_meds) VALUES
-    (3, 1, 12, NULL, '', 'mom', NULL, NULL, NULL, NULL, NULL),
-    (4, 2, 54, NULL, '', 'dad', NULL, NULL, NULL, NULL, NULL),
-    (5, 3, 765, NULL, '', 'son', NULL, NULL, NULL, NULL, NULL);";
-    
-    $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob) VALUES
-    (1, 'caregiver', 'penny', 'lee', '1', '0008-08-08'),
-    (2, 'admin', 'admin', 'admin', '1', '0001-11-11'),
-    (3, 'patient', 'alice', 'ames', '1', '0001-01-11'),
-    (4, 'patient', 'charlie', 'sues', '1234567890', '0004-04-04'),
-    (5, 'patient', 'frank', 'herr', '123456543', '0002-03-31'),
-    (6, 'family', 'bob', 'omb', '146533464', '1111-11-11'),
-    (8, 'doctor', 'evil', 'surgeon', '654345432', '0033-11-14'),
-    (9, 'supervisor', 'eric', 'cartman', '6542457874', '6432-03-22'),
-    (10, 'caregiver', 'felicia', 'jones', '1', '1834-07-31'),
-    (11, 'caregiver', 'elen', 'ingram', '1', '4543-04-22'),
-    (12, 'caregiver', 'jane', 'parker', '1', '0033-05-05');";
-    
+
+    $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob, email, pass, approved) VALUES
+    (13, 'doctor', 'dr', 'who', '1234567890', '2019-11-30', 'd@a.com', '1', 1),
+    (14, 'admin', 'boss', 'admin', '1', '2019-01-01', 'a@a.com', '1', 1),
+    (15, 'patient', 'jane', 'smith', '1', '2018-10-29', 'pat@a.com', '1', 1),
+    (16, 'patient', 'bob', 'doe', '0987654321', '2015-08-23', 'pat2@a.com', '1', 1),
+    (17, 'patient', 'tracy', 'harris', '1234567890', '2009-05-18', 'pat3@a.com', '1', 1),
+    (18, 'family', 'jane', 'doe', '1234567890', '2013-03-05', 'fam@a.com', '1', 1),
+    (19, 'doctor', 'dr', 'dre', '123456789', '2006-07-06', 'doc@a.com', '1', 1),
+    (20, 'doctor', 'evil', 'surgeon', '1234567890', '2006-04-07', 'doc2@a.com', '1', 0),
+    (21, 'supervisor', 'eric', 'cartman', '3456789876', '2012-11-20', 'sup@a.com', '1', 1),
+    (22, 'caregiver', 'lucy', 'francis', '1234567890', '2014-09-27', 'cg1@a.com', '1', 1),
+    (23, 'caregiver', 'izzy', 'rodriguez', '1092837465', '2011-12-28', 'cg2@a.com', '1', 1),
+    (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
+    (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
+
 
         $result = mysqli_query($conn, $sql_user);
-        $result = mysqli_query($conn, $sql);
         $result = mysqli_query($conn, $sql_patient_table );
         $result = mysqli_query($conn, $sql_doctorappt_table);
         $result = mysqli_query($conn, $sql_roster_table);
-        $result = mysqli_query($conn, $sql_caregiver_table);
+        $result = mysqli_query($conn, $sql_patient_activity_table);
         $result = mysqli_query($conn, $sql_employee_table);
-        $result = mysqli_query($conn, $sql_login_data);
-        $result = mysqli_query($conn, $sql_patient_data);
+        $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
 
 } else {
