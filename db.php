@@ -41,7 +41,7 @@ if ($conn->query($sql) === TRUE) {
 
     // Doctor Appointment Table
     $sql_doctorappt_table = "CREATE TABLE doctor_appt (
-        patientid int PRIMARY KEY,
+        patientid int,
         FOREIGN KEY (patientid) REFERENCES patient(patientid),
         doctorid int,
         FOREIGN KEY (doctorid) REFERENCES users(userid),
@@ -103,10 +103,6 @@ if ($conn->query($sql) === TRUE) {
 
     // Sample Data
 
-    $sql_patient_data = "INSERT INTO patient (userid, patientid, family_code, emergency_contact, emergency_contact_name, relation, group_num, admission_date, morning_meds, afternoon_meds, night_meds) VALUES
-    (3, 1, 12, NULL, '', 'mom', NULL, NULL, NULL, NULL, NULL),
-    (4, 2, 54, NULL, '', 'dad', NULL, NULL, NULL, NULL, NULL),
-    (5, 3, 765, NULL, '', 'son', NULL, NULL, NULL, NULL, NULL);";
 
     $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob, email, pass, approved) VALUES
     (13, 'doctor', 'dr', 'who', '1234567890', '2019-11-30', 'd@a.com', '1', 1),
@@ -130,8 +126,6 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_roster_table);
         $result = mysqli_query($conn, $sql_patient_activity_table);
         $result = mysqli_query($conn, $sql_employee_table);
-        $result = mysqli_query($conn, $sql_login_data);
-        $result = mysqli_query($conn, $sql_patient_data);
         $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
 
