@@ -17,14 +17,7 @@ if ($conn->query($sql) === TRUE) {
         fname varchar(50),
         lname varchar(50),
         phone char(10),
-        dob date
-    );";
-
-    
-
-    $sql = "CREATE TABLE login (
-        userid int PRIMARY KEY,
-        FOREIGN KEY (userid) REFERENCES users(userid),
+        dob date,
         email varchar(35),
         pass text,
         approved boolean
@@ -35,10 +28,9 @@ if ($conn->query($sql) === TRUE) {
     $sql_patient_table = "CREATE TABLE patient (
         userid int PRIMARY KEY,
         FOREIGN KEY (userid) REFERENCES users(userid),
-        patientid INT AUTO_INCREMENT UNIQUE,
+        patientid INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
         family_code int,
-        emergency_contact char(10),
-        emergency_contact_name varchar(50),
+        emergency_contact_number char(10),
         relation varchar(50),
         group_num int,
         admission_date date,
@@ -55,11 +47,13 @@ if ($conn->query($sql) === TRUE) {
         FOREIGN KEY (doctorid) REFERENCES users(userid),
         apt_date date,
         comment text,
-        med_records text
+        morning_med text,
+        afternoon_med text,
+        night_med text
     );";
 
     // Caregiver Table
-    $sql_caregiver_table = "CREATE TABLE caregiver (
+    $sql_patient_activity_table = "CREATE TABLE caregiver (
         today date,
         FOREIGN KEY (today) REFERENCES roster(roster_date),
         patientid int,
@@ -102,6 +96,13 @@ if ($conn->query($sql) === TRUE) {
         FOREIGN KEY (userid) REFERENCES users(userid),
         salary int
         );";
+
+        // Prescription Table
+        $sql_prescription_table = "CREATE TABLE prescription (
+            patient_id int PRIMARY KEY,
+            doctorid int FOREIGN KEY (doctorid) REFERENCES doctorappt(doctorid),
+            appt_exist char(1);";
+
     // Sample Data
 
     $sql_login_data = "INSERT INTO login (userid, email, pass, approved) VALUES
