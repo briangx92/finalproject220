@@ -53,7 +53,7 @@ if ($conn->query($sql) === TRUE) {
     );";
 
     // Caregiver Table
-    $sql_patient_activity_table = "CREATE TABLE caregiver (
+    $sql_patient_activity_table = "CREATE TABLE patient_activity (
         today date,
         FOREIGN KEY (today) REFERENCES roster(roster_date),
         patientid int,
