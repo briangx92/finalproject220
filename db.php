@@ -26,7 +26,7 @@ if ($conn->query($sql) === TRUE) {
 
     // Patient Table
     $sql_patient_table = "CREATE TABLE patient (
-        userid int PRIMARY KEY,
+        userid int,
         FOREIGN KEY (userid) REFERENCES users(userid),
         patientid INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
         family_code int,
@@ -52,22 +52,6 @@ if ($conn->query($sql) === TRUE) {
         night_med text
     );";
 
-    // Caregiver Table
-    $sql_patient_activity_table = "CREATE TABLE patient_activity (
-        today date,
-        FOREIGN KEY (today) REFERENCES roster(roster_date),
-        patientid int,
-        FOREIGN KEY (patientid) REFERENCES patient(patientid),
-        caregiver int,
-        FOREIGN KEY (caregiver) REFERENCES users(userid),
-        morning_meds boolean,
-        afternoon_meds boolean,
-        night_meds boolean,
-        breakfast boolean,
-        lunch boolean,
-        dinner boolean
-    );";
-
     // Roster Table
     // The entry of groups must be done on the php side, and can only allow the groups that already exist.
     $sql_roster_table = "CREATE TABLE roster (
@@ -90,6 +74,22 @@ if ($conn->query($sql) === TRUE) {
         caregiver_group4 INT
     );";
 
+        // Caregiver Table
+        $sql_patient_activity_table = "CREATE TABLE patient_activity (
+            today date,
+            FOREIGN KEY (today) REFERENCES roster(roster_date),
+            patientid int,
+            FOREIGN KEY (patientid) REFERENCES patient(patientid),
+            caregiver int,
+            FOREIGN KEY (caregiver) REFERENCES users(userid),
+            morning_meds boolean,
+            afternoon_meds boolean,
+            night_meds boolean,
+            breakfast boolean,
+            lunch boolean,
+            dinner boolean
+        );";
+
     // Employee Table
     $sql_employee_table = "CREATE TABLE employee (
         userid int PRIMARY KEY,
@@ -98,10 +98,7 @@ if ($conn->query($sql) === TRUE) {
         );";
 
     // Prescription Table
-    $sql_prescription_table = "CREATE TABLE prescription (
-        patient_id int PRIMARY KEY,
-        doctorid int FOREIGN KEY (doctorid) REFERENCES doctorappt(doctorid),
-        appt_exist char(1);";
+    $sql_prescription_table = "CREATE TABLE prescription ( patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist char(1))";
 
     // Sample Data
 
@@ -121,7 +118,7 @@ if ($conn->query($sql) === TRUE) {
     (3, 1, 12, NULL, '', 'mom', NULL, NULL, NULL, NULL, NULL),
     (4, 2, 54, NULL, '', 'dad', NULL, NULL, NULL, NULL, NULL),
     (5, 3, 765, NULL, '', 'son', NULL, NULL, NULL, NULL, NULL);";
-    
+
     $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob) VALUES
     (1, 'caregiver', 'penny', 'lee', '1', '0008-08-08'),
     (2, 'admin', 'admin', 'admin', '1', '0001-11-11'),
@@ -134,10 +131,9 @@ if ($conn->query($sql) === TRUE) {
     (10, 'caregiver', 'felicia', 'jones', '1', '1834-07-31'),
     (11, 'caregiver', 'elen', 'ingram', '1', '4543-04-22'),
     (12, 'caregiver', 'jane', 'parker', '1', '0033-05-05');";
-    
+
 
         $result = mysqli_query($conn, $sql_user);
-        $result = mysqli_query($conn, $sql);
         $result = mysqli_query($conn, $sql_patient_table );
         $result = mysqli_query($conn, $sql_doctorappt_table);
         $result = mysqli_query($conn, $sql_roster_table);
