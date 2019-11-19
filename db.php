@@ -97,11 +97,11 @@ if ($conn->query($sql) === TRUE) {
         salary int
         );";
 
-        // Prescription Table
-        $sql_prescription_table = "CREATE TABLE prescription (
-            patient_id int PRIMARY KEY,
-            doctorid int FOREIGN KEY (doctorid) REFERENCES doctorappt(doctorid),
-            appt_exist char(1);";
+    // Prescription Table
+    $sql_prescription_table = "CREATE TABLE prescription (
+        patient_id int PRIMARY KEY,
+        doctorid int FOREIGN KEY (doctorid) REFERENCES doctorappt(doctorid),
+        appt_exist char(1);";
 
     // Sample Data
 
@@ -141,10 +141,11 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_patient_table );
         $result = mysqli_query($conn, $sql_doctorappt_table);
         $result = mysqli_query($conn, $sql_roster_table);
-        $result = mysqli_query($conn, $sql_caregiver_table);
+        $result = mysqli_query($conn, $sql_patient_activity_table);
         $result = mysqli_query($conn, $sql_employee_table);
         $result = mysqli_query($conn, $sql_login_data);
         $result = mysqli_query($conn, $sql_patient_data);
+        $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
 
 } else {
