@@ -101,6 +101,17 @@ if ($conn->query($sql) === TRUE) {
     // Prescription Table
     $sql_prescription_table = "CREATE TABLE prescription ( patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist char(1))";
 
+    // Role Table
+    $sql_role_table = "CREATE TABLE role (
+        page varchar(30) PRIMARY KEY,
+        admin boolean,
+        patient boolean,
+        familyr boolean,
+        doctor boolean,
+        supervisor boolean,
+        caregiver boolean
+        );";
+
     // Sample Data
 
 

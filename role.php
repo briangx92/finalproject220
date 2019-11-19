@@ -2,14 +2,8 @@
 include_once 'db.php';
 session_start();
 
-if ($_SESSION['role'] != 'admin') {
-    header("Location: index.php");
-}
 ?>
-<?php
 
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +13,35 @@ if ($_SESSION['role'] != 'admin') {
     <title>Old Home</title>
 </head>
 <body>
+        <table>
+            <tr>
+                <th><h1>Page</h1>
+                <th>Admin</th>
+                <th>Patient</th>
+                <th>Family Member</th>
+                <th>Doctor</th>
+                <th>Supervisor</th>
+                <th>Caregiver</th>
+            </tr>
 
+<?php
+$dir    = getcwd();
+$files = scandir($dir);
+        foreach ($files as $page) {
+            echo "<tr>";
+            echo "<td> $page </td>";
+            echo "<td><button type='submit' value='$page' name='' ></button></td>";
+            echo "<td><button type='submit' value='$page' name='' ></button></td>";
+            echo "<td><button type='submit' value='$page' name='' ></button></td>";
+            echo "<td><button type='submit' value='$page' name='' ></button></td>";
+            echo "<td><button type='submit' value='$page' name='' ></button></td>";
+            echo "<td><button type='submit' value='$page' name='' ></button></td>";
+            echo "</tr>";
+        }
 
+?>
 </body>
+
 </html>
 
 <?php
