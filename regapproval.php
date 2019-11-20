@@ -34,11 +34,13 @@ if ($_SESSION['role'] != 'admin') {
         $denied = $_POST['denied'] ?? '';
 
         $i = 1;
-        $sql = "SELECT u.fname, u.lname, role, l.userid
-        FROM users u JOIN login l ON u.userid = l.userid
-        WHERE l.approved = 0;";
-        $userid = "SELECT userid FROM login;";
+        $sql = "SELECT fname, lname, role, userid
+        FROM users
+        WHERE approved = 0;";
+        $userid = "SELECT userid FROM users;";
         $result = mysqli_query($conn, $sql);
+        $resultCheck = mysqli_num_rows($result);
+        if($resultCheck>0) {
 
 
 
@@ -55,6 +57,9 @@ if ($_SESSION['role'] != 'admin') {
             echo "</tr>\n";
 
         }
+    } else {
+        echo "No users to approve!";
+    }
 
         echo "</table>";
 
