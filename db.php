@@ -1,4 +1,5 @@
 <?php
+session_start();
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
@@ -148,5 +149,21 @@ $dbName = "old_home";
 
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
+
+
+
+// Security
+function securitygate($conn) {
+    $currentpage = basename($_SERVER['PHP_SELF']);
+    $sessionrole = $_SESSION['role'];
+    $securitycheck = "SELECT $sessionrole FROM role WHERE page = '$currentpage'";
+    $clearance = mysqli_query($conn, $securitycheck);
+    $passclearance = mysqli_fetch_assoc($clearance);
+    if ($passclearance[$sessionrole] == 1) {
+    } else {
+        $_SESSION['message'] = 'You are not authorized to visit that page, you have been logged out.';
+        header("Location: index.php");
+    }
+}
 
 ?>

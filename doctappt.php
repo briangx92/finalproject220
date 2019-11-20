@@ -1,9 +1,10 @@
 <?php
 include_once 'db.php';
+securitygate($conn);
 ?>
 <?php
 
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +28,7 @@ include_once 'db.php';
             </select>
     </fieldset>
 </form>
-    
+
 </body>
 </html>
 

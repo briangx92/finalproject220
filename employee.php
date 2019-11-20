@@ -1,10 +1,6 @@
 <?php
 include_once 'db.php';
-session_start();
-
-if ($_SESSION['role'] != 'admin') {
-    header("Location: index.php");
-}
+securitygate($conn);
 ?>
 <?php
 
@@ -55,7 +51,7 @@ if ($_SESSION['role'] != 'admin') {
         <br>
         <button type="submit" name="ok" value="ok">Ok</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
-    </fieldset>      
+    </fieldset>
 </form>
 <table>
     <tr>

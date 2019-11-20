@@ -1,6 +1,6 @@
 <?php
 include_once 'db.php';
-session_start();
+securitygate($conn);
 
 $admin = $_POST['admin'] ?? '';
 $patient = $_POST['patient'] ?? '';
