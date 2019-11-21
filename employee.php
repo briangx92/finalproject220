@@ -12,6 +12,7 @@ if ($_SESSION['role'] != 'admin') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,26 +20,28 @@ if ($_SESSION['role'] != 'admin') {
     <title>Old Home</title>
 
     <style>
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    }
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
+
 <body>
 
-<form action="" method="post">
-    <fieldset>
-        <legend>Update Salary</legend>
-        <label>ID:
-        <select name="empid">
-        <?php
+    <form action="" method="post">
+        <fieldset>
+            <legend>Update Salary</legend>
+            <label>ID:
+                <select name="empid">
+                    <?php
         $empsql = "SELECT userid FROM employee;";
         $result = mysqli_query($conn, $empsql);
         $resultcheck = mysqli_num_rows($result);
@@ -49,22 +52,22 @@ if ($_SESSION['role'] != 'admin') {
            }
        }
         ?>
-    </select>
-        <br>
-        <input type="text" name="newsalary" placeholder="Enter New Salary">
-        <br>
-        <button type="submit" name="ok" value="ok">Ok</button>
-        <input type="button" onclick="location.href='index.php';" value="Cancel">
-    </fieldset>      
-</form>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Salary</th>
-    </tr>
-<?php
+                </select>
+                <br>
+                <input type="text" name="newsalary" placeholder="Enter New Salary">
+                <br>
+                <button type="submit" name="ok" value="ok">Ok</button>
+                <input type="button" onclick="location.href='index.php';" value="Cancel">
+        </fieldset>
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Salary</th>
+        </tr>
+        <?php
 // Statement for displaying  employee info from the user info table and joining the salary from the employee table
 $sql = "SELECT ui.userid AS ID, CONCAT(ui.fname, ' ', ui.lname) AS emp_name, ui.role, emp.salary FROM user_info ui JOIN employee emp ON ui.userid = emp.userid;";
 
@@ -78,10 +81,11 @@ echo "</table>";
 } else { echo "0 results"; }
 
 ?>
-</table>
+    </table>
 
 
 </body>
+
 </html>
 
 <?php
