@@ -131,6 +131,15 @@ if ($conn->query($sql) === TRUE) {
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
 
+    $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
+    VALUES
+    ('adminreport.php', 1, 0, 0, 0, 0, 0),
+    ('role.php', 1, 0, 0, 0, 0, 0),
+    ('caregiverhome.php', 0, 0, 0, 0, 0, 1),
+    ('doctorhome.php', 0, 0, 0, 1, 0, 0),
+    ('familyhome.php', 0, 0, 1, 0, 0, 0),
+    ('patienthome.php', 0, 1, 0, 0, 0, 0),
+    ('supervisorhome.php', 0, 0, 0, 0, 1, 0);";
 
         $result = mysqli_query($conn, $sql_user);
         $result = mysqli_query($conn, $sql_patient_table );
@@ -140,6 +149,7 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_employee_table);
         $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
+        $result = mysqli_query($conn, $sql_default_security);
 
 } else {
 }

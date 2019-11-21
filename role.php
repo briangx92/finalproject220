@@ -136,7 +136,6 @@ if( isset($_POST['admin']) )  {
             elseif (strpos($page, 'php') == True) {
                 $sql = "INSERT INTO role (page) VALUES ('$page');";
                 if ($conn->query($sql) === TRUE) {
-                    echo "Page $page added";
                 }
                 $getinfo = "SELECT * FROM role WHERE page = '$page'" ;
                 $theirinfo = mysqli_query($conn, $getinfo);
