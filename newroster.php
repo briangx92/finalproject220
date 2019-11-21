@@ -1,10 +1,6 @@
 <?php
 include_once 'db.php';
-session_start();
-
-if ($_SESSION['role'] != 'admin') {
-    header("Location: index.php");
-}
+securitygate($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,15 +153,15 @@ if ($_SESSION['role'] != 'admin') {
             $date = $_POST['date'] ?? '';
             $supervisor = $_POST['supervisor'] ?? '';
             $doctor = $_POST['doctor'] ?? '';
-            
 
-            
-           
+
+
+
             // Prepare insert statement
             $new_roster = "INSERT INTO roster (roster_date, supervisor, doctor, caregiver_1, caregiver_2, caregiver_3, caregiver_4, caregiver_group1, caregiver_group2, caregiver_group3, caregiver_group4)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             $stmt = mysqli_prepare($conn, $new_roster);
-            
+
             if ($stmt) {
                 // Bind variables to the prepared statement as parameters
                 // ORDER MATTERS ON VARIABLES
@@ -189,15 +185,15 @@ if ($_SESSION['role'] != 'admin') {
                 if (mysqli_stmt_execute($stmt)) {
                     echo "Inserted successfully";
                 } else {
-                  
+
                 }
-            
-                
+
+
 
                 }
                 mysqli_stmt_close($stmt);
-           
-            
+
+
         ?>
 
         </fieldset>

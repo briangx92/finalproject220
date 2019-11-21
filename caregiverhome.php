@@ -1,11 +1,7 @@
 <?php
 include_once 'db.php';
+securitygate($conn);
 
-session_start();
-
-if ($_SESSION['role'] != 'caregiver') {
-    header("Location: index.php");
-}
 ?>
 
 <?php
@@ -58,7 +54,7 @@ if ($_SESSION['role'] != 'caregiver') {
 <form action="" method="post">
     <button type="submit" name="submit" value="submit">Ok</button>
     <input type="button" onclick="location.href='index.php';" value="Cancel">
-</form>  
+</form>
 
 
 </body>

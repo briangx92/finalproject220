@@ -1,8 +1,6 @@
 <?php
 include_once 'db.php';
-?>
-<?php
-
+securitygate($conn);
 
 ?>
 <!DOCTYPE html>

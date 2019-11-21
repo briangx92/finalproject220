@@ -1,10 +1,7 @@
 <?php
 include_once 'db.php';
-session_start();
+securitygate($conn);
 
-if ($_SESSION['role'] != 'admin') {
-    header("Location: index.php");
-}
 ?>
 
 <html lang="en">

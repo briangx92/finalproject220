@@ -1,6 +1,6 @@
 <?php
 include_once 'db.php';
-session_start();
+securitygate($conn);
 ?>
 <?php
 // POSTS
@@ -87,8 +87,6 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             $sql_new_apt = "INSERT INTO doctor_appt (patientid, doctorid, apt_date) VALUES ($patientid, $docid, '$date');";
 
             echo mysqli_query($conn, $sql_new_apt);
-
-
         }
         else {}
         
