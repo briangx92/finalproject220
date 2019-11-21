@@ -1,6 +1,24 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
+
+$getpatientid = $_POST['getpatientid'] ?? '';
+$getpatientid = intval($getpatientid);
+$getpatient = "SELECT * FROM patient WHERE patientid = '$getpatientid'";
+$patientinfo = mysqli_query($conn, $getpatient);
+$wegood = mysqli_fetch_assoc($patientinfo);
+$nameid = $wegood['userid'];
+$nameget = "SELECT fname,lname FROM users WHERE userid = '$nameid'";
+$namegot = mysqli_query($conn, $nameget);
+$getgot = mysqli_fetch_assoc($namegot);
+
+// Money Owed Calculation
+$admindate = $wegood['admission_date'];
+$admindate = date_create($admindate);
+$date = date_create(date('Y/m/d'));
+$interval = date_diff($admindate, $date);
+$date_difference = $interval->format('%a');
+
 ?>
 <?php
 
@@ -23,13 +41,15 @@ securitygate($conn);
     <fieldset>
         <legend>Payment</legend>
         <label>Patient ID:</label>
-        <input type="text" name="patid" value="<?php // sql variable ?>">
+        <input type="text" name="getpatientid">
+        <input type="submit">
+        Patient Name: <?php echo $getgot['fname'] . ' ' . $getgot['lname']; ?>
         <br>
         <label>Total Due: $</label>
         <input type="text" name="due" value=" <?php // sql variable ?>" disabled>
         <br>
         <label>New Payment: $</label>
-        <input type="text" name="pay" placeholder="00.00" value="<?php // sql variable for insert ?>">
+        <input type="text" name="pay" placeholder="0.00" value="<?php // sql variable for insert ?>">
         <br>
         <button type="submit" value="ok">Ok</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
@@ -38,7 +58,6 @@ securitygate($conn);
 
 <p>$10 for every day</p>
 <p>$50 for every appointment</p>
-<p>$5 for every medicine/month</p>
 </body>
 </html>
 
