@@ -18,7 +18,7 @@ $sql_date = "SELECT * FROM users u JOIN doctor_appt d ON u.userid = d.doctorid W
 
 
 
-$sql_doctor = "SELECT DISTINCT * FROM users u JOIN doctor_appt d ON u.userid = d.doctorid WHERE u.role = 'doctor';";
+$sql_doctor = "SELECT DISTINCT * FROM users WHERE role = 'doctor';";
 
 
 // MYSQL Queries
@@ -65,7 +65,7 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
                 $result = mysqli_query($conn,$sql_doctor);
                 if ($result-> num_rows > 0) {
                     while ($row = $result-> fetch_assoc()) {
-                        $docid = $row['doctorid'];
+                        $docid = $row['userid'];
                         $fname = $row['fname'];
                         $lname = $row['lname'];
                         echo "<option value='{$docid}'>{$fname} {$lname} ID: {$docid}</option>";
