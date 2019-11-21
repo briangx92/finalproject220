@@ -3,42 +3,35 @@ include_once 'db.php';
 session_start();
 ?>
 <?php
-
-
-
 // POSTS
-$patientid = $_POST['patid'] ?? '';
-$apt_date = $_POST['date'] ?? '';
-$docid = $_POST['doctorid'] ?? '';
+$patientid = $_POST['patientid'] ?? '';
+$date = $_POST['date'] ?? '';
+$doctor = $_POST['doctor'] ?? '';
+
+$submit = isset($_POST['submit']);
+$search = isset($_POST['search']);
+
+// SQL Query Variables
+$sql_patientid = "SELECT * FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE d.patientid = '$patientid';";
+
+$sql_date = "SELECT * FROM users u JOIN doctor_appt d ON u.userid = d.doctorid WHERE d.apt_date = '$date';";
 
 
-// SQL Variable Queries
 
-$sql_doctor = "SELECT fname, lname FROM users WHERE role = 'doctor';";
+$sql_doctor = "SELECT DISTINCT * FROM users u JOIN doctor_appt d ON u.userid = d.doctorid WHERE u.role = 'doctor';";
 
-$sql_patient = "SELECT * FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE d.patientid = '$patientid';";
 
-$sql_date = "SELECT * FROM users u JOIN doctor_appt d ON u.userid = d.doctorid WHERE d.apt_date = '$apt_date';";
+// MYSQL Queries
 
-$sql_new_appt = "INSERT INTO doct_appt (patientid, doctorid, apt_date)
-VALUES ($patientid, $docid, $apt_date);";
+// Patient ID
+$sql_patid_query = mysqli_query($conn, $sql_patientid);
+$result_patientid = mysqli_fetch_assoc($sql_patid_query);
 
-// Doctor Query
-$sql_doc_query = mysqli_query($conn, $sql_doctor);
-$result_doctor = mysqli_fetch_assoc($sql_doc_query);
+// Date 
+$sql_date_query = mysqli_query($conn, $sql_date);
+$result_date = mysqli_fetch_assoc($sql_date_query);
 
-// Patient Query
-$sql_query_patient = mysqli_query($conn, $sql_patient);
-$result_patient = mysqli_fetch_assoc($sql_query_patient);
-
-// Date Query
-$sql_query_date = mysqli_query($conn, $sql_date);
-$result_date = mysqli_fetch_assoc($sql_query_date);
-
-// Insert Query
-$sql_query_insert = mysqli_query($conn, $sql_new_appt);
-$result_insert = mysqli_fetch_assoc($sql_query_insert);
-
+$patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
 ?>
 
 <!DOCTYPE html>
@@ -52,29 +45,55 @@ $result_insert = mysqli_fetch_assoc($sql_query_insert);
 </head>
 
 <body>
+    
     <form action="" method="post">
         <fieldset>
             <legend>Doctors Appointment</legend>
-            <label>Patient ID</label>
-            <input type="text" name="patid" value="<?php ?>">
+            <label>Patient ID: </label>
+            <input type="text" name="patientid" value="<?php echo $patientid; ?>">
+            <label>Patient Name: <?php if($search) {
+                echo "{$patient}"; }?></label>
+                <br>
+            
+            <label>Date: </label>
+            <input type="date" name="date" value='<?php echo $date; ?>'>
             <br>
-            <label>Patient: <?php echo "{$result_patient['fname']} {$result_patient['lname']}"; ?></label>
-            <br>
-            <label>Date</label>
-            <input type="date" name="date" value="<?php  ?>">
-            <label>Doctor</label>
+            <label>Doctor: </label>
             <select name="doctor">
+                <option>-- SELECT --</option>
                 <?php
-                if($result_doctor > 0) {
-                    while($row = mysqli_fetch_assoc($sql_query_user)) {
-                        echo "<option>{$row['fname']} {$row['lname']}</option>";
+                $result = mysqli_query($conn,$sql_doctor);
+                if ($result-> num_rows > 0) {
+                    while ($row = $result-> fetch_assoc()) {
+                        $docid = $row['doctorid'];
+                        $fname = $row['fname'];
+                        $lname = $row['lname'];
+                        echo "<option value='{$docid}'>{$fname} {$lname} ID: {$docid}</option>";
+
                     }
-                }
+                }     
+                
                 ?>
             </select>
-            <br>
-            
-            <button type="submit" value="submit">Submit</button>
+        <br>
+        <button type="submit" name="search" value="">Search Patient ID</button>
+        <button type="submit" name="submit" value="">Submit Form</button>
+        <?php 
+       
+        if ($submit) {
+            $patientid = $_POST['patientid'] ?? '';
+            $date = $_POST['date'] ?? '';
+            $doctor = $_POST['doctor'] ?? '';
+            $sql_new_apt = "INSERT INTO doctor_appt (patientid, doctorid, apt_date) VALUES ($patientid, $docid, '$date');";
+
+            echo mysqli_query($conn, $sql_new_apt);
+
+
+        }
+        else {}
+        
+      
+        ?>
 
         </fieldset>
 
