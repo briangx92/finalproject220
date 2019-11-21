@@ -141,15 +141,17 @@ if( isset($_POST['admin']) )  {
                 $theirinfo = mysqli_query($conn, $getinfo);
                 $newinfo = mysqli_fetch_assoc($theirinfo);
                 echo "<tr>";
-                echo "<td> $page </td>";
-                echo "<td><button type='submit' value='$page' name='admin'>" . ($newinfo['admin'] == 1 ? 'Approved' : 'Denied') . "</button></td>";
-                echo "<td><button type='submit' value='$page' name='patient'>" . ($newinfo['patient'] == 1 ? 'Approved' : 'Denied') . "</button></td>";
-                echo "<td><button type='submit' value='$page' name='family'>" . ($newinfo['family'] == 1 ? 'Approved' : 'Denied') . "</button></td>";
-                echo "<td><button type='submit' value='$page' name='doctor'>" . ($newinfo['doctor'] == 1 ? 'Approved' : 'Denied') . "</button></td>";
-                echo "<td><button type='submit' value='$page' name='supervisor'>" . ($newinfo['supervisor'] == 1 ? 'Approved' : 'Denied') . "</button></td>";
-                echo "<td><button type='submit' value='$page' name='caregiver'>" . ($newinfo['caregiver'] == 1 ? 'Approved' : 'Denied') . "</button></td>";
+                $i = 0;
+                foreach ($newinfo as $key => $new) {
+                    if ($i == 0) {
+                        echo "<td> $new </td>";
+                        $thispage = $new;
+                        $i += 1;
+                    } else {
+                        echo "<td><button type='submit' value='$thispage' name='$key'>" . ($new == 1 ? 'Approved' : 'Denied') . "</button></td>";
+                    }
+                }
                 echo "</tr>";
-
             }
         }
 
