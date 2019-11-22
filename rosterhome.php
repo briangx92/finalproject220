@@ -93,8 +93,8 @@ function getname($conn, $whichguy) {
                 echo "<td>{$docname}</td>";
                 echo "<td>{$cg1name} <p>Group: {$cg1num}</p>";
                 ?>
-                <p>Patients:</p>
-                <select name="care1">
+            <p>Patients:</p>
+            <select name="care1">
                 <?php
                 $getsup = "SELECT userid FROM patient WHERE group_num = '$cg1num';";
                 $thesup = mysqli_query($conn, $getsup);
@@ -107,13 +107,13 @@ function getname($conn, $whichguy) {
                 }
             }
             ?>
-                </select>
-                <?php
+            </select>
+            <?php
                 echo "</td>";
                 echo "<td>{$cg2name} <p>Group: {$cg2num}</p>";
                 ?>
-                <p>Patients:</p>
-                <select name="care2">
+            <p>Patients:</p>
+            <select name="care2">
                 <?php
                 $getsup = "SELECT userid FROM patient WHERE group_num = '$cg2num';";
                 $thesup = mysqli_query($conn, $getsup);
@@ -126,13 +126,13 @@ function getname($conn, $whichguy) {
                 }
             }
             ?>
-                </select>
+            </select>
             <?php
                 echo "</td>";
                 echo "<td>{$cg3name} <p>Group: {$cg3num}</p>";
                 ?>
-                <p>Patients:</p>
-                <select name="care3">
+            <p>Patients:</p>
+            <select name="care3">
                 <?php
                 $getsup = "SELECT userid FROM patient WHERE group_num = '$cg3num';";
                 $thesup = mysqli_query($conn, $getsup);
@@ -147,9 +147,9 @@ function getname($conn, $whichguy) {
             echo "</td>";
             echo "<td>{$cg4name} <p>Group: {$cg4num}</p>";
             ?>
-                </select>
-                <p>Patients:</p>
-                <select name="care4">
+            </select>
+            <p>Patients:</p>
+            <select name="care4">
                 <?php
                     $getsup = "SELECT userid FROM patient WHERE group_num = '$cg4num';";
                     $thesup = mysqli_query($conn, $getsup);
@@ -168,7 +168,7 @@ function getname($conn, $whichguy) {
             }
             ?>
 
-            <?php
+                <?php
             $sql_all = "SELECT * FROM roster;";
             $result = mysqli_query($conn, $sql_all);
             if(empty($date) == TRUE) {
@@ -204,9 +204,9 @@ function getname($conn, $whichguy) {
                         echo "<td>{$docname}</td>";
                         echo "<td>{$cg1name} <p>Group: {$cg1num}</p>";
                         ?>
-                        <p>Patients:</p>
-                        <select name="care1">
-                        <?php
+                <p>Patients:</p>
+                <select name="care1">
+                    <?php
                         $getsup = "SELECT userid FROM patient WHERE group_num = '$cg1num';";
                         $thesup = mysqli_query($conn, $getsup);
                         $resultCheck = mysqli_num_rows($thesup);
@@ -218,14 +218,14 @@ function getname($conn, $whichguy) {
                         }
                     }
                     ?>
-                        </select>
-                        <?php
+                </select>
+                <?php
                         echo "</td>";
                         echo "<td>{$cg2name} <p>Group: {$cg2num}</p>";
                         ?>
-                        <p>Patients:</p>
-                        <select name="care2">
-                        <?php
+                <p>Patients:</p>
+                <select name="care2">
+                    <?php
                         $getsup = "SELECT userid FROM patient WHERE group_num = '$cg2num';";
                         $thesup = mysqli_query($conn, $getsup);
                         $resultCheck = mysqli_num_rows($thesup);
@@ -237,14 +237,14 @@ function getname($conn, $whichguy) {
                         }
                     }
                     ?>
-                        </select>
-                    <?php
+                </select>
+                <?php
                         echo "</td>";
                         echo "<td>{$cg3name} <p>Group: {$cg3num}</p>";
                         ?>
-                        <p>Patients:</p>
-                        <select name="care3">
-                        <?php
+                <p>Patients:</p>
+                <select name="care3">
+                    <?php
                         $getsup = "SELECT userid FROM patient WHERE group_num = '$cg3num';";
                         $thesup = mysqli_query($conn, $getsup);
                         $resultCheck = mysqli_num_rows($thesup);
@@ -258,10 +258,10 @@ function getname($conn, $whichguy) {
                     echo "</td>";
                     echo "<td>{$cg4name} <p>Group: {$cg4num}</p>";
                     ?>
-                        </select>
-                        <p>Patients:</p>
-                        <select name="care4">
-                        <?php
+                </select>
+                <p>Patients:</p>
+                <select name="care4">
+                    <?php
                             $getsup = "SELECT userid FROM patient WHERE group_num = '$cg4num';";
                             $thesup = mysqli_query($conn, $getsup);
                             $resultCheck = mysqli_num_rows($thesup);

@@ -33,10 +33,7 @@ if ($conn->query($sql) === TRUE) {
         emergency_contact_number char(10),
         relation varchar(50),
         group_num int,
-        admission_date date,
-        morning_meds varchar(50),
-        afternoon_meds varchar(50),
-        night_meds varchar(50)
+        admission_date date
     );";
 
     // Doctor Appointment Table
@@ -119,6 +116,12 @@ if ($conn->query($sql) === TRUE) {
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
 
+    $sql_doct_appt_data = "INSERT INTO `doctor_appt`(`comment`, `morning_med`, `afternoon_med`, `night_med`, `patientid`) 
+    VALUES ('cool guy but needs some serious help', 'xanax', 'advil', 'whatever pills he wants', 16),
+    ('needs to see a psych ward', 'sleepy pills', 'more sleepy pills', 'nothing',15),
+    ('n/a', 'marijuana', 'more marijuana', 'bomb marijuana', 17);";
+                                  
+
 
         $result = mysqli_query($conn, $sql_user);
         $result = mysqli_query($conn, $sql_patient_table );
@@ -128,6 +131,7 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_employee_table);
         $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
+        $result = mysqli_query($conn, $sql_doct_appt_data);
 
 } else {
 }
