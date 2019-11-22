@@ -35,10 +35,7 @@ if ($conn->query($sql) === TRUE) {
         relation varchar(50),
         group_num int,
         admission_date date,
-        morning_meds varchar(50),
-        afternoon_meds varchar(50),
-        night_meds varchar(50),
-        amount_paid int
+        amount_due int
     );";
 
     // Doctor Appointment Table
@@ -108,7 +105,7 @@ if ($conn->query($sql) === TRUE) {
         page varchar(30) PRIMARY KEY,
         admin boolean,
         patient boolean,
-        familyr boolean,
+        family boolean,
         doctor boolean,
         supervisor boolean,
         caregiver boolean
@@ -142,6 +139,20 @@ if ($conn->query($sql) === TRUE) {
     ('patienthome.php', 0, 1, 0, 0, 0, 0),
     ('supervisorhome.php', 0, 0, 0, 0, 1, 0);";
 
+    $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
+    (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),
+    (16, 16, 554, '564345654', 'dad', 3211, '2019-11-23', 30000),
+    (17, 17, 6543, '345678322', 'killer', 988, '2019-11-25', 1000);
+    ");
+
+    $sql_doct_appt_data = "INSERT INTO `doctor_appt` (`patientid`, `doctorid`, `apt_date`, `complete`, `comment`, `morning_med`, `afternoon_med`, `night_med`) VALUES
+    (15, 13, '2019-11-30', 0, 'Needs serious help', 'xanax', 'advil', 'hennesy'),
+    (16, 20, '2019-11-27', 0, 'Losing his mental health', 'heroin', 'MDMA', 'percs'),
+    (17, 19, '2019-11-28', 0, 'I am not qualified to know', 'Weed', 'Whatever he wants', 'Meth');
+    ";
+
+    $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+
         $result = mysqli_query($conn, $sql_user);
         $result = mysqli_query($conn, $sql_patient_table );
         $result = mysqli_query($conn, $sql_doctorappt_table);
@@ -151,6 +162,9 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
         $result = mysqli_query($conn, $sql_default_security);
+        $result = mysqli_query($conn, $sql_patient_data);
+        $result = mysqli_query($conn, $sql_doct_appt_data);
+        $result = mysqli_query($conn, $sql_employee_data);
 
 } else {
 }
