@@ -133,7 +133,6 @@ if ($conn->query($sql) === TRUE) {
 
                                   
 
-
         $result = mysqli_query($conn, $sql_user);
         $result = mysqli_query($conn, $sql_patient_table );
         $result = mysqli_query($conn, $sql_doctorappt_table);
