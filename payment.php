@@ -8,6 +8,7 @@ $getpatient = "SELECT * FROM patient WHERE patientid = '$getpatientid'";
 $patientinfo = mysqli_query($conn, $getpatient);
 $wegood = mysqli_fetch_assoc($patientinfo);
 $nameid = $wegood['userid'];
+$amount_paid = $wegood['amount_paid'];
 $nameget = "SELECT fname,lname FROM users WHERE userid = '$nameid'";
 $namegot = mysqli_query($conn, $nameget);
 $getgot = mysqli_fetch_assoc($namegot);
@@ -23,7 +24,12 @@ $appointment_count = "SELECT count(patientid) FROM doctor_appt WHERE patientid =
 $numgot = mysqli_query($conn, $appointment_count);
 $appointno = mysqli_fetch_assoc($numgot);
 $numnappoint = $appointno['count(patientid)'];
-$thecost = ($numnappoint * 50) + ($date_difference * 10);
+$thecost = ($numnappoint * 50) + ($date_difference * 10) - $amount_paid;
+
+$pay = $_POST['pay'] ?? '';
+$newtotal = intval($thecost) - intval($pay);
+$moneyupdate = "UPDATE patient SET amount_paid = $newtotal WHERE patientid = '$getpatientid';";
+mysqli_query($conn, $moneyupdate);
 ?>
 <?php
 
@@ -46,7 +52,7 @@ $thecost = ($numnappoint * 50) + ($date_difference * 10);
     <fieldset>
         <legend>Payment</legend>
         <label>Patient ID:</label>
-        <input type="text" name="getpatientid">
+        <input type="text" name="getpatientid" value=" <?php echo $getpatientid ?>">
         <input type="submit">
         Patient Name: <?php echo $getgot['fname'] . ' ' . $getgot['lname']; ?>
         <br>

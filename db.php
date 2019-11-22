@@ -37,7 +37,8 @@ if ($conn->query($sql) === TRUE) {
         admission_date date,
         morning_meds varchar(50),
         afternoon_meds varchar(50),
-        night_meds varchar(50)
+        night_meds varchar(50),
+        amount_paid int
     );";
 
     // Doctor Appointment Table
