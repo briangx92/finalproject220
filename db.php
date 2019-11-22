@@ -33,7 +33,8 @@ if ($conn->query($sql) === TRUE) {
         emergency_contact_number char(10),
         relation varchar(50),
         group_num int,
-        admission_date date
+        admission_date date,
+        amount_paid int
     );";
 
     // Doctor Appointment Table
@@ -100,7 +101,6 @@ if ($conn->query($sql) === TRUE) {
 
     // Sample Data
 
-
     $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob, email, pass, approved) VALUES
     (13, 'doctor', 'dr', 'who', '1234567890', '2019-11-30', 'd@a.com', '1', 1),
     (14, 'admin', 'boss', 'admin', '1', '2019-01-01', 'a@a.com', '1', 1),
@@ -116,10 +116,21 @@ if ($conn->query($sql) === TRUE) {
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
 
-    $sql_doct_appt_data = "INSERT INTO `doctor_appt`(`comment`, `morning_med`, `afternoon_med`, `night_med`, `patientid`) 
-    VALUES ('cool guy but needs some serious help', 'xanax', 'advil', 'whatever pills he wants', 16),
-    ('needs to see a psych ward', 'sleepy pills', 'more sleepy pills', 'nothing',15),
-    ('n/a', 'marijuana', 'more marijuana', 'bomb marijuana', 17);";
+
+    $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
+    (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),
+    (16, 16, 554, '564345654', 'dad', 3211, '2019-11-23', 30000),
+    (17, 17, 6543, '345678322', 'killer', 988, '2019-11-25', 1000);
+    ");
+
+    $sql_doct_appt_data = "INSERT INTO `doctor_appt` (`patientid`, `doctorid`, `apt_date`, `complete`, `comment`, `morning_med`, `afternoon_med`, `night_med`) VALUES
+    (15, 13, '2019-11-30', 0, 'Needs serious help', 'xanax', 'advil', 'hennesy'),
+    (16, 20, '2019-11-27', 0, 'Losing his mental health', 'heroin', 'MDMA', 'percs'),
+    (17, 19, '2019-11-28', 0, 'I am not qualified to know', 'Weed', 'Whatever he wants', 'Meth');
+    ";
+    
+    $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+
                                   
 
 
@@ -132,6 +143,8 @@ if ($conn->query($sql) === TRUE) {
         $result = mysqli_query($conn, $sql_prescription_table);
         $result = mysqli_query($conn, $sql_user_data);
         $result = mysqli_query($conn, $sql_doct_appt_data);
+        $result = mysqli_query($conn, $sql_patient_data);
+        $result = mysqli_query($conn, $sql_employee_data);
 
 } else {
 }

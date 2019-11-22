@@ -113,9 +113,10 @@ include_once 'db.php';
             $date = $_POST['date'] ?? '';
             $today = date('m/d/Y');
             $period = new DatePeriod(
-                new DateTime($date),
+                new DateTime($today),
                 new DateInterval('P1D'),
-                new DateTime($today)
+                new DateTime($date)
+                
             );
             foreach ($period as $key => $value) {
                 $days = $value->format('Y-m-d');
