@@ -1,10 +1,5 @@
 <?php
 include_once 'db.php';
-session_start();
-
-if ($_SESSION['role'] != 'doctor') {
-    header("Location: index.php");
-}
 ?>
 <?php
 
@@ -54,7 +49,7 @@ if ($_SESSION['role'] != 'doctor') {
                 </select>
                 <input type="text" name="search_text" value="<?php $search_text; ?>">
                 <button type="submit" name="search" value="search">Search</button>
-                
+
                 <table>
                     <tr>
                         <th>Name</th>
@@ -69,18 +64,18 @@ if ($_SESSION['role'] != 'doctor') {
                     // POSTS
                     $search = isset($_POST['search']);
                     $searchtype = $_POST['searchtype'] ?? '';
-                    $search_text = $_POST['search_text'] ?? ''; 
-    
+                    $search_text = $_POST['search_text'] ?? '';
+
                     // SQL Variable Query
                     $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE u.role = 'patient' AND `$searchtype` LIKE '%$search_text%';";
-                   
+
 
                     // MYSQL Query
                     $name_query = mysqli_query($conn, $sql_search);
-                    // 
+                    //
                     if ($search) {
                         if ($searchtype) {
-                            
+
                             if(mysqli_num_rows($name_query) > 0) {
                                 while ($row = mysqli_fetch_assoc($name_query)) {
                                     echo "<tr>";
@@ -91,30 +86,54 @@ if ($_SESSION['role'] != 'doctor') {
                                     echo "<td>{$row['afternoon_med']}</td>";
                                     echo "<td>{$row['night_med']}</td>";
                                     echo "</tr>";
-                                    
-                                         
+
+
                                 }
                             }
-    
+
                         }
                     }
-                
+
                     ?>
 
                 </table>
             </fieldset>
         <!-- Appointment Search Form -->
         </form>
-        <input type="date" name="date">
-        <button type="submit">Appointments</button>
+        <form action="doctorhome.php" method="post">
+            <input type="date" name="date">
+            <button type="submit">Appointments</button>
+        </form>
         <table>
             <tr>
                 <th>Patient</th>
                 <th>Date</th>
             </tr>
             <?php
+            $date = $_POST['date'] ?? '';
+            $today = date('m/d/Y');
+            $period = new DatePeriod(
+                new DateTime($date),
+                new DateInterval('P1D'),
+                new DateTime($today)
+            );
+            foreach ($period as $key => $value) {
+                $days = $value->format('Y-m-d');
+                $sql_search_date = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE d.apt_date = $days;";
+                $date_query = mysqli_query($conn, $sql_search_date);
+                print_r($date_query);
+                if(mysqli_num_rows($date_query) > 0) {
+                    while ($row = mysqli_fetch_assoc($date_query)) {
+                        echo "<tr>";
+                        echo "<td>{$row['name']}</td>";
+                        echo "<td>{$row['apt_date']}</td>";
+                        echo "</tr>";
 
-            $sq
+
+                    }
+                }
+
+            }
 
             ?>
 
