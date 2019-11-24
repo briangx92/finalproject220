@@ -85,21 +85,21 @@ if ($conn->query($sql) === TRUE) {
         caregiver_group4 INT
     );";
 
-        // Caregiver Table
-        $sql_patient_activity_table = "CREATE TABLE patient_activity (
-            today date,
-            FOREIGN KEY (today) REFERENCES roster(roster_date),
-            patientid int,
-            FOREIGN KEY (patientid) REFERENCES patient(patientid),
-            caregiver int,
-            FOREIGN KEY (caregiver) REFERENCES users(userid),
-            morning_meds boolean,
-            afternoon_meds boolean,
-            night_meds boolean,
-            breakfast boolean,
-            lunch boolean,
-            dinner boolean
-        );";
+    // Caregiver Table
+    $sql_patient_activity_table = "CREATE TABLE patient_activity (
+        today date,
+        FOREIGN KEY (today) REFERENCES roster(roster_date),
+        patientid int,
+        FOREIGN KEY (patientid) REFERENCES patient(patientid),
+        caregiver int,
+        FOREIGN KEY (caregiver) REFERENCES users(userid),
+        morning_meds boolean,
+        afternoon_meds boolean,
+        night_meds boolean,
+        breakfast boolean,
+        lunch boolean,
+        dinner boolean
+    );";
 
     // Employee Table
     $sql_employee_table = "CREATE TABLE employee (
@@ -158,23 +158,26 @@ if ($conn->query($sql) === TRUE) {
     ";
 
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+    
+    // SET GLOBAL EVENT SCHEDULER ON;
+    $sql_scheduler = "SET GLOBAL event_scheduler = 1;";
+ 
+    $result = mysqli_query($conn, $sql_scheduler);
+    $result = mysqli_query($conn, $sql_user);
+    $result = mysqli_query($conn, $sql_role_table);
+    $result = mysqli_query($conn, $sql_patient_table );
+    $result = mysqli_query($conn, $sql_doctorappt_table);
+    $result = mysqli_query($conn, $sql_roster_table);
+    $result = mysqli_query($conn, $sql_patient_activity_table);
+    $result = mysqli_query($conn, $sql_employee_table);
+    $result = mysqli_query($conn, $sql_prescription_table);
+    $result = mysqli_query($conn, $sql_user_data);
+    $result = mysqli_query($conn, $sql_default_security);
+    $result = mysqli_query($conn, $sql_patient_data);
+    $result = mysqli_query($conn, $sql_doct_appt_data);
+    $result = mysqli_query($conn, $sql_employee_data);
 
-        $result = mysqli_query($conn, $sql_user);
-        $result = mysqli_query($conn, $sql_role_table);
-        $result = mysqli_query($conn, $sql_patient_table );
-        $result = mysqli_query($conn, $sql_doctorappt_table);
-        $result = mysqli_query($conn, $sql_roster_table);
-        $result = mysqli_query($conn, $sql_patient_activity_table);
-        $result = mysqli_query($conn, $sql_employee_table);
-        $result = mysqli_query($conn, $sql_prescription_table);
-        $result = mysqli_query($conn, $sql_user_data);
-        $result = mysqli_query($conn, $sql_default_security);
-        $result = mysqli_query($conn, $sql_patient_data);
-        $result = mysqli_query($conn, $sql_doct_appt_data);
-        $result = mysqli_query($conn, $sql_employee_data);
-
-} else {
-}
+} else {}
 
 $dbName = "old_home";
 
