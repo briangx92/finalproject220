@@ -24,6 +24,17 @@ if ($conn->query($sql) === TRUE) {
         approved boolean
     );";
 
+    // Role Table
+    $sql_role_table = "CREATE TABLE role (
+        page varchar(30) PRIMARY KEY,
+        admin boolean,
+        patient boolean,
+        family boolean,
+        doctor boolean,
+        supervisor boolean,
+        caregiver boolean
+        );";
+
 
     // Patient Table
     $sql_patient_table = "CREATE TABLE patient (
@@ -98,18 +109,9 @@ if ($conn->query($sql) === TRUE) {
         );";
 
     // Prescription Table
-    $sql_prescription_table = "CREATE TABLE prescription ( patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist char(1))";
+    $sql_prescription_table = "CREATE TABLE prescription (patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist boolean);";
 
-    // Role Table
-    $sql_role_table = "CREATE TABLE role (
-        page varchar(30) PRIMARY KEY,
-        admin boolean,
-        patient boolean,
-        family boolean,
-        doctor boolean,
-        supervisor boolean,
-        caregiver boolean
-        );";
+    
 
     // Sample Data
 
@@ -137,7 +139,11 @@ if ($conn->query($sql) === TRUE) {
     ('doctorhome.php', 0, 0, 0, 1, 0, 0),
     ('familyhome.php', 0, 0, 1, 0, 0, 0),
     ('patienthome.php', 0, 1, 0, 0, 0, 0),
-    ('supervisorhome.php', 0, 0, 0, 0, 1, 0);";
+    ('supervisorhome.php', 0, 0, 0, 0, 1, 0),
+    ('payment.php', 1, 0, 0, 0, 1, 0),
+    ('newroster.php', 1, 0, 0, 0, 1, 0),
+    ('register.php', 1, 0, 0, 0, 1, 0),
+    ('regapproval.php', 1, 0, 0, 0, 1, 0);";
 
     $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
     (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),
@@ -154,6 +160,7 @@ if ($conn->query($sql) === TRUE) {
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
 
         $result = mysqli_query($conn, $sql_user);
+        $result = mysqli_query($conn, $sql_role_table);
         $result = mysqli_query($conn, $sql_patient_table );
         $result = mysqli_query($conn, $sql_doctorappt_table);
         $result = mysqli_query($conn, $sql_roster_table);
