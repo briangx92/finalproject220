@@ -65,7 +65,7 @@ $appt_date_count_query = mysqli_query($conn, $sql_appt_date_count);
 $admission_date_query = mysqli_query($conn, $sql_admission_date);
 $amount_due_query = mysqli_query($conn, $sql_amount_due);
 $med_charge_query = mysqli_query($conn, $sql_med_charge);
-$new_payment_query = mysqli_query($conn, $sql_new_payment);
+
 $add_charge_query = mysqli_query($conn, $sql_add_charge);
 
 // Query Results
@@ -75,7 +75,7 @@ $appt_date_result = mysqli_fetch_assoc($appt_date_count_query);
 $admission_date_result = mysqli_fetch_assoc($admission_date_query);
 $amount_due_result = mysqli_fetch_assoc($amount_due_query);
 $med_charge_result = mysqli_fetch_assoc($med_charge_query);
-$new_payment_result = mysqli_fetch_assoc($new_payment_query);
+
 $add_charge_result = mysqli_fetch_assoc($add_charge_query);
 
 // Math
@@ -105,35 +105,12 @@ print_r($appt_count_result);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Old Home</title>
-    <script>
-        window.onload = function() {
-            var inputs = document.getElementsByTagName('input');
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type == 'text') {
-                inputs[i].onchange = function() {
-                    this.value = this.value.replace(/^\s+/, '').replace(/\s+$/, '');
-                        };
-                    }
-                }
-            }
-    </script>
 </head>
 
 <body>
     
 <form action="" method="post">
-<script>
-    window.onload = function() {
-        var inputs = document.getElementsByTagName('input');
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].type == 'text') {
-            inputs[i].onchange = function() {
-                this.value = this.value.replace(/^\s+/, '').replace(/\s+$/, '');
-                    };
-                }
-            }
-        }
-    </script>
+    
 
     <fieldset>
         <?php  ; ?>
@@ -148,7 +125,10 @@ print_r($appt_count_result);
         <input type="text" name="due" value=" <?php if ($search) {echo "{$amount_due_result['amount_due']}";} ?>" disabled>
         <br>
         <label>New Payment: $</label>
-        <input type="text" name="pay" placeholder="0.00" value="<?php if ($submit) {echo "{$newpayment}";}?>">
+        <input type="text" name="pay" placeholder="0.00" value="<?php if ($submit) {
+            @$new_payment_query = mysqli_query($conn, $sql_new_payment);
+            @$new_payment_result = mysqli_fetch_assoc($new_payment_query);
+            echo "{$newpayment}";}?>">
         <br>
         <button type="submit" value="submit" name="submit">Submit</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
