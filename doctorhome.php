@@ -2,10 +2,6 @@
 include_once 'db.php';
 securitygate($conn);
 ?>
-<?php
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,37 +26,105 @@ securitygate($conn);
 </style>
 
 <body>
-    <!--Doctors home table  -->
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Comment</th>
-            <th>Morning Meds</th>
-            <th>Afternoon Meds</th>
-            <th>Night Meds</th>
-        </tr>
-        <?php
-    // PHP CODE FOR LISTING RESULTS OF PATIENTS
-    ?>
-    </table>
-    <input type="date" name="date">
-    <button type="submit">Appointments</button>
-    <table>
-        <tr>
-            <th>Patient</th>
-            <th>Date</th>
-        </tr>
-        <?php
+    <main>
 
-    // PHP CODE FOR LISTING APPOINTMENTS
-    ?>
-    </table>
+
+        <!--Doctors Search Form -->
+        <form action="" method="post">
+
+            <fieldset>
+                <legend>Doctor's Home Page</legend>
+                <label>Search By: </label>
+                <select name="searchtype">
+                    <option value="fname" name="fname">Name</option>
+                    <option value="apt_date" name="apt_date">Date</option>
+                    <option value="comment" name="comment">Comment</option>
+                    <option value="morning_med" name="morning_med">Morning Meds</option>
+                    <option value="afternoon_med" name="afternoon_med">Afternoon Meds</option>
+                    <option value="night_med" name="night_med">Night Meds</option>
+                </select>
+                <input type="text" name="search_text" value="<?php $search_text; ?>">
+                <button type="submit" name="search" value="search">Search</button>
+
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Comment</th>
+                        <th>Morning Meds</th>
+                        <th>Afternoon Meds</th>
+                        <th>Night Meds</th>
+                    </tr>
+                    <?php
+
+                    // POSTS
+                    $search = isset($_POST['search']);
+                    $searchtype = $_POST['searchtype'] ?? '';
+                    $search_text = $_POST['search_text'] ?? '';
+
+                    // SQL Variable Query
+                    $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE u.role = 'patient' AND `$searchtype` LIKE '%$search_text%';";
+
+
+                    // MYSQL Query
+                    $name_query = mysqli_query($conn, $sql_search);
+                    //
+                    if ($search) {
+                        if ($searchtype) {
+
+                            if(mysqli_num_rows($name_query) > 0) {
+                                while ($row = mysqli_fetch_assoc($name_query)) {
+                                    echo "<tr>";
+                                    echo "<td>{$row['name']}</td>";
+                                    echo "<td>{$row['apt_date']}</td>";
+                                    echo "<td>{$row['comment']}</td>";
+                                    echo "<td>{$row['morning_med']}</td>";
+                                    echo "<td>{$row['afternoon_med']}</td>";
+                                    echo "<td>{$row['night_med']}</td>";
+                                    echo "</tr>";
+
+
+                                }
+                            }
+
+                        }
+                    }
+
+                    ?>
+
+                </table>
+            </fieldset>
+        <!-- Appointment Search Form -->
+        </form>
+        <form action="doctorhome.php" method="post">
+            <input type="date" name="date">
+            <button type="submit">Appointments</button>
+        </form>
+        <table>
+            <tr>
+                <th>Patient</th>
+                <th>Date</th>
+            </tr>
+            <?php
+            $date = $_POST['date'] ?? '';
+            $today = date('m/d/Y');
+            $docid = $_SESSION['id'];
+            $sql_search_date = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE apt_date BETWEEN '$today' and '$date' AND doctorid = '$docid' ";
+            $date_query = mysqli_query($conn, $sql_search_date);
+            if(mysqli_num_rows($date_query) > 0) {
+                while ($row = mysqli_fetch_assoc($date_query)) {
+                    echo "<tr>";
+                    echo "<td>{$row['name']}</td>";
+                    echo "<td>{$row['apt_date']}</td>";
+                    echo "</tr>";
+                    }
+                }
+
+
+            ?>
+
+        </table>
+    </main>
 </body>
 
 </html>
-
-<?php
-
-
-?>

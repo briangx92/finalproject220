@@ -5,6 +5,8 @@ $dbUsername = "root";
 $dbPassword = "";
 $conn = new mysqli($dbServername, $dbUsername , $dbPassword);
 
+session_start();
+
 // Database Initialization
 $sql = "CREATE DATABASE old_home";
 if ($conn->query($sql) === TRUE) {
@@ -115,7 +117,6 @@ if ($conn->query($sql) === TRUE) {
 
     // Sample Data
 
-
     $sql_user_data = "INSERT INTO users (userid, role, fname, lname, phone, dob, email, pass, approved) VALUES
     (13, 'doctor', 'dr', 'who', '1234567890', '2019-11-30', 'd@a.com', '1', 1),
     (14, 'admin', 'boss', 'admin', '1', '2019-01-01', 'a@a.com', '1', 1),
@@ -130,8 +131,8 @@ if ($conn->query($sql) === TRUE) {
     (23, 'caregiver', 'izzy', 'rodriguez', '1092837465', '2011-12-28', 'cg2@a.com', '1', 1),
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
-
-    $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
+    
+  $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
     VALUES
     ('adminreport.php', 1, 0, 0, 0, 0, 0),
     ('role.php', 1, 0, 0, 0, 0, 0),
@@ -158,7 +159,6 @@ if ($conn->query($sql) === TRUE) {
     ";
 
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
-    
     // SET GLOBAL EVENT SCHEDULER ON;
     $sql_scheduler = "SET GLOBAL event_scheduler = 1;";
  
@@ -178,6 +178,7 @@ if ($conn->query($sql) === TRUE) {
     $result = mysqli_query($conn, $sql_employee_data);
 
 } else {}
+
 
 $dbName = "old_home";
 
