@@ -79,17 +79,16 @@ else {}
 </head>
 
 <body>
-    
+
 <form action="" method="post">
-    
+
 
     <fieldset>
-        <?php  ; ?>
         <legend>Payment</legend>
         <label>Patient ID:</label>
-        <input type="text" name="patientid" value=" <?php echo $patientid; ?>">
+        <input type="text" name="patientid" value="<?php echo $patientid; ?>">
         <button type="submit" name="search">Search</button>
-        Patient Name: 
+        Patient Name:
         <?php if($search) {echo "{$patient_name_result['fname']} {$patient_name_result['lname']}";} ?>
         <br>
         <label>Total Due: $</label>
@@ -97,9 +96,7 @@ else {}
         <br>
         <label>New Payment: $</label>
         <input type="text" name="pay" placeholder="0.00" value="<?php if ($submit) {
-            @$new_payment_query = mysqli_query($conn, $sql_new_payment);
-            @$new_payment_result = mysqli_fetch_assoc($new_payment_query);
-            echo "{$newpayment}";}?>">
+            $new_payment_query = mysqli_query($conn, $sql_new_payment);}?>">
         <br>
         <button type="submit" value="submit" name="submit">Submit</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
