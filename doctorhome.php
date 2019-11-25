@@ -1,6 +1,7 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
+$docid = $_SESSION['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,18 +59,14 @@ securitygate($conn);
                     <?php
 
                     // POSTS
-                    $search = isset($_POST['search']);
                     $searchtype = $_POST['searchtype'] ?? '';
                     $search_text = $_POST['search_text'] ?? '';
+                    $search = isset($_POST['search']);
 
-                    // SQL Variable Query
-                    $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE u.role = 'patient' AND `$searchtype` LIKE '%$search_text%';";
-
-
-                    // MYSQL Query
-                    $name_query = mysqli_query($conn, $sql_search);
-                    //
                     if ($search) {
+                        // SQL Variable Query
+                        $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE u.role = 'patient' AND doctorid = '$docid' AND `$searchtype` LIKE '%$search_text%'  ;";
+                        $name_query = mysqli_query($conn, $sql_search);
                         if ($searchtype) {
 
                             if(mysqli_num_rows($name_query) > 0) {
@@ -84,10 +81,27 @@ securitygate($conn);
                                     echo "</tr>";
 
 
+                                    }
                                 }
                             }
+                        } else {
+                        // MYSQL Query
+                        $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE doctorid = '$docid' ";
+                        $name_query = mysqli_query($conn, $sql_search);
+                        if(mysqli_num_rows($name_query) > 0) {
+                            while ($row = mysqli_fetch_assoc($name_query)) {
+                                echo "<tr>";
+                                echo "<td>{$row['name']}</td>";
+                                echo "<td>{$row['apt_date']}</td>";
+                                echo "<td>{$row['comment']}</td>";
+                                echo "<td>{$row['morning_med']}</td>";
+                                echo "<td>{$row['afternoon_med']}</td>";
+                                echo "<td>{$row['night_med']}</td>";
+                                echo "</tr>";
 
-                        }
+
+                                }
+                            }
                     }
 
                     ?>
@@ -108,7 +122,6 @@ securitygate($conn);
             <?php
             $date = $_POST['date'] ?? '';
             $today = date('m/d/Y');
-            $docid = $_SESSION['id'];
             $sql_search_date = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE apt_date BETWEEN '$today' and '$date' AND doctorid = '$docid' ";
             $date_query = mysqli_query($conn, $sql_search_date);
             if(mysqli_num_rows($date_query) > 0) {
