@@ -2,8 +2,6 @@
 include_once 'db.php';
 securitygate($conn);
 $docid = $_SESSION['id'];
-$currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
-echo $currentpage;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +10,7 @@ echo $currentpage;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <title><?php echo ucfirst(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME)) ?></title>
 </head>
 <style>
     table {
@@ -92,8 +90,10 @@ echo $currentpage;
                         $name_query = mysqli_query($conn, $sql_search);
                         if(mysqli_num_rows($name_query) > 0) {
                             while ($row = mysqli_fetch_assoc($name_query)) {
+                                $sendname = str_replace(' ', '', $row['name']);
+                                $namerow = "/finalproject220/patientofdoc.php?data={$sendname}1&data2=Data120";
                                 echo "<tr>";
-                                echo "<td onclick='location.href=`patientofdoc.php`'>{$row['name']}</td>";
+                                echo "<td><a href=$namerow> {$row['name']}</a></td>";
                                 echo "<td>{$row['apt_date']}</td>";
                                 echo "<td>{$row['comment']}</td>";
                                 echo "<td>{$row['morning_med']}</td>";

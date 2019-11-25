@@ -195,8 +195,8 @@ function securitygate($conn) {
     $passclearance = mysqli_fetch_assoc($clearance);
     if ($passclearance[$sessionrole] == 1) {
     } else {
-        $_SESSION['message'] = 'You are not authorized to visit that page, you have been logged out.';
-        header("Location: ./index.php");
+        $_SESSION['message'] = "You are not authorized to visit {$currentpage}, you have been logged out.";
+        header("Location: /finalproject220/index.php");
     }
 }
 

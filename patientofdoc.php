@@ -1,7 +1,11 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
-
+if(isset($_GET["data"]) && isset($_GET["data2"]))
+{
+   $data = $_GET["data"] ?? '';
+   $data2 = $_GET["data2"] ?? '';
+}
 ?>
 
 
