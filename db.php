@@ -4,6 +4,8 @@ $dbUsername = "root";
 $dbPassword = "";
 $conn = new mysqli($dbServername, $dbUsername , $dbPassword);
 
+session_start();
+
 // Database Initialization
 $sql = "CREATE DATABASE old_home";
 if ($conn->query($sql) === TRUE) {
@@ -128,10 +130,10 @@ if ($conn->query($sql) === TRUE) {
     (16, 20, '2019-11-27', 0, 'Losing his mental health', 'heroin', 'MDMA', 'percs'),
     (17, 19, '2019-11-28', 0, 'I am not qualified to know', 'Weed', 'Whatever he wants', 'Meth');
     ";
-    
+
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
 
-                                  
+
 
         $result = mysqli_query($conn, $sql_user);
         $result = mysqli_query($conn, $sql_patient_table );

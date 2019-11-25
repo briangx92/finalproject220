@@ -1,10 +1,6 @@
 <?php
 include_once 'db.php';
 ?>
-<?php
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +35,6 @@ include_once 'db.php';
                 <legend>Doctor's Home Page</legend>
                 <label>Search By: </label>
                 <select name="searchtype">
-                    <!-- <option value="">-- SELECT --</option> -->
                     <option value="fname" name="fname">Name</option>
                     <option value="apt_date" name="apt_date">Date</option>
                     <option value="comment" name="comment">Comment</option>
@@ -112,29 +107,18 @@ include_once 'db.php';
             <?php
             $date = $_POST['date'] ?? '';
             $today = date('m/d/Y');
-            $period = new DatePeriod(
-                new DateTime($today),
-                new DateInterval('P1D'),
-                new DateTime($date)
-                
-            );
-            foreach ($period as $key => $value) {
-                $days = $value->format('Y-m-d');
-                $sql_search_date = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE d.apt_date = $days;";
-                $date_query = mysqli_query($conn, $sql_search_date);
-                print_r($date_query);
-                if(mysqli_num_rows($date_query) > 0) {
-                    while ($row = mysqli_fetch_assoc($date_query)) {
-                        echo "<tr>";
-                        echo "<td>{$row['name']}</td>";
-                        echo "<td>{$row['apt_date']}</td>";
-                        echo "</tr>";
-
-
+            $docid = $_SESSION['id'];
+            $sql_search_date = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE apt_date BETWEEN '$today' and '$date' AND doctorid = '$docid' ";
+            $date_query = mysqli_query($conn, $sql_search_date);
+            if(mysqli_num_rows($date_query) > 0) {
+                while ($row = mysqli_fetch_assoc($date_query)) {
+                    echo "<tr>";
+                    echo "<td>{$row['name']}</td>";
+                    echo "<td>{$row['apt_date']}</td>";
+                    echo "</tr>";
                     }
                 }
 
-            }
 
             ?>
 
