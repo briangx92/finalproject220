@@ -1,11 +1,10 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
-?>
-<?php
-
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

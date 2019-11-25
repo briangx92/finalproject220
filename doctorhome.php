@@ -2,6 +2,8 @@
 include_once 'db.php';
 securitygate($conn);
 $docid = $_SESSION['id'];
+$currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+echo $currentpage;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +93,7 @@ $docid = $_SESSION['id'];
                         if(mysqli_num_rows($name_query) > 0) {
                             while ($row = mysqli_fetch_assoc($name_query)) {
                                 echo "<tr>";
-                                echo "<td>{$row['name']}</td>";
+                                echo "<td onclick='location.href=`patientofdoc.php`'>{$row['name']}</td>";
                                 echo "<td>{$row['apt_date']}</td>";
                                 echo "<td>{$row['comment']}</td>";
                                 echo "<td>{$row['morning_med']}</td>";

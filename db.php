@@ -132,17 +132,17 @@ if ($conn->query($sql) === TRUE) {
 
   $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
     VALUES
-    ('adminreport.php', 1, 0, 0, 0, 0, 0),
-    ('role.php', 1, 0, 0, 0, 0, 0),
-    ('caregiverhome.php', 0, 0, 0, 0, 0, 1),
-    ('doctorhome.php', 0, 0, 0, 1, 0, 0),
-    ('familyhome.php', 0, 0, 1, 0, 0, 0),
-    ('patienthome.php', 0, 1, 0, 0, 0, 0),
-    ('supervisorhome.php', 0, 0, 0, 0, 1, 0),
-    ('payment.php', 1, 0, 0, 0, 1, 0),
-    ('newroster.php', 1, 0, 0, 0, 1, 0),
-    ('register.php', 1, 0, 0, 0, 1, 0),
-    ('regapproval.php', 1, 0, 0, 0, 1, 0);";
+    ('adminreport', 1, 0, 0, 0, 0, 0),
+    ('role', 1, 0, 0, 0, 0, 0),
+    ('caregiverhome', 0, 0, 0, 0, 0, 1),
+    ('doctorhome', 0, 0, 0, 1, 0, 0),
+    ('familyhome', 0, 0, 1, 0, 0, 0),
+    ('patienthome', 0, 1, 0, 0, 0, 0),
+    ('supervisorhome', 0, 0, 0, 0, 1, 0),
+    ('payment', 1, 0, 0, 0, 1, 0),
+    ('newroster', 1, 0, 0, 0, 1, 0),
+    ('register', 1, 0, 0, 0, 1, 0),
+    ('regapproval', 1, 0, 0, 0, 1, 0);";
 
     $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
     (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),
@@ -188,7 +188,7 @@ $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 
 // Security
 function securitygate($conn) {
-    $currentpage = basename($_SERVER['PHP_SELF']);
+    $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
     $sessionrole = $_SESSION['role'];
     $securitycheck = "SELECT $sessionrole FROM role WHERE page = '$currentpage'";
     $clearance = mysqli_query($conn, $securitycheck);
@@ -196,7 +196,7 @@ function securitygate($conn) {
     if ($passclearance[$sessionrole] == 1) {
     } else {
         $_SESSION['message'] = 'You are not authorized to visit that page, you have been logged out.';
-        header("Location: index.php");
+        header("Location: ./index.php");
     }
 }
 
