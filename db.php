@@ -1,4 +1,5 @@
 <?php
+session_start();
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
@@ -25,6 +26,17 @@ if ($conn->query($sql) === TRUE) {
         approved boolean
     );";
 
+    // Role Table
+    $sql_role_table = "CREATE TABLE role (
+        page varchar(30) PRIMARY KEY,
+        admin boolean,
+        patient boolean,
+        family boolean,
+        doctor boolean,
+        supervisor boolean,
+        caregiver boolean
+        );";
+
 
     // Patient Table
     $sql_patient_table = "CREATE TABLE patient (
@@ -36,7 +48,7 @@ if ($conn->query($sql) === TRUE) {
         relation varchar(50),
         group_num int,
         admission_date date,
-        amount_paid int
+        amount_due int
     );";
 
     // Doctor Appointment Table
@@ -75,21 +87,21 @@ if ($conn->query($sql) === TRUE) {
         caregiver_group4 INT
     );";
 
-        // Caregiver Table
-        $sql_patient_activity_table = "CREATE TABLE patient_activity (
-            today date,
-            FOREIGN KEY (today) REFERENCES roster(roster_date),
-            patientid int,
-            FOREIGN KEY (patientid) REFERENCES patient(patientid),
-            caregiver int,
-            FOREIGN KEY (caregiver) REFERENCES users(userid),
-            morning_meds boolean,
-            afternoon_meds boolean,
-            night_meds boolean,
-            breakfast boolean,
-            lunch boolean,
-            dinner boolean
-        );";
+    // Caregiver Table
+    $sql_patient_activity_table = "CREATE TABLE patient_activity (
+        today date,
+        FOREIGN KEY (today) REFERENCES roster(roster_date),
+        patientid int,
+        FOREIGN KEY (patientid) REFERENCES patient(patientid),
+        caregiver int,
+        FOREIGN KEY (caregiver) REFERENCES users(userid),
+        morning_meds boolean,
+        afternoon_meds boolean,
+        night_meds boolean,
+        breakfast boolean,
+        lunch boolean,
+        dinner boolean
+    );";
 
     // Employee Table
     $sql_employee_table = "CREATE TABLE employee (
@@ -99,7 +111,9 @@ if ($conn->query($sql) === TRUE) {
         );";
 
     // Prescription Table
-    $sql_prescription_table = "CREATE TABLE prescription ( patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist char(1))";
+    $sql_prescription_table = "CREATE TABLE prescription (patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist boolean);";
+
+    
 
     // Sample Data
 
@@ -117,7 +131,20 @@ if ($conn->query($sql) === TRUE) {
     (23, 'caregiver', 'izzy', 'rodriguez', '1092837465', '2011-12-28', 'cg2@a.com', '1', 1),
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
-
+    
+  $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
+    VALUES
+    ('adminreport.php', 1, 0, 0, 0, 0, 0),
+    ('role.php', 1, 0, 0, 0, 0, 0),
+    ('caregiverhome.php', 0, 0, 0, 0, 0, 1),
+    ('doctorhome.php', 0, 0, 0, 1, 0, 0),
+    ('familyhome.php', 0, 0, 1, 0, 0, 0),
+    ('patienthome.php', 0, 1, 0, 0, 0, 0),
+    ('supervisorhome.php', 0, 0, 0, 0, 1, 0),
+    ('payment.php', 1, 0, 0, 0, 1, 0),
+    ('newroster.php', 1, 0, 0, 0, 1, 0),
+    ('register.php', 1, 0, 0, 0, 1, 0),
+    ('regapproval.php', 1, 0, 0, 0, 1, 0);";
 
     $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
     (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),
@@ -132,28 +159,47 @@ if ($conn->query($sql) === TRUE) {
     ";
 
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+    // SET GLOBAL EVENT SCHEDULER ON;
+    $sql_scheduler = "SET GLOBAL event_scheduler = 1;";
+ 
+    $result = mysqli_query($conn, $sql_scheduler);
+    $result = mysqli_query($conn, $sql_user);
+    $result = mysqli_query($conn, $sql_role_table);
+    $result = mysqli_query($conn, $sql_patient_table );
+    $result = mysqli_query($conn, $sql_doctorappt_table);
+    $result = mysqli_query($conn, $sql_roster_table);
+    $result = mysqli_query($conn, $sql_patient_activity_table);
+    $result = mysqli_query($conn, $sql_employee_table);
+    $result = mysqli_query($conn, $sql_prescription_table);
+    $result = mysqli_query($conn, $sql_user_data);
+    $result = mysqli_query($conn, $sql_default_security);
+    $result = mysqli_query($conn, $sql_patient_data);
+    $result = mysqli_query($conn, $sql_doct_appt_data);
+    $result = mysqli_query($conn, $sql_employee_data);
 
+} else {}
 
-
-        $result = mysqli_query($conn, $sql_user);
-        $result = mysqli_query($conn, $sql_patient_table );
-        $result = mysqli_query($conn, $sql_doctorappt_table);
-        $result = mysqli_query($conn, $sql_roster_table);
-        $result = mysqli_query($conn, $sql_patient_activity_table);
-        $result = mysqli_query($conn, $sql_employee_table);
-        $result = mysqli_query($conn, $sql_prescription_table);
-        $result = mysqli_query($conn, $sql_user_data);
-        $result = mysqli_query($conn, $sql_doct_appt_data);
-        $result = mysqli_query($conn, $sql_patient_data);
-        $result = mysqli_query($conn, $sql_employee_data);
-
-} else {
-}
 
 $dbName = "old_home";
 
 
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
+
+
+
+// Security
+function securitygate($conn) {
+    $currentpage = basename($_SERVER['PHP_SELF']);
+    $sessionrole = $_SESSION['role'];
+    $securitycheck = "SELECT $sessionrole FROM role WHERE page = '$currentpage'";
+    $clearance = mysqli_query($conn, $securitycheck);
+    $passclearance = mysqli_fetch_assoc($clearance);
+    if ($passclearance[$sessionrole] == 1) {
+    } else {
+        $_SESSION['message'] = 'You are not authorized to visit that page, you have been logged out.';
+        header("Location: index.php");
+    }
+}
 
 ?>

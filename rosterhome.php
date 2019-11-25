@@ -1,7 +1,6 @@
 <?php
 include_once 'db.php';
-
-session_start();
+securitygate($conn);
 
 if ($_SESSION['role'] = '') {
     header("Location: index.php");

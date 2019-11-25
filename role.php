@@ -1,15 +1,45 @@
 <?php
 include_once 'db.php';
-session_start();
+securitygate($conn);
 
-if ($_SESSION['role'] != 'admin') {
-    header("Location: index.php");
+function update_values($conn) {
+    $role_list = array();
+    $getinfo = "SELECT * FROM role " ;
+    $theirinfo = mysqli_query($conn, $getinfo);
+    $newinfo = mysqli_fetch_assoc($theirinfo);
+    $u = 0;
+    foreach ($newinfo as $key => $new) {
+        array_push($role_list, $key);
+    }
+    foreach ($role_list as $role) {
+        if (isset($_POST[$role])) {
+            $page = $_POST[$role];
+            $getinfo = "SELECT $role FROM role WHERE page = '$page'" ;
+            $theirinfo = mysqli_query($conn, $getinfo);
+            $newinfo = mysqli_fetch_assoc($theirinfo);
+
+            $approval = ($newinfo[$role] == 1 ? 1 : 0);
+            if ($approval == 1) {
+                $unapprove = "UPDATE role SET $role = 0 WHERE page = '$page';";
+                mysqli_query($conn, $unapprove);
+            } else {
+                $approve = "UPDATE role SET $role = 1 WHERE page = '$page';";
+                mysqli_query($conn, $approve);
+            }
+            header("Refresh:0");
+        }
+    }
 }
-?>
-<?php
 
+$newrole = $_POST['newrole'] ?? '';
 
+$addnewrole = "ALTER TABLE role
+ADD $newrole varchar(20);";
+mysqli_query($conn, $addnewrole);
+
+update_values($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,11 +47,80 @@ if ($_SESSION['role'] != 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Old Home</title>
+    <style>
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    border-color: 10px solid blue;
+    text-align: center;
+    }
+    th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    }
+</style>
 </head>
 <body>
+        <table>
+            <tr>
+                <?php
+                $getinfo = "SELECT * FROM role " ;
+                $theirinfo = mysqli_query($conn, $getinfo);
+                $newinfo = mysqli_fetch_assoc($theirinfo);
+                $u = 0;
+                foreach ($newinfo as $key => $new) {
+                    if ($u == 0) {
+                        echo "<td><h1>" . ucfirst($key) . "</h1></td>";
+                        $thispage = $new;
+                        $u += 1;
+                    } else {
+                        echo "<td>" . ucfirst($key) . "</td>";
+                    }
+                }
+                ?>
+            </tr>
+            <form action='role.php' method='post'>
+<?php
+
+        $dir = getcwd();
+        $files = scandir($dir);
+        foreach ($files as $page) {
+            if ($page == 'index.php' or $page == 'verify.php' or $page == 'db.php') {
+                continue;
+            }
+            elseif (strpos($page, 'php') == True) {
+                $sql = "INSERT INTO role (page) VALUES ('$page');";
+                if ($conn->query($sql) === TRUE) {
+                }
+                $getinfo = "SELECT * FROM role WHERE page = '$page'" ;
+                $theirinfo = mysqli_query($conn, $getinfo);
+                $newinfo = mysqli_fetch_assoc($theirinfo);
+                echo "<tr>";
+                $i = 0;
+                foreach ($newinfo as $key => $new) {
+                    if ($i == 0) {
+                        echo "<td> $new </td>";
+                        $thispage = $new;
+                        $i += 1;
+                    } else {
+                        echo "<td><button type='submit' value='$thispage' name='$key'>" . ($new == 1 ? 'Approved' : 'Denied') . "</button></td>";
+                    }
+                }
+                echo "</tr>";
+            }
+        }
 
 
+?>
+</form>
+<form action='role.php' method='post'>
+    New Role <input type="text" name="newrole">
+    <input type="submit" name="newrolesubmit">
+</form>
+<?php echo $newrole; ?>
 </body>
+
 </html>
 
 <?php

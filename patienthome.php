@@ -1,9 +1,7 @@
 <?php
 include_once 'db.php';
-?>
-<?php
+securitygate($conn);
 
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +13,7 @@ include_once 'db.php';
 </head>
 <body>
 
-    
+
 </body>
 </html>
 

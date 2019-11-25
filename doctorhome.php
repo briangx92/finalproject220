@@ -1,5 +1,6 @@
 <?php
 include_once 'db.php';
+securitygate($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -127,9 +128,3 @@ include_once 'db.php';
 </body>
 
 </html>
-
-<?php
-
-// Search button for each column
-
-?>
