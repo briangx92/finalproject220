@@ -24,6 +24,17 @@ if ($conn->query($sql) === TRUE) {
         approved boolean
     );";
 
+    // Role Table
+    $sql_role_table = "CREATE TABLE role (
+        page varchar(30) PRIMARY KEY,
+        admin boolean,
+        patient boolean,
+        family boolean,
+        doctor boolean,
+        supervisor boolean,
+        caregiver boolean
+        );";
+
 
     // Patient Table
     $sql_patient_table = "CREATE TABLE patient (
@@ -35,9 +46,7 @@ if ($conn->query($sql) === TRUE) {
         relation varchar(50),
         group_num int,
         admission_date date,
-        morning_meds varchar(50),
-        afternoon_meds varchar(50),
-        night_meds varchar(50)
+        amount_due int
     );";
 
     // Doctor Appointment Table
@@ -76,21 +85,21 @@ if ($conn->query($sql) === TRUE) {
         caregiver_group4 INT
     );";
 
-        // Caregiver Table
-        $sql_patient_activity_table = "CREATE TABLE patient_activity (
-            today date,
-            FOREIGN KEY (today) REFERENCES roster(roster_date),
-            patientid int,
-            FOREIGN KEY (patientid) REFERENCES patient(patientid),
-            caregiver int,
-            FOREIGN KEY (caregiver) REFERENCES users(userid),
-            morning_meds boolean,
-            afternoon_meds boolean,
-            night_meds boolean,
-            breakfast boolean,
-            lunch boolean,
-            dinner boolean
-        );";
+    // Caregiver Table
+    $sql_patient_activity_table = "CREATE TABLE patient_activity (
+        today date,
+        FOREIGN KEY (today) REFERENCES roster(roster_date),
+        patientid int,
+        FOREIGN KEY (patientid) REFERENCES patient(patientid),
+        caregiver int,
+        FOREIGN KEY (caregiver) REFERENCES users(userid),
+        morning_meds boolean,
+        afternoon_meds boolean,
+        night_meds boolean,
+        breakfast boolean,
+        lunch boolean,
+        dinner boolean
+    );";
 
     // Employee Table
     $sql_employee_table = "CREATE TABLE employee (
@@ -100,18 +109,9 @@ if ($conn->query($sql) === TRUE) {
         );";
 
     // Prescription Table
-    $sql_prescription_table = "CREATE TABLE prescription ( patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist char(1))";
+    $sql_prescription_table = "CREATE TABLE prescription (patient_id int PRIMARY KEY, doctorid int, FOREIGN KEY (doctorid) REFERENCES doctor_appt(doctorid), appt_exist boolean);";
 
-    // Role Table
-    $sql_role_table = "CREATE TABLE role (
-        page varchar(30) PRIMARY KEY,
-        admin boolean,
-        patient boolean,
-        familyr boolean,
-        doctor boolean,
-        supervisor boolean,
-        caregiver boolean
-        );";
+    
 
     // Sample Data
 
@@ -139,20 +139,45 @@ if ($conn->query($sql) === TRUE) {
     ('doctorhome.php', 0, 0, 0, 1, 0, 0),
     ('familyhome.php', 0, 0, 1, 0, 0, 0),
     ('patienthome.php', 0, 1, 0, 0, 0, 0),
-    ('supervisorhome.php', 0, 0, 0, 0, 1, 0);";
+    ('supervisorhome.php', 0, 0, 0, 0, 1, 0),
+    ('payment.php', 1, 0, 0, 0, 1, 0),
+    ('newroster.php', 1, 0, 0, 0, 1, 0),
+    ('register.php', 1, 0, 0, 0, 1, 0),
+    ('regapproval.php', 1, 0, 0, 0, 1, 0);";
 
-        $result = mysqli_query($conn, $sql_user);
-        $result = mysqli_query($conn, $sql_patient_table );
-        $result = mysqli_query($conn, $sql_doctorappt_table);
-        $result = mysqli_query($conn, $sql_roster_table);
-        $result = mysqli_query($conn, $sql_patient_activity_table);
-        $result = mysqli_query($conn, $sql_employee_table);
-        $result = mysqli_query($conn, $sql_prescription_table);
-        $result = mysqli_query($conn, $sql_user_data);
-        $result = mysqli_query($conn, $sql_default_security);
+    $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
+    (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),
+    (16, 16, 554, '564345654', 'dad', 3211, '2019-11-23', 30000),
+    (17, 17, 6543, '345678322', 'killer', 988, '2019-11-25', 1000);
+    ");
 
-} else {
-}
+    $sql_doct_appt_data = "INSERT INTO `doctor_appt` (`patientid`, `doctorid`, `apt_date`, `complete`, `comment`, `morning_med`, `afternoon_med`, `night_med`) VALUES
+    (15, 13, '2019-11-30', 0, 'Needs serious help', 'xanax', 'advil', 'hennesy'),
+    (16, 20, '2019-11-27', 0, 'Losing his mental health', 'heroin', 'MDMA', 'percs'),
+    (17, 19, '2019-11-28', 0, 'I am not qualified to know', 'Weed', 'Whatever he wants', 'Meth');
+    ";
+
+    $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+    
+    // SET GLOBAL EVENT SCHEDULER ON;
+    $sql_scheduler = "SET GLOBAL event_scheduler = 1;";
+ 
+    $result = mysqli_query($conn, $sql_scheduler);
+    $result = mysqli_query($conn, $sql_user);
+    $result = mysqli_query($conn, $sql_role_table);
+    $result = mysqli_query($conn, $sql_patient_table );
+    $result = mysqli_query($conn, $sql_doctorappt_table);
+    $result = mysqli_query($conn, $sql_roster_table);
+    $result = mysqli_query($conn, $sql_patient_activity_table);
+    $result = mysqli_query($conn, $sql_employee_table);
+    $result = mysqli_query($conn, $sql_prescription_table);
+    $result = mysqli_query($conn, $sql_user_data);
+    $result = mysqli_query($conn, $sql_default_security);
+    $result = mysqli_query($conn, $sql_patient_data);
+    $result = mysqli_query($conn, $sql_doct_appt_data);
+    $result = mysqli_query($conn, $sql_employee_data);
+
+} else {}
 
 $dbName = "old_home";
 
