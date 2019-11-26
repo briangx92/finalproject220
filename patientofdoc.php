@@ -46,6 +46,7 @@ if (isset($_GET["name"])) {
            $date = date('Y-m-d');
            if($row['apt_date'] == $date) {
             $todaysappt = $row['apt_date'];
+            continue;
            }
            echo "<tr>";
            echo "<td>{$row['apt_date']}</td>";
@@ -53,6 +54,7 @@ if (isset($_GET["name"])) {
            echo "<td>{$row['morning_med']}</td>";
            echo "<td>{$row['afternoon_med']}</td>";
            echo "<td>{$row['night_med']}</td>";
+           echo "<td></td>";
            echo "</tr>";
            }
        }
@@ -71,12 +73,14 @@ if(isset($todaysappt)) {
     $appt_query = mysqli_query($conn, $sql_appt);
     if(mysqli_num_rows($appt_query) > 0) {
         while ($row = mysqli_fetch_assoc($appt_query)) {
-        echo "<h2> Todays Appointment</h2>";
-        echo "<label>Comment:<input value= '{$row['comment']}' name='new_comment'></label> ";
-        echo "<label>Morning Med:<input value = '{$row['morning_med']}' name='new_morning'> </label>";
-        echo "<label>Afternoon Med:<input value ='{$row['afternoon_med']}' name='afternoon_med'> </label>";
-        echo "<label>Night Med:<input value ='{$row['night_med']}' name='night_med'> </label>";
-        echo "<input type='submit' name='today'>";
+        echo "<tr>";
+        echo "<td><h2> Todays Appointment</h2></td>";
+        echo "<td><label>Comment:<input value= '{$row['comment']}' name='new_comment'></label> </td>";
+        echo "<td><label>Morning Med:<input value = '{$row['morning_med']}' name='new_morning'> </label></td>";
+        echo "<td><label>Afternoon Med:<input value ='{$row['afternoon_med']}' name='afternoon_med'> </label></td>";
+        echo "<td><label>Night Med:<input value ='{$row['night_med']}' name='night_med'> </label></td>";
+        echo "<td><input type='submit' name='today'></td>";
+        echo "</tr>";
         }
     }
 }
