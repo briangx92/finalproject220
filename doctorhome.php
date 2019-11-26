@@ -90,8 +90,8 @@ $docid = $_SESSION['id'];
                         $name_query = mysqli_query($conn, $sql_search);
                         if(mysqli_num_rows($name_query) > 0) {
                             while ($row = mysqli_fetch_assoc($name_query)) {
-                                $sendname = str_replace(' ', '', $row['name']);
-                                $namerow = "/finalproject220/patientofdoc.php?data={$sendname}1&data2=Data120";
+                                $sendname = str_replace(' ', '_', $row['name']);
+                                $namerow = "/finalproject220/patientofdoc.php?name={$sendname}&docid={$docid}";
                                 echo "<tr>";
                                 echo "<td><a href=$namerow> {$row['name']}</a></td>";
                                 echo "<td>{$row['apt_date']}</td>";
