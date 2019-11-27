@@ -55,6 +55,7 @@ $docid = $_SESSION['id'];
                         <th>Morning Meds</th>
                         <th>Afternoon Meds</th>
                         <th>Night Meds</th>
+                        <th></th>
                     </tr>
                     <?php
 
@@ -62,6 +63,11 @@ $docid = $_SESSION['id'];
                     $searchtype = $_POST['searchtype'] ?? '';
                     $search_text = $_POST['search_text'] ?? '';
                     $search = isset($_POST['search']);
+
+                    $morn = $_POST["new_morning"] ?? '';
+                    $after = $_POST["new_afternoon"] ?? '';
+                    $night = $_POST["new_night"] ?? '';
+                    $com = $_POST["new_comment"] ?? '';
 
                     if ($search) {
                         // SQL Variable Query
@@ -88,8 +94,46 @@ $docid = $_SESSION['id'];
                         // MYSQL Query
                         $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, u.userid, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE doctorid = '$docid' ";
                         $name_query = mysqli_query($conn, $sql_search);
+                        $checker = 0;
                         if(mysqli_num_rows($name_query) > 0) {
                             while ($row = mysqli_fetch_assoc($name_query)) {
+                                $date = date('Y-m-d');
+                                if($row['apt_date'] == $date) {
+                                    echo "<tr>";
+                                    echo "<td>{$row['name']}</td>";
+                                    echo "<td><h3>Today</h3></td>";
+                                    echo "<td><label>Comment:<input value = '{$row['comment']}' name='new_comment'></label> </td>";
+                                    echo "<td><label>Morning Med:<input value = '{$row['morning_med']}' name='new_morning'> </label></td>";
+                                    echo "<td><label>Afternoon Med:<input value ='{$row['afternoon_med']}' name='new_afternoon'> </label></td>";
+                                    echo "<td><label>Night Med:<input value ='{$row['night_med']}' name='new_night'> </label></td>";
+                                    echo "<td><input type='submit' name='today'></td>";
+                                    echo "</tr>";
+
+                                    if (empty($com) == false) {
+                                            $makenewcom = "UPDATE doctor_appt SET comment = '$com' WHERE apt_date = '$date' AND doctorid = '$docid' AND patientid = '{$row['userid']}';";
+                                            mysqli_query($conn, $makenewcom);
+                                            $checker = 1;
+                                    }
+                                    if (empty($morn) == false) {
+                                            $makenewmorn = "UPDATE doctor_appt SET morning_med = '$morn' WHERE apt_date = '$date' AND doctorid = '$docid' AND patientid = '{$row['userid']}';";
+                                            mysqli_query($conn, $makenewmorn);
+                                            $checker = 1;
+                                    }
+                                    if (empty($after) == false) {
+                                            $makenewafter = "UPDATE doctor_appt SET afternoon_med = '$after' WHERE apt_date = '$date' AND doctorid = '$docid' AND patientid = '{$row['userid']}';";
+                                            mysqli_query($conn, $makenewafter);
+                                            $checker = 1;
+                                    }
+                                    if (empty($night) == false) {
+                                            $makenewnight = "UPDATE doctor_appt SET night_med = '$night' WHERE apt_date = '$date' AND doctorid = '$docid' AND patientid = '{$row['userid']}';";
+                                            mysqli_query($conn, $makenewnight);
+                                            $checker = 1;
+                                    }
+                                    //if ($checker == 1) {
+                                    //    header("Refresh:0");
+                                    //}
+                                    continue;
+                                }
                                 $sendname = str_replace(' ', '_', $row['name']);
                                 $namerow = "/finalproject220/patientofdoc.php?name={$sendname}&docid={$docid}&patid={$row['userid']}";
                                 echo "<tr>";
