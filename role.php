@@ -42,29 +42,41 @@ update_values($conn);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
-    <style>
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    border-color: 10px solid blue;
-    text-align: center;
-    }
-    th, td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    }
-</style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Role - Old Home</title>
 </head>
+
 <body>
-        <table>
-            <tr>
-                <?php
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="register.php">Register</a></li>
+            <li><a href="adminreport.php">Admin Home</a></li>
+            <li><a href="regapproval.php">Registration Approval</a></li>
+            <li><a href="supervisorhome.php">Supervisor Home</a></li>
+            <li><a href="caregiverhome.php">Caregiver Home</a></li>
+            <li><a href="doctorhome.php">Doctor Home</a></li>
+            <li><a href="familyhome.php">Family Home</a></li>
+            <li><a href="patienthome.php">Patient Home</a></li>
+            <li><a href="rosterhome.php">Roster Home</a></li>
+            <li><a href="employee.php">Employee</a></li>
+            <li><a href="doctappt.php">Doctor Appointments</a></li>
+            <li><a href="patientinfo.php">Patient Info</a></li>
+            <li><a href="patientofdoc.php">Patients of Doctor</a></li>
+            <li><a href="payments.php">Payments</a></li>
+            <li><a href="role.php">Role</a></li>
+
+
+        </ul>
+    </nav>
+    <table>
+        <tr>
+            <?php
                 $getinfo = "SELECT * FROM role " ;
                 $theirinfo = mysqli_query($conn, $getinfo);
                 $newinfo = mysqli_fetch_assoc($theirinfo);
@@ -79,9 +91,9 @@ update_values($conn);
                     }
                 }
                 ?>
-            </tr>
-            <form action='role.php' method='post'>
-<?php
+        </tr>
+        <form action='role.php' method='post'>
+            <?php
 
         $dir = getcwd();
         $files = scandir($dir);
@@ -113,12 +125,12 @@ update_values($conn);
 
 
 ?>
-</form>
-<form action='role.php' method='post'>
-    New Role <input type="text" name="newrole">
-    <input type="submit" name="newrolesubmit">
-</form>
-<?php echo $newrole; ?>
+        </form>
+        <form action='role.php' method='post'>
+            New Role <input type="text" name="newrole">
+            <input type="submit" name="newrolesubmit">
+        </form>
+        <?php echo $newrole; ?>
 </body>
 
 </html>

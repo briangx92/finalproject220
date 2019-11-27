@@ -9,53 +9,63 @@ securitygate($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Doctor Home - Old Home</title>
 </head>
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
 
 <body>
-    <main>
+
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="register.php">Register</a></li>
+            <li><a href="adminreport.php">Admin Home</a></li>
+            <li><a href="regapproval.php">Registration Approval</a></li>
+            <li><a href="supervisorhome.php">Supervisor Home</a></li>
+            <li><a href="caregiverhome.php">Caregiver Home</a></li>
+            <li><a href="doctorhome.php">Doctor Home</a></li>
+            <li><a href="familyhome.php">Family Home</a></li>
+            <li><a href="patienthome.php">Patient Home</a></li>
+            <li><a href="rosterhome.php">Roster Home</a></li>
+            <li><a href="employee.php">Employee</a></li>
+            <li><a href="doctappt.php">Doctor Appointments</a></li>
+            <li><a href="patientinfo.php">Patient Info</a></li>
+            <li><a href="patientofdoc.php">Patients of Doctor</a></li>
+            <li><a href="payments.php">Payments</a></li>
+            <li><a href="role.php">Role</a></li>
 
 
-        <!--Doctors Search Form -->
-        <form action="" method="post">
+        </ul>
+    </nav>
 
-            <fieldset>
-                <legend>Doctor's Home Page</legend>
-                <label>Search By: </label>
-                <select name="searchtype">
-                    <option value="fname" name="fname">Name</option>
-                    <option value="apt_date" name="apt_date">Date</option>
-                    <option value="comment" name="comment">Comment</option>
-                    <option value="morning_med" name="morning_med">Morning Meds</option>
-                    <option value="afternoon_med" name="afternoon_med">Afternoon Meds</option>
-                    <option value="night_med" name="night_med">Night Meds</option>
-                </select>
-                <input type="text" name="search_text" value="<?php $search_text; ?>">
-                <button type="submit" name="search" value="search">Search</button>
 
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Comment</th>
-                        <th>Morning Meds</th>
-                        <th>Afternoon Meds</th>
-                        <th>Night Meds</th>
-                    </tr>
-                    <?php
+    <!--Doctors Search Form -->
+    <form action="" method="post">
+
+        <fieldset>
+            <legend>Doctor's Home Page</legend>
+            <label>Search By: </label>
+            <select name="searchtype">
+                <option value="fname" name="fname">Name</option>
+                <option value="apt_date" name="apt_date">Date</option>
+                <option value="comment" name="comment">Comment</option>
+                <option value="morning_med" name="morning_med">Morning Meds</option>
+                <option value="afternoon_med" name="afternoon_med">Afternoon Meds</option>
+                <option value="night_med" name="night_med">Night Meds</option>
+            </select>
+            <input type="text" name="search_text" value="<?php $search_text; ?>">
+            <button type="submit" name="search" value="search">Search</button>
+
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Comment</th>
+                    <th>Morning Meds</th>
+                    <th>Afternoon Meds</th>
+                    <th>Night Meds</th>
+                </tr>
+                <?php
 
                     // POSTS
                     $search = isset($_POST['search']);
@@ -92,20 +102,20 @@ securitygate($conn);
 
                     ?>
 
-                </table>
-            </fieldset>
+            </table>
+        </fieldset>
         <!-- Appointment Search Form -->
-        </form>
-        <form action="doctorhome.php" method="post">
-            <input type="date" name="date">
-            <button type="submit">Appointments</button>
-        </form>
-        <table>
-            <tr>
-                <th>Patient</th>
-                <th>Date</th>
-            </tr>
-            <?php
+    </form>
+    <form action="doctorhome.php" method="post">
+        <input type="date" name="date">
+        <button type="submit">Appointments</button>
+    </form>
+    <table>
+        <tr>
+            <th>Patient</th>
+            <th>Date</th>
+        </tr>
+        <?php
             $date = $_POST['date'] ?? '';
             $today = date('m/d/Y');
             $docid = $_SESSION['id'];
@@ -123,8 +133,8 @@ securitygate($conn);
 
             ?>
 
-        </table>
-    </main>
+    </table>
+
 </body>
 
 </html>

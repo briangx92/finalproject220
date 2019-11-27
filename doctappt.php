@@ -41,11 +41,34 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Doctor Appointments - Old Home</title>
 </head>
 
 <body>
-    
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="register.php">Register</a></li>
+            <li><a href="adminreport.php">Admin Home</a></li>
+            <li><a href="regapproval.php">Registration Approval</a></li>
+            <li><a href="supervisorhome.php">Supervisor Home</a></li>
+            <li><a href="caregiverhome.php">Caregiver Home</a></li>
+            <li><a href="doctorhome.php">Doctor Home</a></li>
+            <li><a href="familyhome.php">Family Home</a></li>
+            <li><a href="patienthome.php">Patient Home</a></li>
+            <li><a href="rosterhome.php">Roster Home</a></li>
+            <li><a href="employee.php">Employee</a></li>
+            <li><a href="doctappt.php">Doctor Appointments</a></li>
+            <li><a href="patientinfo.php">Patient Info</a></li>
+            <li><a href="patientofdoc.php">Patients of Doctor</a></li>
+            <li><a href="payments.php">Payments</a></li>
+            <li><a href="role.php">Role</a></li>
+
+
+        </ul>
+    </nav>
+
     <form action="" method="post">
         <fieldset>
             <legend>Doctors Appointment</legend>
@@ -53,8 +76,8 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             <input type="text" name="patientid" value="<?php echo $patientid; ?>">
             <label>Patient Name: <?php if($search) {
                 echo "{$patient}"; }?></label>
-                <br>
-            
+            <br>
+
             <label>Date: </label>
             <input type="date" name="date" value='<?php echo $date; ?>'>
             <br>
@@ -75,10 +98,10 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
                 
                 ?>
             </select>
-        <br>
-        <button type="submit" name="search" value="">Search Patient ID</button>
-        <button type="submit" name="submit" value="">Submit Form</button>
-        <?php 
+            <br>
+            <button type="submit" name="search" value="">Search Patient ID</button>
+            <button type="submit" name="submit" value="">Submit Form</button>
+            <?php 
        
         if ($submit) {
             $patientid = $_POST['patientid'] ?? '';

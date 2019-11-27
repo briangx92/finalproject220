@@ -28,6 +28,28 @@ function getname($conn, $whichguy) {
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="register.php">Register</a></li>
+            <li><a href="adminreport.php">Admin Home</a></li>
+            <li><a href="regapproval.php">Registration Approval</a></li>
+            <li><a href="supervisorhome.php">Supervisor Home</a></li>
+            <li><a href="caregiverhome.php">Caregiver Home</a></li>
+            <li><a href="doctorhome.php">Doctor Home</a></li>
+            <li><a href="familyhome.php">Family Home</a></li>
+            <li><a href="patienthome.php">Patient Home</a></li>
+            <li><a href="rosterhome.php">Roster Home</a></li>
+            <li><a href="employee.php">Employee</a></li>
+            <li><a href="doctappt.php">Doctor Appointments</a></li>
+            <li><a href="patientinfo.php">Patient Info</a></li>
+            <li><a href="patientofdoc.php">Patients of Doctor</a></li>
+            <li><a href="payments.php">Payments</a></li>
+            <li><a href="role.php">Role</a></li>
+
+
+        </ul>
+    </nav>
     <form action="rosterhome.php" method="post">
         <fieldset>
             <legend>Roster</legend>
