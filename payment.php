@@ -99,6 +99,7 @@ else {}
             <li><a href="patientofdoc.php">Patients of Doctor</a></li>
             <li><a href="payment.php">Payments</a></li>
             <li><a href="role.php">Role</a></li>
+            <li><a href="newroster.php">New Roster</a></li>
 
 
         </ul>
