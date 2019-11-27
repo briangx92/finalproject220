@@ -86,12 +86,12 @@ $docid = $_SESSION['id'];
                             }
                         } else {
                         // MYSQL Query
-                        $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE doctorid = '$docid' ";
+                        $sql_search = "SELECT DISTINCT CONCAT(u.fname, ' ', u.lname) AS name, d.apt_date, d.comment, d.morning_med, d.afternoon_med, u.userid, d.night_med FROM users u JOIN doctor_appt d ON u.userid = d.patientid WHERE doctorid = '$docid' ";
                         $name_query = mysqli_query($conn, $sql_search);
                         if(mysqli_num_rows($name_query) > 0) {
                             while ($row = mysqli_fetch_assoc($name_query)) {
                                 $sendname = str_replace(' ', '_', $row['name']);
-                                $namerow = "/finalproject220/patientofdoc.php?name={$sendname}&docid={$docid}";
+                                $namerow = "/finalproject220/patientofdoc.php?name={$sendname}&docid={$docid}&patid={$row['userid']}";
                                 echo "<tr>";
                                 echo "<td><a href=$namerow> {$row['name']}</a></td>";
                                 echo "<td>{$row['apt_date']}</td>";
