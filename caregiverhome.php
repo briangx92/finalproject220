@@ -92,18 +92,12 @@ $patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today)
             ?>
 
         </tr>
-        <?php
-
-
-        // WHILE LOOP TO CREATE A TABLE FOR THE LIST OF PATIENTS DUTY <tr></tr> 
-        ?>
 
 
     </table>
-    <!-- OK and Cancel Form -->
-    <form action="" method="post">
-        <button type="submit" name="submit" value="submit">Submit</button>
-        <input type="button" onclick="location.href='index.php';" value="Cancel">
+
+    <button type="submit" name="submit" value="submit">Submit</button>
+    <input type="button" onclick="location.href='index.php';" value="Cancel">
     </form>
 
 
