@@ -1,7 +1,6 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
-
 function update_values($conn) {
     $role_list = array();
     $getinfo = "SELECT * FROM role " ;
@@ -17,7 +16,6 @@ function update_values($conn) {
             $getinfo = "SELECT $role FROM role WHERE page = '$page'" ;
             $theirinfo = mysqli_query($conn, $getinfo);
             $newinfo = mysqli_fetch_assoc($theirinfo);
-
             $approval = ($newinfo[$role] == 1 ? 1 : 0);
             if ($approval == 1) {
                 $unapprove = "UPDATE role SET $role = 0 WHERE page = '$page';";
@@ -30,13 +28,10 @@ function update_values($conn) {
         }
     }
 }
-
 $newrole = $_POST['newrole'] ?? '';
-
 $addnewrole = "ALTER TABLE role
 ADD $newrole varchar(20);";
 mysqli_query($conn, $addnewrole);
-
 update_values($conn);
 ?>
 

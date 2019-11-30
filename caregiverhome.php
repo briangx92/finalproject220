@@ -1,11 +1,24 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
+$list = isset($_POST['list']);
+$submit = isset($_POST['submit']);
 
-?>
 
-<?php
-// SQL CODE TO LIST PATIENTS
+
+$today = date('Y/m/d');
+
+
+// SQL Query Variables
+// $sql_patient_activity = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid;";
+
+$sql_patient_activity_today = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid WHERE p.today = '$today';";
+
+// MYSQL Queries
+// list_activity_query = mysqli_query($conn, $sql_patient_activity);
+$patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today);
+
+
 
 ?>
 <!DOCTYPE html>
@@ -44,7 +57,7 @@ securitygate($conn);
         </ul>
     </nav>
     <form action="" method="post">
-        <button type="submit" value="submit" name="submit">List Patients Duty Today</button>
+        <button type="submit" value="list" name="list">List Patients Duty Today</button>
     </form>
     <table>
 
@@ -57,16 +70,39 @@ securitygate($conn);
             <th>Lunch</th>
             <th>Dinner</th>
         </tr>
+        <tr>
+
+            <?php
+
+
+            if ($list) {
+                if (mysqli_num_rows($patient_activity_today_query) > 0) {
+                    while ($row = mysqli_fetch_assoc($patient_activity_today_query)) {
+                        echo "<td>{$row['name']}</td>";
+                        echo "<td><input type='checkbox' name='morning_meds' value='1'></td>";
+                        echo "<td><input type='checkbox' name='afternoon_meds' value='1'></td>";
+                        echo "<td><input type='checkbox' name='night_meds' value='1'></td>";
+                        echo "<td><input type='checkbox' name='breakfast' value='1'></td>";
+                        echo "<td><input type='checkbox' name='lunch' value='1'></td>";
+                        echo "<td><input type='checkbox' name='dinner' value='1'></td>";
+                    }
+                }
+            }
+
+            ?>
+
+        </tr>
         <?php
 
-    // WHILE LOOP TO CREATE A TABLE FOR THE LIST OF PATIENTS DUTY <tr></tr> <td></td>
-    ?>
+
+        // WHILE LOOP TO CREATE A TABLE FOR THE LIST OF PATIENTS DUTY <tr></tr> 
+        ?>
 
 
     </table>
     <!-- OK and Cancel Form -->
     <form action="" method="post">
-        <button type="submit" name="submit" value="submit">Ok</button>
+        <button type="submit" name="submit" value="submit">Submit</button>
         <input type="button" onclick="location.href='index.php';" value="Cancel">
     </form>
 
