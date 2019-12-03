@@ -74,7 +74,8 @@ update_values($conn);
             if ($page == 'index.php' or $page == 'verify.php' or $page == 'db.php') {
                 continue;
             }
-            elseif (strpos($page, 'php') == True) {
+            elseif (strpos($page, '.php') == True) {
+                $page = str_replace(".php","",$page);
                 $sql = "INSERT INTO role (page) VALUES ('$page');";
                 if ($conn->query($sql) === TRUE) {
                 }
