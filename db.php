@@ -187,25 +187,37 @@ $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 <link href="style.css" rel="stylesheet">
 <nav>
     <ul>
-        <li><a href="index.php">Home</a></li>
-        <li><a href="register.php">Register</a></li>
-        <li><a href="adminreport.php">Admin Home</a></li>
-        <li><a href="regapproval.php">Registration Approval</a></li>
-        <li><a href="supervisorhome.php">Supervisor Home</a></li>
-        <li><a href="caregiverhome.php">Caregiver Home</a></li>
-        <li><a href="doctorhome.php">Doctor Home</a></li>
-        <li><a href="familyhome.php">Family Home</a></li>
-        <li><a href="patienthome.php">Patient Home</a></li>
-        <li><a href="rosterhome.php">Roster Home</a></li>
-        <li><a href="employee.php">Employee</a></li>
-        <li><a href="doctappt.php">Doctor Appointments</a></li>
-        <li><a href="patientinfo.php">Patient Info</a></li>
-        <li><a href="patientofdoc.php">Patients of Doctor</a></li>
-        <li><a href="payment.php">Payments</a></li>
-        <li><a href="role.php">Role</a></li>
-        <li><a href="newroster.php">New Roster</a></li>
-
-
+        <?php
+        $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+        $sessionrole = $_SESSION['role'];
+        $getnav = "SELECT page, $sessionrole FROM role ";
+        $theirinfo = mysqli_query($conn, $getnav);
+        $resultcheck = mysqli_num_rows($theirinfo);
+           if($resultcheck>0) {
+               while($tables = mysqli_fetch_assoc($theirinfo)){
+               if ($tables [$sessionrole] ==  1) {
+                   $unchangedpage = $tables['page'];
+                   $thepage = ucfirst($tables['page']);
+                   if (strpos($thepage, 'home') == True) {
+                       $thepage = str_replace("home"," Home",$thepage);
+                   }
+                   if (strpos($thepage, 'report') == True) {
+                       $thepage = str_replace("report"," Report",$thepage);
+                   }
+                   if (strpos($thepage, 'doctappt') == True) {
+                       $thepage = str_replace("doctappt","Appointments",$thepage);
+                   }
+                   if (strpos($thepage, 'Newroster') == True) {
+                       $thepage = str_replace("New","New ",$thepage);
+                   }
+                   if (strpos($thepage, 'approval') == True) {
+                       $thepage = str_replace("approval"," Approval",$thepage);
+                   }
+                   echo "<li><a href='$unchangedpage.php'>" . " $thepage" . "</a></li>";
+           }
+        }
+    }
+        ?>
     </ul>
 </nav>
 <?php
