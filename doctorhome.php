@@ -129,15 +129,13 @@ $docid = $_SESSION['id'];
                                             mysqli_query($conn, $makenewnight);
                                             $checker = 1;
                                     }
-                                    //if ($checker == 1) {
-                                    //    header("Refresh:0");
-                                    //}
+                                    if ($checker == 1) {
+                                    header("Refresh:0");
+                                    }
                                     continue;
                                 }
-                                $sendname = str_replace(' ', '_', $row['name']);
-                                $namerow = "/finalproject220/patientofdoc.php?name={$sendname}&docid={$docid}&patid={$row['userid']}";
                                 echo "<tr>";
-                                echo "<td><a href=$namerow> {$row['name']}</a></td>";
+                                echo "<td>{$row['name']}</td>";
                                 echo "<td>{$row['apt_date']}</td>";
                                 echo "<td>{$row['comment']}</td>";
                                 echo "<td>{$row['morning_med']}</td>";
@@ -157,8 +155,8 @@ $docid = $_SESSION['id'];
         <!-- Appointment Search Form -->
         </form>
         <form action="doctorhome.php" method="post">
-            <input type="date" name="date">
-            <button type="submit">Appointments</button>
+            Future Appointments: <input type="date" name="date">
+            <button type="submit">Search</button>
         </form>
         <table>
             <tr>
