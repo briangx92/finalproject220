@@ -67,7 +67,8 @@ securitygate($conn);
         elseif ( isset($_POST['denied']) ) {
             $remove_patient = "DELETE FROM patient WHERE userid = '$denied';";
             mysqli_query($conn, $remove_patient);
-            echo $denied;
+            $remove_employee = "DELETE FROM employee WHERE userid = '$denied';";
+            mysqli_query($conn, $remove_employee);
             $remove_users = "DELETE FROM users WHERE userid = '$denied';";
             mysqli_query($conn, $remove_users);
             header("Refresh:0");
