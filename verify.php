@@ -18,31 +18,31 @@ if ($resultCheck >= 1) {
     $_SESSION['id'] = $id;
     if ($user_info['role'] == 'admin') {
         $_SESSION['role'] = 'admin';
-        header("Location: /adminreport.php");
+        header("Location: ./adminreport.php");
     }
     elseif ($user_info['role'] == 'patient') {
             $_SESSION['role'] = 'patient';
-            header("Location: /patients.php");
+            header("Location: ./patients.php");
     }
     elseif ($user_info['role'] == 'supervisor') {
             $_SESSION['role'] = 'supervisor';
-            header("Location: /supervisorhome.php");
+            header("Location: ./supervisorhome.php");
     }
     elseif ($user_info['role'] == 'doctor') {
             $_SESSION['role'] = 'doctor';
-            header("Location: /doctorhome.php");
+            header("Location: ./doctorhome.php");
     }
     elseif ($user_info['role'] == 'caregiver') {
             $_SESSION['role'] = 'caregiver';
-            header("Location: /caregiverhome.php");
+            header("Location: ./caregiverhome.php");
     }
     elseif ($user_info['role'] == 'family') {
             $_SESSION['role'] = 'family';
-            header("Location: /familyhome.php");
+            header("Location: ./familyhome.php");
 
     }
     elseif (isempty($user_info['role']) == TRUE) {
-            header("Location: /index.php");
+            header("Location: ./index.php");
     }
 }
 else {
