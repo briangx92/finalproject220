@@ -19,14 +19,20 @@ include_once 'db.php';
             <legend>Register</legend>
             <label>Role: </label>
             <select id="role" name="role">
-                <option value="none">-- Select --</option>
-                <option value="admin">Admin</option>
-                <option value="patient">Patient</option>
-                <option value="family">Family Member</option>
-                <option value="doctor">Doctor</option>
-                <option value="supervisor">Supervisor</option>
-                <option value="caregiver">Caregiver</option>
-
+            <?php
+            $getinfo = "SELECT * FROM role " ;
+            $theirinfo = mysqli_query($conn, $getinfo);
+            $newinfo = mysqli_fetch_assoc($theirinfo);
+            $u = 0;
+            foreach ($newinfo as $key => $new) {
+                if ($u == 0) {
+                    $u += 1;
+                } else {
+                    $capkey = ucfirst($key);
+                    echo "<option value='{$key}'>{$capkey}</option>";
+                }
+            }
+            ?>
             </select>
             <br>
             <label>First Name: </label>
