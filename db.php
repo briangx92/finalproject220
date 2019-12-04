@@ -157,6 +157,17 @@ if ($conn->query($sql) === TRUE) {
     ";
 
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+
+    $sql_roster_data = "INSERT INTO roster (roster_date, supervisor, doctor, caregiver_1, caregiver_group1, caregiver_2, caregiver_group2, caregiver_3, caregiver_group3, caregiver_4, caregiver_group4) VALUES
+    ('2019-12-03', 21, 13, 22, 1, 23, 2, 24, 3, 25, 4),
+    ('2019-12-04', 21, 19, 22, 4, 23, 2, 24, 3, 25, 1),
+    ('2019-12-05', 21, 20, 23, 1, 24, 2, 22, 4, 25, 3);";
+
+    $sql_patient_activity_data = "INSERT INTO `patient_activity` (`today`, `patientid`, `caregiver`, `morning_meds`, `afternoon_meds`, `night_meds`, `breakfast`, `lunch`, `dinner`) VALUES
+    ('2019-12-03', 15, 25, 0, 0, 1, 1, 1, 0),
+    ('2019-12-04', 17, 24, 0, 1, 0, 1, 1, 0),
+    ('2019-12-05', 16, 22, 1, 1, 1, 1, 1, 1);";
+
     // SET GLOBAL EVENT SCHEDULER ON;
     $sql_scheduler = "SET GLOBAL event_scheduler = 1;";
 
@@ -174,6 +185,8 @@ if ($conn->query($sql) === TRUE) {
     $result = mysqli_query($conn, $sql_patient_data);
     $result = mysqli_query($conn, $sql_doct_appt_data);
     $result = mysqli_query($conn, $sql_employee_data);
+    $result = mysqli_query($conn, $sql_roster_data);
+    $result = mysqli_query($conn, $sql_patient_activity_data);
 } else { }
 
 
