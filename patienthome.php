@@ -1,12 +1,6 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
-
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

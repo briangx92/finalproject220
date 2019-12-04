@@ -1,9 +1,16 @@
 <?php
-session_start();
+$currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
 $conn = new mysqli($dbServername, $dbUsername, $dbPassword);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if ($currentpage == 'logout') {
+    session_destroy();
+}
 
 // Database Initialization
 $sql = "CREATE DATABASE old_home";
@@ -201,47 +208,45 @@ $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
     <ul>
         <?php
         $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
-        $sessionrole = $_SESSION['role'];
-        $getnav = "SELECT page, $sessionrole FROM role ";
-        $theirinfo = mysqli_query($conn, $getnav);
-        $resultcheck = mysqli_num_rows($theirinfo);
-        if ($resultcheck > 0) {
-            while ($tables = mysqli_fetch_assoc($theirinfo)) {
-                if ($tables[$sessionrole] ==  1) {
-                    $unchangedpage = $tables['page'];
-                    $thepage = ucfirst($tables['page']);
-                    if (strpos($thepage, 'home') == True) {
-                        $thepage = str_replace("home", " Home", $thepage);
+        if (isset($_SESSION['role'])) {
+            $sessionrole = $_SESSION['role'];
+            $getnav = "SELECT page, $sessionrole FROM role ";
+            $theirinfo = mysqli_query($conn, $getnav);
+            $resultcheck = mysqli_num_rows($theirinfo);
+            if ($resultcheck > 0) {
+                while ($tables = mysqli_fetch_assoc($theirinfo)) {
+                    if ($tables[$sessionrole] ==  1) {
+                        $unchangedpage = $tables['page'];
+                        $thepage = ucfirst($tables['page']);
+                        if (strpos($thepage, 'home') == True) {
+                            $thepage = str_replace("home", " Home", $thepage);
+                        }
+                        if (strpos($thepage, 'report') == True) {
+                            $thepage = str_replace("report", " Report", $thepage);
+                        }
+                        if (strpos($thepage, 'doctappt') == True) {
+                            $thepage = str_replace("doctappt", "Appointments", $thepage);
+                        }
+                        if (strpos($thepage, 'Newroster') == True) {
+                            $thepage = str_replace("New", "New ", $thepage);
+                        }
+                        if (strpos($thepage, 'approval') == True) {
+                            $thepage = str_replace("approval", " Approval", $thepage);
+                        }
+                        echo "<li><a href='$unchangedpage.php'>" . " $thepage" . "</a></li>";
                     }
-                    if (strpos($thepage, 'report') == True) {
-                        $thepage = str_replace("report", " Report", $thepage);
-                    }
-                    if (strpos($thepage, 'doctappt') == True) {
-                        $thepage = str_replace("doctappt", "Appointments", $thepage);
-                    }
-                    if (strpos($thepage, 'Newroster') == True) {
-                        $thepage = str_replace("New", "New ", $thepage);
-                    }
-                    if (strpos($thepage, 'approval') == True) {
-                        $thepage = str_replace("approval", " Approval", $thepage);
-                    }
-                    echo "<li><a href='$unchangedpage.php'>" . " $thepage" . "</a></li>";
                 }
             }
+        echo "<li><button type='submit' value='logout' name='logout' onclick=location.href='logout.php' >Logout</button></li>";
+        $cancel = $_POST['logout'] ?? '';
         }
-
-
         ?>
-        <li><button type="submit" value="logout" name="logout">Logout</button></li>
+
 
 
     </ul>
 </nav>
 <?php
-$cancel = isset($_POST['logout']);
-if ($cancel) {
-    session_destroy();
-}
 // Security
 function securitygate($conn)
 {
