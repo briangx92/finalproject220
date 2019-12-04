@@ -10,7 +10,9 @@ include_once 'db.php';
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Register - Old Home</title>
+    <script>
 
+    </script>
 </head>
 
 <body>
@@ -19,20 +21,20 @@ include_once 'db.php';
             <legend>Register</legend>
             <label>Role: </label>
             <select id="role" name="role">
-            <?php
-            $getinfo = "SELECT * FROM role " ;
-            $theirinfo = mysqli_query($conn, $getinfo);
-            $newinfo = mysqli_fetch_assoc($theirinfo);
-            $u = 0;
-            foreach ($newinfo as $key => $new) {
-                if ($u == 0) {
-                    $u += 1;
-                } else {
-                    $capkey = ucfirst($key);
-                    echo "<option value='{$key}'>{$capkey}</option>";
+                <?php
+                $getinfo = "SELECT * FROM role ";
+                $theirinfo = mysqli_query($conn, $getinfo);
+                $newinfo = mysqli_fetch_assoc($theirinfo);
+                $u = 0;
+                foreach ($newinfo as $key => $new) {
+                    if ($u == 0) {
+                        $u += 1;
+                    } else {
+                        $capkey = ucfirst($key);
+                        echo "<option value='{$key}'>{$capkey}</option>";
+                    }
                 }
-            }
-            ?>
+                ?>
             </select>
             <br>
             <label>First Name: </label>
@@ -54,7 +56,7 @@ include_once 'db.php';
             <input type="date" name="dob">
             <br>
             <!-- Make this appear when role is patient -->
-            <section id="section">
+            <section id="section" style='display:none'>
                 <label class="hideit">Family Code: </label>
                 <input class="hideit" type="text" name="famcode">
                 <br>
@@ -80,7 +82,6 @@ include_once 'db.php';
     <script>
     // This shows the patient form when selected in the dropdown menu
     let role = document.getElementById('role');
-
     role.addEventListener("change", (event) => {
         let select = role.options[role.selectedIndex].value;
         if (select != "patient") {
@@ -99,32 +100,31 @@ include_once 'db.php';
 
 <?php
 if (!empty($_POST)) {
-$role = $_POST['role'] ?? '';
-$fname = $_POST['fname'] ?? '';
-$lname = $_POST['lname'] ?? '';
-$email = $_POST['email'] ?? '';
-$phone = $_POST['phone'] ?? '';
-$dob = $_POST['dob'] ?? '';
-$pass = $_POST['pass'] ?? '';
-// Patient only
-$famcode = $_POST['famcode'] ?? '';
-$emcontact = $_POST['$emcontact'] ?? '';
-$relation = $_POST['relation'] ?? '';
+    $role = $_POST['role'] ?? '';
+    $fname = $_POST['fname'] ?? '';
+    $lname = $_POST['lname'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $dob = $_POST['dob'] ?? '';
+    $pass = $_POST['pass'] ?? '';
+    // Patient only
+    $famcode = $_POST['famcode'] ?? '';
+    $emcontact = $_POST['$emcontact'] ?? '';
+    $relation = $_POST['relation'] ?? '';
 
-$usersinfo = "INSERT INTO users (role, fname, lname, phone, dob, email, pass, approved)
+    $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob, email, pass, approved)
 VALUES ('$role', '$fname', '$lname', '$phone', '$dob', '$email', '$pass', 0);";
-$what = mysqli_query($conn, $usersinfo);
-$getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
-$theirid = mysqli_query($conn, $getid);
-$newid = mysqli_fetch_assoc($theirid);
-$youid = $newid['userid'];
-echo "Your registration has been submitted, please wait on admin approval.";
+    $what = mysqli_query($conn, $usersinfo);
+    $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
+    $theirid = mysqli_query($conn, $getid);
+    $newid = mysqli_fetch_assoc($theirid);
+    $youid = $newid['userid'];
+    echo "Your registration has been submitted, please wait on admin approval.";
     if ($role == 'patient') {
         $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)
         VALUES ('$youid', '$famcode', '$emcontact', '$relation');";
         mysqli_query($conn, $patientinfo);
-    }
-    elseif ($role != 'patient' AND $role != 'family') {
+    } elseif ($role != 'patient' and $role != 'family') {
         $salary = "INSERT INTO employee(userid)
         VALUES ('$youid');";
         mysqli_query($conn, $salary);
