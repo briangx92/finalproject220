@@ -136,19 +136,23 @@ if ($conn->query($sql) === TRUE) {
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
 
-  $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
-    VALUES
-    ('adminreport', 1, 0, 0, 0, 0, 0),
-    ('role', 1, 0, 0, 0, 0, 0),
-    ('caregiverhome', 0, 0, 0, 0, 0, 1),
-    ('doctorhome', 0, 0, 0, 1, 0, 0),
-    ('familyhome', 0, 0, 1, 0, 0, 0),
-    ('patienthome', 0, 1, 0, 0, 0, 0),
-    ('supervisorhome', 0, 0, 0, 0, 1, 0),
-    ('payment', 1, 0, 0, 0, 1, 0),
-    ('newroster', 1, 0, 0, 0, 1, 0),
-    ('register', 1, 0, 0, 0, 1, 0),
-    ('regapproval', 1, 0, 0, 0, 1, 0);";
+  $sql_default_security = "INSERT INTO `role` (`page`, `admin`, `patient`, `family`, `doctor`, `supervisor`, `caregiver`) VALUES
+  ('adminreport', 1, 0, 0, 0, 0, 0),
+  ('caregiverhome', 0, 0, 0, 0, 0, 1),
+  ('doctappt', 1, NULL, NULL, NULL, 1, NULL),
+  ('doctorhome', 0, 0, 0, 1, 0, 0),
+  ('employee', 1, NULL, NULL, NULL, NULL, NULL),
+  ('familyhome', 0, 0, 1, 0, 0, 0),
+  ('newroster', 1, 0, 0, 0, 1, 0),
+  ('patienthome', 0, 1, 0, 0, 0, 0),
+  ('patientinfo', 1, NULL, NULL, NULL, NULL, NULL),
+  ('payment', 1, 0, 0, 0, 1, 0),
+  ('regapproval', 1, 0, 0, 0, 1, 0),
+  ('register', 1, 0, 0, 0, 1, 0),
+  ('role', 1, 0, 0, 0, 0, 0),
+  ('rosterhome', 1, 1, 1, 1, 1, 1),
+  ('supervisorhome', 0, 0, 0, 0, 1, 0);
+;";
 
     $sql_patient_data = ("INSERT INTO `patient` (`userid`, `patientid`, `family_code`, `emergency_contact_number`, `relation`, `group_num`, `admission_date`, `amount_due`) VALUES
     (15, 15, 54, '90876543', 'mom', 4444, '2019-11-22', 40000),

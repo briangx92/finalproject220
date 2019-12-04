@@ -72,7 +72,7 @@ update_values($conn);
         $dir = getcwd();
         $files = scandir($dir);
         foreach ($files as $page) {
-            if ($page == 'index.php' or $page == 'verify.php' or $page == 'db.php') {
+            if ($page == 'index.php' or $page == 'verify.php' or $page == 'db.php' or $page == 'logout.php' or $page == 'register.php') {
                 continue;
             }
             elseif (strpos($page, '.php') == True) {
