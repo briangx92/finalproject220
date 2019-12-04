@@ -22,7 +22,7 @@ if ($resultCheck >= 1) {
     }
     elseif ($user_info['role'] == 'patient') {
             $_SESSION['role'] = 'patient';
-            header("Location: ./patients.php");
+            header("Location: ./patienthome.php");
     }
     elseif ($user_info['role'] == 'supervisor') {
             $_SESSION['role'] = 'supervisor';

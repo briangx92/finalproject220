@@ -3,13 +3,45 @@ table {
     width: 100%;
     border-color: 10px solid blue;
     text-align: center;
-    
-    
-   
-    }
 
-    th, td {
+}
+
+th,
+td {
     padding: 8px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-    }
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: gray;
+}
+
+li {
+    float: left;
+    border-right: 1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}

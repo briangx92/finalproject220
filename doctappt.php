@@ -27,7 +27,7 @@ $sql_doctor = "SELECT DISTINCT * FROM users WHERE role = 'doctor';";
 $sql_patid_query = mysqli_query($conn, $sql_patientid);
 $result_patientid = mysqli_fetch_assoc($sql_patid_query);
 
-// Date 
+// Date
 $sql_date_query = mysqli_query($conn, $sql_date);
 $result_date = mysqli_fetch_assoc($sql_date_query);
 
@@ -41,11 +41,11 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Doctor Appointments - Old Home</title>
 </head>
 
 <body>
-    
     <form action="" method="post">
         <fieldset>
             <legend>Doctors Appointment</legend>
@@ -53,8 +53,8 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             <input type="text" name="patientid" value="<?php echo $patientid; ?>">
             <label>Patient Name: <?php if($search) {
                 echo "{$patient}"; }?></label>
-                <br>
-            
+            <br>
+
             <label>Date: </label>
             <input type="date" name="date" value='<?php echo $date; ?>'>
             <br>
@@ -71,15 +71,15 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
                         echo "<option value='{$docid}'>{$fname} {$lname} ID: {$docid}</option>";
 
                     }
-                }     
-                
+                }
+
                 ?>
             </select>
-        <br>
-        <button type="submit" name="search" value="">Search Patient ID</button>
-        <button type="submit" name="submit" value="">Submit Form</button>
-        <?php 
-       
+            <br>
+            <button type="submit" name="search" value="">Search Patient ID</button>
+            <button type="submit" name="submit" value="">Submit Form</button>
+            <?php
+
         if ($submit) {
             $patientid = $_POST['patientid'] ?? '';
             $date = $_POST['date'] ?? '';
@@ -89,8 +89,8 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             echo mysqli_query($conn, $sql_new_apt);
         }
         else {}
-        
-      
+
+
         ?>
 
         </fieldset>

@@ -1,63 +1,85 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
+$list = isset($_POST['list']);
+$submit = isset($_POST['submit']);
 
-?>
 
-<?php
-// SQL CODE TO LIST PATIENTS
+
+$today = date('Y/m/d');
+
+
+// SQL Query Variables
+// $sql_patient_activity = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid;";
+
+$sql_patient_activity_today = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid WHERE p.today = '$today';";
+
+// MYSQL Queries
+// list_activity_query = mysqli_query($conn, $sql_patient_activity);
+$patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today);
+
+
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Caregiver Home - Old Home</title>
 </head>
-<style>
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    }
 
-    th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    }
-    </style>
 <body>
     <form action="" method="post">
-        <button type="submit" value="submit" name="submit">List Patients Duty Today</button>
+        <button type="submit" value="list" name="list">List Patients Duty Today</button>
     </form>
-<table>
+    <table>
 
-    <tr>
-        <th>Name</th>
-        <th>Morning Medicine</th>
-        <th>Afternoon Medicine</th>
-        <th>Night Medicine</th>
-        <th>Breakfast</th>
-        <th>Lunch</th>
-        <th>Dinner</th>
-    </tr>
-    <?php
+        <tr>
+            <th>Name</th>
+            <th>Morning Medicine</th>
+            <th>Afternoon Medicine</th>
+            <th>Night Medicine</th>
+            <th>Breakfast</th>
+            <th>Lunch</th>
+            <th>Dinner</th>
+        </tr>
+        <tr>
 
-    // WHILE LOOP TO CREATE A TABLE FOR THE LIST OF PATIENTS DUTY <tr></tr> <td></td>
-    ?>
+            <?php
 
 
-</table>
-<!-- OK and Cancel Form -->
-<form action="" method="post">
-    <button type="submit" name="submit" value="submit">Ok</button>
+            if ($list) {
+                if (mysqli_num_rows($patient_activity_today_query) > 0) {
+                    while ($row = mysqli_fetch_assoc($patient_activity_today_query)) {
+                        echo "<td>{$row['name']}</td>";
+                        echo "<td><input type='checkbox' name='morning_meds' value='1'></td>";
+                        echo "<td><input type='checkbox' name='afternoon_meds' value='1'></td>";
+                        echo "<td><input type='checkbox' name='night_meds' value='1'></td>";
+                        echo "<td><input type='checkbox' name='breakfast' value='1'></td>";
+                        echo "<td><input type='checkbox' name='lunch' value='1'></td>";
+                        echo "<td><input type='checkbox' name='dinner' value='1'></td>";
+                    }
+                }
+            }
+
+            ?>
+
+        </tr>
+
+
+    </table>
+
+    <button type="submit" name="submit" value="submit">Submit</button>
     <input type="button" onclick="location.href='index.php';" value="Cancel">
-</form>
+    </form>
 
 
 </body>
+
 </html>
 
 <?php

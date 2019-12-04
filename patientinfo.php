@@ -37,44 +37,47 @@ if( isset($_POST['change']) )
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Patient Info - Old Home</title>
 </head>
+
 <body>
+    <!-- Patient  Information Form-->
+    <form action="patientinfo.php" method="POST">
+        <fieldset>
+            <form action="patientinfo.php" method="POST">
+                <legend>Patient Information</legend>
+                <p>
+                    Patient ID: <input type="text" name="getpatientid" value="<?php echo $wegood['patientid'];?>">
+                    <input type="submit" value="search" name="search">
+                    Patient Name: <?php echo $getgot['fname'] . ' ' . $getgot['lname']; ?>
+            </form>
 
-<!-- Patient  Information Form-->
-<form action="patientinfo.php" method="POST">
-    <fieldset>
-        <form action="patientinfo.php" method="POST">
-        <legend>Patient Information</legend>
-        <p>
-        Patient ID: <input type="text" name="getpatientid" value="<?php echo $wegood['patientid'];?>" >
-        <input type="submit" value="search" name="search">
-        Patient Name: <?php echo $getgot['fname'] . ' ' . $getgot['lname']; ?>
+            <br>
+            Group:
+            <select name="group">
+                <option value="<?php echo $wegood['group_num']?>"> <?php echo $wegood['group_num'] ?></option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+            </select>
+            Admission Date<input type="date" name="admdate" value="<?php echo $wegood['admission_date'];?>">
+            </p>
+            <input type="submit" value="Update" name="change">
+            <input type="button" onclick="location.href='index.php';" value="Cancel">
+
+        </fieldset>
     </form>
-
-        <br>
-        Group:
-        <select name="group">
-            <option value= "<?php echo $wegood['group_num']?>"> <?php echo $wegood['group_num'] ?></option>
-            <option value = '1'>1</option>
-            <option value = '2'>2</option>
-            <option value = '3'>3</option>
-            <option value = '4'>4</option>
-        </select>
-        Admission Date<input type="date" name="admdate" value="<?php echo $wegood['admission_date'];?>">
-        </p>
-        <input type="submit" value="Update" name="change">
-        <input type="button" onclick="location.href='index.php';" value="Cancel">
-
-    </fieldset>
-</form>
 
 
 </body>
+
 </html>
 
 <?php

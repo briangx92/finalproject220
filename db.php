@@ -1,9 +1,16 @@
 <?php
-session_start();
+$currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
-$conn = new mysqli($dbServername, $dbUsername , $dbPassword);
+$conn = new mysqli($dbServername, $dbUsername, $dbPassword);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if ($currentpage == 'logout') {
+    session_destroy();
+}
 
 // Database Initialization
 $sql = "CREATE DATABASE old_home";
@@ -157,13 +164,24 @@ if ($conn->query($sql) === TRUE) {
     ";
 
     $sql_employee_data = "INSERT INTO `employee` (`userid`, `salary`) VALUES ('14', '100000'), ('25', '20000'), ('24', '20000'), ('23', '20000'), ('22', '20000'), ('20', '30000'), ('19', '30000'), ('13', '30000'), ('21', '25000');";
+
+    $sql_roster_data = "INSERT INTO roster (roster_date, supervisor, doctor, caregiver_1, caregiver_group1, caregiver_2, caregiver_group2, caregiver_3, caregiver_group3, caregiver_4, caregiver_group4) VALUES
+    ('2019-12-03', 21, 13, 22, 1, 23, 2, 24, 3, 25, 4),
+    ('2019-12-04', 21, 19, 22, 4, 23, 2, 24, 3, 25, 1),
+    ('2019-12-05', 21, 20, 23, 1, 24, 2, 22, 4, 25, 3);";
+
+    $sql_patient_activity_data = "INSERT INTO `patient_activity` (`today`, `patientid`, `caregiver`, `morning_meds`, `afternoon_meds`, `night_meds`, `breakfast`, `lunch`, `dinner`) VALUES
+    ('2019-12-03', 15, 25, 0, 0, 1, 1, 1, 0),
+    ('2019-12-04', 17, 24, 0, 1, 0, 1, 1, 0),
+    ('2019-12-05', 16, 22, 1, 1, 1, 1, 1, 1);";
+
     // SET GLOBAL EVENT SCHEDULER ON;
     $sql_scheduler = "SET GLOBAL event_scheduler = 1;";
 
     $result = mysqli_query($conn, $sql_scheduler);
     $result = mysqli_query($conn, $sql_user);
     $result = mysqli_query($conn, $sql_role_table);
-    $result = mysqli_query($conn, $sql_patient_table );
+    $result = mysqli_query($conn, $sql_patient_table);
     $result = mysqli_query($conn, $sql_doctorappt_table);
     $result = mysqli_query($conn, $sql_roster_table);
     $result = mysqli_query($conn, $sql_patient_activity_table);
@@ -174,8 +192,9 @@ if ($conn->query($sql) === TRUE) {
     $result = mysqli_query($conn, $sql_patient_data);
     $result = mysqli_query($conn, $sql_doct_appt_data);
     $result = mysqli_query($conn, $sql_employee_data);
-
-} else {}
+    $result = mysqli_query($conn, $sql_roster_data);
+    $result = mysqli_query($conn, $sql_patient_activity_data);
+} else { }
 
 
 $dbName = "old_home";
@@ -183,9 +202,51 @@ $dbName = "old_home";
 
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
+?>
+<link href="style.css" rel="stylesheet">
+<nav>
+    <ul>
+        <?php
+        $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+        if (isset($_SESSION['role'])) {
+            $sessionrole = $_SESSION['role'];
+            $getnav = "SELECT page, $sessionrole FROM role ";
+            $theirinfo = mysqli_query($conn, $getnav);
+            $resultcheck = mysqli_num_rows($theirinfo);
+            if ($resultcheck > 0) {
+                while ($tables = mysqli_fetch_assoc($theirinfo)) {
+                    if ($tables[$sessionrole] ==  1) {
+                        $unchangedpage = $tables['page'];
+                        $thepage = ucfirst($tables['page']);
+                        if (strpos($thepage, 'home') == True) {
+                            $thepage = str_replace("home", " Home", $thepage);
+                        }
+                        if (strpos($thepage, 'report') == True) {
+                            $thepage = str_replace("report", " Report", $thepage);
+                        }
+                        if (strpos($thepage, 'doctappt') == True) {
+                            $thepage = str_replace("doctappt", "Appointments", $thepage);
+                        }
+                        if (strpos($thepage, 'Newroster') == True) {
+                            $thepage = str_replace("New", "New ", $thepage);
+                        }
+                        if (strpos($thepage, 'approval') == True) {
+                            $thepage = str_replace("approval", " Approval", $thepage);
+                        }
+                        echo "<li><a href='$unchangedpage.php'>" . " $thepage" . "</a></li>";
+                    }
+                }
+            }
+        echo "<li><button type='submit' value='logout' name='logout' onclick=location.href='logout.php' >Logout</button></li>";
+        $cancel = $_POST['logout'] ?? '';
+        }
+        ?>
 
 
 
+    </ul>
+</nav>
+<?php
 // Security
 function securitygate($conn) {
     $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);

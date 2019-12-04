@@ -71,42 +71,45 @@ else {}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Payment - Old Home</title>
 </head>
 
 <body>
+    <form action="" method="post">
 
-<form action="" method="post">
 
-
-    <fieldset>
-        <legend>Payment</legend>
-        <label>Patient ID:</label>
-        <input type="text" name="patientid" value="<?php echo $patientid; ?>">
-        <button type="submit" name="search">Search</button>
-        Patient Name:
-        <?php if($search) {echo "{$patient_name_result['fname']} {$patient_name_result['lname']}";} ?>
-        <br>
-        <label>Total Due: $</label>
-        <input type="text" name="due" value=" <?php if ($search) {echo "{$amount_due_result['amount_due']}";} ?>" disabled>
-        <br>
-        <label>New Payment: $</label>
-        <input type="text" name="pay" placeholder="0.00" value="<?php if ($submit) {
+        <fieldset>
+            <legend>Payment</legend>
+            <label>Patient ID:</label>
+            <input type="text" name="patientid" value="<?php echo $patientid; ?>">
+            <button type="submit" name="search">Search</button>
+            Patient Name:
+            <?php if($search) {echo "{$patient_name_result['fname']} {$patient_name_result['lname']}";} ?>
+            <br>
+            <label>Total Due: $</label>
+            <input type="text" name="due" value=" <?php if ($search) {echo "{$amount_due_result['amount_due']}";} ?>"
+                disabled>
+            <br>
+            <label>New Payment: $</label>
+            <input type="text" name="pay" placeholder="0.00" value="<?php if ($submit) {
             $new_payment_query = mysqli_query($conn, $sql_new_payment);}?>">
-        <br>
-        <button type="submit" value="submit" name="submit">Submit</button>
-        <input type="button" onclick="location.href='index.php';" value="Cancel">
-    </fieldset>
-</form>
+            <br>
+            <button type="submit" value="submit" name="submit">Submit</button>
+            <input type="button" onclick="location.href='index.php';" value="Cancel">
+        </fieldset>
+    </form>
 
-<p>$10 for every day</p>
-<p>$50 for every appointment</p>
-<p>$5 for every medicine a month</p>
+    <p>$10 for every day</p>
+    <p>$50 for every appointment</p>
+    <p>$5 for every medicine a month</p>
 </body>
+
 </html>
 
 <?php

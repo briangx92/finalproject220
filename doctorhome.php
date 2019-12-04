@@ -10,54 +10,38 @@ $docid = $_SESSION['id'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?php echo ucfirst(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME)) ?></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Doctor Home - Old Home</title>
 </head>
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
 
 <body>
-    <main>
+    <!--Doctors Search Form -->
+    <form action="" method="post">
 
+        <fieldset>
+            <legend>Doctor's Home Page</legend>
+            <label>Search By: </label>
+            <select name="searchtype">
+                <option value="fname" name="fname">Name</option>
+                <option value="apt_date" name="apt_date">Date</option>
+                <option value="comment" name="comment">Comment</option>
+                <option value="morning_med" name="morning_med">Morning Meds</option>
+                <option value="afternoon_med" name="afternoon_med">Afternoon Meds</option>
+                <option value="night_med" name="night_med">Night Meds</option>
+            </select>
+            <input type="text" name="search_text" value="<?php $search_text; ?>">
+            <button type="submit" name="search" value="search">Search</button>
 
-        <!--Doctors Search Form -->
-        <form action="" method="post">
-
-            <fieldset>
-                <legend>Doctor's Home Page</legend>
-                <label>Search By: </label>
-                <select name="searchtype">
-                    <option value="fname" name="fname">Name</option>
-                    <option value="apt_date" name="apt_date">Date</option>
-                    <option value="comment" name="comment">Comment</option>
-                    <option value="morning_med" name="morning_med">Morning Meds</option>
-                    <option value="afternoon_med" name="afternoon_med">Afternoon Meds</option>
-                    <option value="night_med" name="night_med">Night Meds</option>
-                </select>
-                <input type="text" name="search_text" value="<?php $search_text; ?>">
-                <button type="submit" name="search" value="search">Search</button>
-
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Comment</th>
-                        <th>Morning Meds</th>
-                        <th>Afternoon Meds</th>
-                        <th>Night Meds</th>
-                        <th></th>
-                    </tr>
-                    <?php
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Comment</th>
+                    <th>Morning Meds</th>
+                    <th>Afternoon Meds</th>
+                    <th>Night Meds</th>
+                </tr>
+                <?php
 
                     // POSTS
                     $searchtype = $_POST['searchtype'] ?? '';
@@ -150,8 +134,8 @@ $docid = $_SESSION['id'];
 
                     ?>
 
-                </table>
-            </fieldset>
+            </table>
+        </fieldset>
         <!-- Appointment Search Form -->
         </form>
         <form action="doctorhome.php" method="post">
@@ -180,8 +164,8 @@ $docid = $_SESSION['id'];
 
             ?>
 
-        </table>
-    </main>
+    </table>
+
 </body>
 
 </html>

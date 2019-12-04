@@ -1,7 +1,6 @@
 <?php
 include_once 'db.php';
 securitygate($conn);
-
 function update_values($conn) {
     $role_list = array();
     $getinfo = "SELECT * FROM role " ;
@@ -17,7 +16,6 @@ function update_values($conn) {
             $getinfo = "SELECT $role FROM role WHERE page = '$page'" ;
             $theirinfo = mysqli_query($conn, $getinfo);
             $newinfo = mysqli_fetch_assoc($theirinfo);
-
             $approval = ($newinfo[$role] == 1 ? 1 : 0);
             if ($approval == 1) {
                 $unapprove = "UPDATE role SET $role = 0 WHERE page = '$page';";
@@ -30,41 +28,28 @@ function update_values($conn) {
         }
     }
 }
-
 $newrole = $_POST['newrole'] ?? '';
-
 $addnewrole = "ALTER TABLE role
 ADD $newrole varchar(20);";
 mysqli_query($conn, $addnewrole);
-
 update_values($conn);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
-    <style>
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    border-color: 10px solid blue;
-    text-align: center;
-    }
-    th, td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    }
-</style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Role - Old Home</title>
 </head>
+
 <body>
-        <table>
-            <tr>
-                <?php
+    <table>
+        <tr>
+            <?php
                 $getinfo = "SELECT * FROM role " ;
                 $theirinfo = mysqli_query($conn, $getinfo);
                 $newinfo = mysqli_fetch_assoc($theirinfo);
@@ -79,9 +64,9 @@ update_values($conn);
                     }
                 }
                 ?>
-            </tr>
-            <form action='role.php' method='post'>
-<?php
+        </tr>
+        <form action='role.php' method='post'>
+            <?php
 
         $dir = getcwd();
         $files = scandir($dir);
@@ -89,7 +74,7 @@ update_values($conn);
             if ($page == 'index.php' or $page == 'verify.php' or $page == 'db.php') {
                 continue;
             }
-            elseif (strpos($page, 'php') == True) {
+            elseif (strpos($page, '.php') == True) {
                 $page = str_replace(".php","",$page);
                 $sql = "INSERT INTO role (page) VALUES ('$page');";
                 if ($conn->query($sql) === TRUE) {
@@ -114,12 +99,12 @@ update_values($conn);
 
 
 ?>
-</form>
-<form action='role.php' method='post'>
-    New Role <input type="text" name="newrole">
-    <input type="submit" name="newrolesubmit">
-</form>
-<?php echo $newrole; ?>
+        </form>
+        <form action='role.php' method='post'>
+            New Role <input type="text" name="newrole">
+            <input type="submit" name="newrolesubmit">
+        </form>
+        <?php echo $newrole; ?>
 </body>
 
 </html>

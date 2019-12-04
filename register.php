@@ -1,99 +1,100 @@
 <?php
 include_once 'db.php';
-securitygate($conn);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old Home</title>
-<style>
-section {
-    display: none;
-}
-</style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Register - Old Home</title>
 
 </head>
+
 <body>
-
-<form action="register.php" method="post">
-    <fieldset>
-        <legend>Register</legend>
-        <label>Role: </label>
-        <select id="role" name="role">
-            <option value="none">-- Select --</option>
-            <option value="admin">Admin</option>
-            <option value="patient">Patient</option>
-            <option value="family">Family Member</option>
-            <option value="doctor">Doctor</option>
-            <option value="supervisor">Supervisor</option>
-            <option value="caregiver">Caregiver</option>
-
-        </select>
-        <br>
-        <label>First Name: </label>
+    <form action="register.php" method="post">
+        <fieldset>
+            <legend>Register</legend>
+            <label>Role: </label>
+            <select id="role" name="role">
+            <?php
+            $getinfo = "SELECT * FROM role " ;
+            $theirinfo = mysqli_query($conn, $getinfo);
+            $newinfo = mysqli_fetch_assoc($theirinfo);
+            $u = 0;
+            foreach ($newinfo as $key => $new) {
+                if ($u == 0) {
+                    $u += 1;
+                } else {
+                    $capkey = ucfirst($key);
+                    echo "<option value='{$key}'>{$capkey}</option>";
+                }
+            }
+            ?>
+            </select>
+            <br>
+            <label>First Name: </label>
             <input type="text" name="fname">
-        <br>
-        <label>Last Name: </label>
+            <br>
+            <label>Last Name: </label>
             <input type="text" name="lname">
-        <br>
-        <label>Email: </label>
+            <br>
+            <label>Email: </label>
             <input type="text" name="email">
-        <br>
-        <label>Password: </label>
+            <br>
+            <label>Password: </label>
             <input type="password" name="pass">
-        <br>
-        <label>Phone: </label>
+            <br>
+            <label>Phone: </label>
             <input type="text" name="phone">
-        <br>
-        <label>Date of Birth: </label>
+            <br>
+            <label>Date of Birth: </label>
             <input type="date" name="dob">
-        <br>
-        <!-- Make this appear when role is patient -->
-        <section id="section">
-        <label class="hideit">Family Code: </label>
-            <input class="hideit" type="text" name="famcode">
-        <br>
-        <label class="hideit">Emergency Contact: </label>
-            <input class="hideit" type="text" name="emcontact">
-        <br>
-        <label class="hideit">Relationship: </label>
-            <input class="hideit" type="text" name="relation">
-        </section>
-        <!-- End appear -->
+            <br>
+            <!-- Make this appear when role is patient -->
+            <section id="section">
+                <label class="hideit">Family Code: </label>
+                <input class="hideit" type="text" name="famcode">
+                <br>
+                <label class="hideit">Emergency Contact: </label>
+                <input class="hideit" type="text" name="emcontact">
+                <br>
+                <label class="hideit">Relationship: </label>
+                <input class="hideit" type="text" name="relation">
+            </section>
+            <!-- End appear -->
 
-        <button type="submit" name="submit" value="submit">Ok</button>
-        <input type="button" onclick="location.href='index.php';" value="Cancel">
-
-
+            <button type="submit" name="submit" value="submit">Ok</button>
+            <input type="button" onclick="location.href='index.php';" value="Cancel">
 
 
 
 
-    </fieldset>
-</form>
 
-<script>
-// This shows the patient form when selected in the dropdown menu
-let role = document.getElementById('role');
 
-role.addEventListener("change", (event) => {
-    let select = role.options[role.selectedIndex].value;
-    if (select != "patient") {
-        document.getElementById('section').style.display="none";
-    } else {
-        document.getElementById('section').style.display="block";
-    }
-});
+        </fieldset>
+    </form>
 
-</script>
+    <script>
+    // This shows the patient form when selected in the dropdown menu
+    let role = document.getElementById('role');
+
+    role.addEventListener("change", (event) => {
+        let select = role.options[role.selectedIndex].value;
+        if (select != "patient") {
+            document.getElementById('section').style.display = "none";
+        } else {
+            document.getElementById('section').style.display = "block";
+        }
+    });
+    </script>
 
 
 
 </body>
+
 </html>
 
 <?php
