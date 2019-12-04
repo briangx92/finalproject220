@@ -1,7 +1,6 @@
 <?php
 include_once 'db.php';
 session_destroy();
-echo $_SESSION['message'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

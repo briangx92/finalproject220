@@ -1,6 +1,5 @@
 <?php
 $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
-
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";

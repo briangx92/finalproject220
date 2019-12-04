@@ -29,6 +29,7 @@ function update_values($conn) {
     }
 }
 $newrole = $_POST['newrole'] ?? '';
+$newrole = str_replace(" ","",$newrole);
 $addnewrole = "ALTER TABLE role
 ADD $newrole varchar(20);";
 mysqli_query($conn, $addnewrole);

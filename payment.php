@@ -107,7 +107,6 @@ else {}
 
     <p>$10 for every day</p>
     <p>$50 for every appointment</p>
-    <p>$5 for every medicine a month</p>
 </body>
 
 </html>
