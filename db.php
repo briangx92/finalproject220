@@ -137,7 +137,7 @@ if ($conn->query($sql) === TRUE) {
     (24, 'caregiver', 'qincy', 'ruze', '657483892', '2012-03-27', 'cg3@a.com', '1', 1),
     (25, 'caregiver', 'prince', 'op', '1', '2017-10-30', 'cg4@a.com', '1', 1);";
 
-    $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
+  $sql_default_security = "INSERT INTO role (page, admin, patient, family, doctor, supervisor, caregiver)
     VALUES
     ('adminreport', 1, 0, 0, 0, 0, 0),
     ('role', 1, 0, 0, 0, 0, 0),
@@ -248,14 +248,14 @@ $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 </nav>
 <?php
 // Security
-function securitygate($conn)
-{
+function securitygate($conn) {
     $currentpage = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
     $sessionrole = $_SESSION['role'];
     $securitycheck = "SELECT $sessionrole FROM role WHERE page = '$currentpage'";
     $clearance = mysqli_query($conn, $securitycheck);
     $passclearance = mysqli_fetch_assoc($clearance);
-    if ($passclearance[$sessionrole] == 1) { } else {
+    if ($passclearance[$sessionrole] == 1) {
+    } else {
         $_SESSION['message'] = "You are not authorized to visit {$currentpage}, you have been logged out.";
         header("Location: /finalproject220/index.php");
     }
