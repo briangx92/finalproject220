@@ -9,7 +9,6 @@ $list = isset($_POST['list']);
 $today = date('Y/m/d');
 $date = date('Y/m/d');
 
-echo $date;
 // SQL Query Variables
 
 $sql_patient_activity_today = "SELECT * FROM patient_activity p JOIN users u ON p.patientid = u.userid WHERE p.today = '$today';";
