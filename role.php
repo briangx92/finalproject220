@@ -90,6 +90,8 @@ update_values($conn);
                         echo "<td> $new </td>";
                         $thispage = $new;
                         $i += 1;
+                    } elseif ($thispage == ('role') and ($key == 'admin') ){
+                        echo "<td><button disabled>" . 'Approved' . "</button></td>";
                     } else {
                         echo "<td><button type='submit' value='$thispage' name='$key'>" . ($new == 1 ? 'Approved' : 'Denied') . "</button></td>";
                     }
