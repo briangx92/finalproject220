@@ -2,20 +2,19 @@
 include_once 'db.php';
 securitygate($conn);
 $list = isset($_POST['list']);
-$submit = isset($_POST['submit']);
+
 
 
 
 $today = date('Y/m/d');
-
+$date = date('Y/m/d');
 
 // SQL Query Variables
-// $sql_patient_activity = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid;";
 
-$sql_patient_activity_today = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid WHERE p.today = '$today';";
+$sql_patient_activity_today = "SELECT * FROM patient_activity p JOIN users u ON p.patientid = u.userid WHERE p.today = '$today';";
 
 // MYSQL Queries
-// list_activity_query = mysqli_query($conn, $sql_patient_activity);
+
 $patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today);
 
 
@@ -33,7 +32,7 @@ $patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today)
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="caregiverhome.php" method="post">
         <button type="submit" value="list" name="list">List Patients Duty Today</button>
     </form>
     <table>
@@ -55,13 +54,45 @@ $patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today)
             if ($list) {
                 if (mysqli_num_rows($patient_activity_today_query) > 0) {
                     while ($row = mysqli_fetch_assoc($patient_activity_today_query)) {
-                        echo "<td>{$row['name']}</td>";
-                        echo "<td><input type='checkbox' name='morning_meds' value='1'></td>";
-                        echo "<td><input type='checkbox' name='afternoon_meds' value='1'></td>";
-                        echo "<td><input type='checkbox' name='night_meds' value='1'></td>";
-                        echo "<td><input type='checkbox' name='breakfast' value='1'></td>";
-                        echo "<td><input type='checkbox' name='lunch' value='1'></td>";
-                        echo "<td><input type='checkbox' name='dinner' value='1'></td>";
+                        if ($row['morning_meds'] == 1) {
+                            $morning = "<td><input type='checkbox' name='morning_meds' checked></td>";
+                        } elseif ($row['morning_meds'] == 0) {
+                            $morning = "<td><input type='checkbox' name='morning_meds'></td>";
+                        }
+                        if ($row['afternoon_meds'] == 1) {
+                            $afternoon = "<td><input type='checkbox' name='afternoon_meds' checked></td>";
+                        } elseif ($row['afternoon_meds'] == 0) {
+                            $afternoon = "<td><input type='checkbox' name='afternoon_meds'></td>";
+                        }
+                        if ($row['night_meds'] == 1) {
+                            $night = "<td><input type='checkbox' name='night_meds' checked></td>";
+                        } elseif ($row['night_meds'] == 0) {
+                            $night = "<td><input type='checkbox' name='night_meds'></td>";
+                        }
+                        if ($row['breakfast'] == 1) {
+                            $breakfast = "<td><input type='checkbox' name='breakfast' checked></td>";
+                        } elseif ($row['breakfast'] == 0) {
+                            $breakfast = "<td><input type='checkbox' name='breakfast'></td>";
+                        }
+                        if ($row['lunch'] == 1) {
+                            $lunch = "<td><input type='checkbox' name='lunch' checked></td>";
+                        } elseif ($row['lunch'] == 0) {
+                            $lunch = "<td><input type='checkbox' name='lunch'></td>";
+                        }
+                        if ($row['dinner'] == 1) {
+                            $dinner = "<td><input type='checkbox' name='dinner' checked></td>";
+                        } elseif ($row['dinner'] == 0) {
+                            $dinner = "<td><input type='checkbox' name='dinner'></td>";
+                        }
+
+
+                        echo "<td>{$row['fname']} {$row['lname']}</td>";
+                        echo $morning;
+                        echo $afternoon;
+                        echo $night;
+                        echo $breakfast;
+                        echo $lunch;
+                        echo $dinner;
                     }
                 }
             }
@@ -69,20 +100,17 @@ $patient_activity_today_query = mysqli_query($conn, $sql_patient_activity_today)
             ?>
 
         </tr>
+        <input type="button" onclick="location.href='index.php';" value="Cancel">
+
 
 
     </table>
 
-    <button type="submit" name="submit" value="submit">Submit</button>
-    <input type="button" onclick="location.href='index.php';" value="Cancel">
+
+
     </form>
 
 
 </body>
 
 </html>
-
-<?php
-
-
-?>
