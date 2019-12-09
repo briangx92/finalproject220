@@ -61,6 +61,65 @@ securitygate($conn);
                     }
                     ?>
         </table>
+        <hr>
+        <table>
+
+            <tr>
+                <th>Name</th>
+                <th>Morning Medicine</th>
+                <th>Afternoon Medicine</th>
+                <th>Night Medicine</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+            </tr>
+            <tr>
+
+                <?php
+                $sql_patient_activity = "SELECT CONCAT(u.fname, ' ', u.lname) AS name, p.today, p.morning_meds, p.afternoon_meds, p.night_meds, p.breakfast, p.lunch, p.dinner FROM patient_activity p JOIN users u ON p.patientid = u.userid WHERE p.patientid = '$theid';";
+                $patient_activity_query = mysqli_query($conn, $sql_patient_activity);
+                    if (mysqli_num_rows($patient_activity_query) > 0) {
+                        while ($row = mysqli_fetch_assoc($patient_activity_query)) {
+                            echo "<td>{$row['today']}</td>";
+                            echo "<td><input type='checkbox'";
+                            if ($row['morning_meds'] == 1) {
+                                echo "checked";
+                            }
+                            echo " disabled name='morning_meds' value='1'></td>";
+                            echo "<td><input type='checkbox'";
+                            if ($row['afternoon_meds'] == 1) {
+                                echo "checked";
+                            }
+                            echo " disabled name='afternoon_meds' value='1'></td>";
+                            echo "<td><input type='checkbox'";
+                            if ($row['night_meds'] == 1) {
+                                echo "checked";
+                            }
+                            echo " disabled name='night_meds' value='1'></td>";
+                            echo "<td><input type='checkbox'";
+                            if ($row['breakfast'] == 1) {
+                                echo "checked";
+                            }
+                            echo " disabled name='breakfast' value='1'></td>";
+                            echo "<td><input type='checkbox'";
+                            if ($row['lunch'] == 1) {
+                                echo "checked";
+                            }
+                            echo " disabled name='lunch' value='1'></td>";
+                            echo "<td><input type='checkbox'";
+                            if ($row['dinner'] == 1) {
+                                echo "checked";
+                            }
+                            echo " disabled name='dinner' value='1'></td>";
+                        }
+                    }
+
+                ?>
+
+            </tr>
+
+
+        </table>
     </form>
     </main>
 
