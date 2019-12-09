@@ -20,7 +20,6 @@ FROM `users` u
 // MYSQL Query
 $sql_query = mysqli_query($conn, $sql_all);
 
-echo $sql_all;
 ?>
 <!DOCTYPE html>
 <html lang="en">
