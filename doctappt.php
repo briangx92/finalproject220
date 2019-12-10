@@ -51,8 +51,9 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             <legend>Doctors Appointment</legend>
             <label>Patient ID: </label>
             <input type="text" name="patientid" value="<?php echo $patientid; ?>">
-            <label>Patient Name: <?php if($search) {
-                echo "{$patient}"; }?></label>
+            <label>Patient Name: <?php if ($search) {
+                                        echo "{$patient}";
+                                    } ?></label>
             <br>
 
             <label>Date: </label>
@@ -62,14 +63,13 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             <select name="doctor">
                 <option>-- SELECT --</option>
                 <?php
-                $result = mysqli_query($conn,$sql_doctor);
-                if ($result-> num_rows > 0) {
-                    while ($row = $result-> fetch_assoc()) {
+                $result = mysqli_query($conn, $sql_doctor);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
                         $docid = $row['userid'];
                         $fname = $row['fname'];
                         $lname = $row['lname'];
                         echo "<option value='{$docid}'>{$fname} {$lname} ID: {$docid}</option>";
-
                     }
                 }
 
@@ -80,18 +80,21 @@ $patient = "{$result_patientid['fname']} {$result_patientid['lname']}";
             <button type="submit" name="submit" value="">Submit Form</button>
             <?php
 
-        if ($submit) {
-            $patientid = $_POST['patientid'] ?? '';
-            $date = $_POST['date'] ?? '';
-            $doctor = $_POST['doctor'] ?? '';
-            $sql_new_apt = "INSERT INTO doctor_appt (patientid, doctorid, apt_date) VALUES ($patientid, $docid, '$date');";
+            if ($submit) {
+                if ($date < date('Y/m/d')) {
+                    echo "Enter valid date";
+                } else {
+                    $patientid = $_POST['patientid'] ?? '';
+                    $date = $_POST['date'] ?? '';
+                    $doctor = $_POST['doctor'] ?? '';
+                    $sql_new_apt = "INSERT INTO doctor_appt (patientid, doctorid, apt_date) VALUES ($patientid, $docid, '$date');";
 
-            echo mysqli_query($conn, $sql_new_apt);
-        }
-        else {}
+                    echo mysqli_query($conn, $sql_new_apt);
+                }
+            }
 
 
-        ?>
+            ?>
 
         </fieldset>
 

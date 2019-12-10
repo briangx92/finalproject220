@@ -17,6 +17,28 @@ securitygate($conn);
 </head>
 <body>
         <main>
+            <table>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Morning Medicine</th>
+                    <th>Afternoon Medicine</th>
+                    <th>Night Medicine</th>
+                    <th>Breakfast</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                </tr>
+                <tr>
+
+
+                </tr>
+
+
+            </table>
+            <form>
+            <button type="submit" name="submit" value="submit">Submit</button>
+            <input type="button" onclick="location.href='index.php';" value="Cancel">
+            </form>
 
         </main>
         <footer>

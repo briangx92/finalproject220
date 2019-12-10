@@ -15,10 +15,10 @@ session_destroy();
 <body>
     <form action="verify.php" method="post">
         <label> Email:
-            <input type="email" name="email">
+            <input type="email" name="email" required>
         </label>
         <label> Password:
-            <input type="password" name="password">
+            <input type="password" name="password" required>
         </label>
         <br>
         <button type="submit" name="submit" value="submit">Ok</button>

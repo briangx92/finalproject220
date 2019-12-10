@@ -38,22 +38,22 @@ include_once 'db.php';
             </select>
             <br>
             <label>First Name: </label>
-            <input type="text" name="fname">
+            <input type="text" name="fname" required>
             <br>
             <label>Last Name: </label>
-            <input type="text" name="lname">
+            <input type="text" name="lname" required>
             <br>
             <label>Email: </label>
-            <input type="text" name="email">
+            <input type="text" name="email" required>
             <br>
             <label>Password: </label>
-            <input type="password" name="pass">
+            <input type="password" name="pass" required>
             <br>
             <label>Phone: </label>
-            <input type="text" name="phone">
+            <input type="text" name="phone" required>
             <br>
             <label>Date of Birth: </label>
-            <input type="date" name="dob">
+            <input type="date" name="dob" required>
             <br>
             <!-- Make this appear when role is patient -->
             <section id="section" style='display:none'>
@@ -112,22 +112,26 @@ if (!empty($_POST)) {
     $emcontact = $_POST['$emcontact'] ?? '';
     $relation = $_POST['relation'] ?? '';
 
-    $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob, email, pass, approved)
+    if (!empty($fname) and !empty($lname) and !empty($email) and !empty($phone) and !empty($dob) and !empty($pass) and $dob > date('Y/m/d')) {
+        $usersinfo = "INSERT INTO users (role, fname, lname, phone, dob, email, pass, approved)
 VALUES ('$role', '$fname', '$lname', '$phone', '$dob', '$email', '$pass', 0);";
-    $what = mysqli_query($conn, $usersinfo);
-    $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
-    $theirid = mysqli_query($conn, $getid);
-    $newid = mysqli_fetch_assoc($theirid);
-    $youid = $newid['userid'];
-    echo "Your registration has been submitted, please wait on admin approval.";
-    if ($role == 'patient') {
-        $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)
+        $what = mysqli_query($conn, $usersinfo);
+        $getid = "SELECT userid FROM users WHERE lname = '$lname' AND fname = '$fname'";
+        $theirid = mysqli_query($conn, $getid);
+        $newid = mysqli_fetch_assoc($theirid);
+        $youid = $newid['userid'];
+        echo "Your registration has been submitted, please wait on admin approval.";
+        if ($role == 'patient') {
+            $patientinfo = "INSERT INTO patient(userid, family_code, emergency_contact_name, relation)
         VALUES ('$youid', '$famcode', '$emcontact', '$relation');";
-        mysqli_query($conn, $patientinfo);
-    } elseif ($role != 'patient' and $role != 'family') {
-        $salary = "INSERT INTO employee(userid)
+            mysqli_query($conn, $patientinfo);
+        } elseif ($role != 'patient' and $role != 'family') {
+            $salary = "INSERT INTO employee(userid)
         VALUES ('$youid');";
-        mysqli_query($conn, $salary);
+            mysqli_query($conn, $salary);
+        }
+    } else {
+        echo "Please enter valid inputs";
     }
 }
 ?>
